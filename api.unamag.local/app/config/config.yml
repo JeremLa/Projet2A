@@ -2,11 +2,12 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
+    - { resource: "@AuthenticationBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    locale: en
+    locale: fr
 
 framework:
     #esi: ~
@@ -41,12 +42,12 @@ twig:
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   "%psql_database_driver%"
-        host:     "%psql_database_host%"
-        port:     "%psql_database_port%"
-        dbname:   "%psql_database_name%"
-        user:     "%psql_database_user%"
-        password: "%psql_database_password%"
+        driver:   "%database_driver%"
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
         charset:  UTF8
         # if using pdo_sqlite as your database driver:
         #   1. add the path in parameters.yml
