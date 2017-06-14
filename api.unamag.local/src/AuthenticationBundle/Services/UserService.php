@@ -1,6 +1,6 @@
 <?php
 
-namespace AuthenticationBundle\Service;
+namespace AuthenticationBundle\Services;
 
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
