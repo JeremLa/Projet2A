@@ -1,5 +1,6 @@
 imports:
     - { resource: parameters.yml }
+    - { resource: parameters/parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
     - { resource: "@AuthenticationBundle/Resources/config/services.yml" }
@@ -20,6 +21,8 @@ framework:
     csrf_protection: ~
     validation: { enable_annotations: true }
     #serializer: { enable_annotations: true }
+    serializer:
+        enabled: true
     templating:
         engines: ['twig']
     default_locale: '%locale%'
@@ -42,7 +45,7 @@ twig:
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   "%database_driver%"
+        driver:   "%database_pgsql%"
         host:     "%database_host%"
         port:     "%database_port%"
         dbname:   "%database_name%"
