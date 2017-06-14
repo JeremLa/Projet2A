@@ -1,0 +1,41 @@
+User :
+	- ID					INT
+	- Nom					STRING
+	- Prénom				STRING
+	- Rue					STRING
+	- Ville					STRING
+	- Code postal			INT
+	- Téléphone				STRING
+	- Mail					STRING
+	- lieu de naissance		STRING
+	- date de naissance		DATE
+	- MDP					STRING
+
+Abonnement :
+	- ID					INT
+	- Magazine				MAGAZINE
+	- User					USER
+	- Date début			DATE
+	- Date fin				DATE
+	- Status				INT
+
+Paiement :
+	- ID					INT
+	- ID Transaction		STRING
+	- Date Transaction		DATE
+	- Abonnement			ABONNEMENT
+	
+Magazine :
+	- ID										INT
+	- Titre										STRING
+	- Nombre de numéro à l'année				INT
+	- Photo de couverture de présentation		STRING
+	- Déscription								STRING
+	- Prix annuel								FLOAT
+	
+Historique :
+	- ID					INT
+	- ContactType			INT
+	- Commentaire			STRING
+	- User					USER | NULL
+	

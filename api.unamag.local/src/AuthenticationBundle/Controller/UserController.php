@@ -3,16 +3,16 @@
 namespace AuthenticationBundle\Controller;
 
 use AuthenticationBundle\Entity\User;
-use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use FOS\RestBundle\Controller\Annotations\Get;
 
 class UserController extends Controller
 {
 
     /**
-     * @Rest\Get("/user/{id}")
+     * @Get("/user/{id}")
      */
     public function getUserAction($id)
     {
