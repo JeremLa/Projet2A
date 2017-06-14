@@ -6,3 +6,4 @@ services:
         class: AuthenticationBundle\Services\UserService
         arguments:
             - "@doctrine.orm.entity_manager"
+            - "@security.password_encoder"

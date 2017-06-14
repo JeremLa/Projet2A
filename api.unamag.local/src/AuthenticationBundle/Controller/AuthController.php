@@ -5,7 +5,9 @@ namespace AuthenticationBundle\Controller;
 use AuthenticationBundle\Entity\User;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 
@@ -21,23 +23,21 @@ class AuthController extends Controller
      * @param Request $request
      * @param UserPasswordEncoderInterface $encoder
      */
-    public function  authenticateAction(Request $request, UserPasswordEncoderInterface $encoder)
+    public function  authenticateAction(Request $request)
     {
         /* @var $user User */
 
-        $login = $request->get("login");
+        $mail = $request->get("mail");
         $password = $request->get("password");
 
-        if(!$login || !$password){
-            throw new AuthenticationException();
-        }
-        $user = $this->get('doctrine.orm.entity_manager')
-            ->getRepository('AuthenticationBundle:User')
-            ->findOneBy(["mail" => $login, "password" => $encoder->encodePassword($user,$password)]);
-        if(!$user){
-            throw new AuthenticationException();
+        $user = $this->get('unamag.service.user')->findByMailOr404($mail);
+
+        $password = $this->get('unamag.service.user')->encodePassword($password);
+
+        if($password !== $user->getPassword()){
+            throw new HttpException(215, "Authentication error");
         }
 
+        return new JsonResponse("", 200);
     }
-
 }
