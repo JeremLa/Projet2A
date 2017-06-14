@@ -10,6 +10,7 @@ use FOS\RestBundle\Controller\Annotations\Get;
 
 class UserController extends Controller
 {
+
     /**
      * @Get("/user/{id}")
      */
@@ -24,6 +25,7 @@ class UserController extends Controller
 
         return new JsonResponse($formatted);
     }
+
 
     public function getUsersAction(Request $request)
     {
