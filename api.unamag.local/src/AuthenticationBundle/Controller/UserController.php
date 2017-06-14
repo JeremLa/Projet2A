@@ -6,9 +6,13 @@ use AuthenticationBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use FOS\RestBundle\Controller\Annotations\Get;
 
 class UserController extends Controller
 {
+    /**
+     * @Get("/user/{id}")
+     */
     public function getUserAction($id)
     {
         /* @var $user User */
@@ -27,7 +31,6 @@ class UserController extends Controller
         $users = $this->get('doctrine.orm.entity_manager')
             ->getRepository('AuthenticationBundle:User')
             ->findAll();
-
 
         $formatted = [];
         foreach ($users as $user) {

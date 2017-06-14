@@ -1,14 +1,15 @@
 <?php
 
-namespace AuthenticationBundle\Service;
+namespace AuthenticationBundle\Services;
 
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class UserService
 {
     private $em;
 
-    function __construct(\Doctrine\ORM\EntityManager $em)
+    function __construct(EntityManager $em)
     {
         $this->em = $em;
     }
