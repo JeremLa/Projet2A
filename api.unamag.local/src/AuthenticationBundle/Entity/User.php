@@ -234,17 +234,17 @@ class User
     /**
      * @return string
      */
-    public function getCityOfBorn(): string
+    public function getBirthCity(): string
     {
-        return $this->cityOfBorn;
+        return $this->birthCity;
     }
 
     /**
-     * @param string $cityOfBorn
+     * @param string $birthCity
      */
-    public function setCityOfBorn(string $cityOfBorn)
+    public function setBirthCity(string $birthCity)
     {
-        $this->cityOfBorn = $cityOfBorn;
+        $this->birthCity = $birthCity;
     }
 
     /**
