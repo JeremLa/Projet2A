@@ -34,7 +34,6 @@ class UserController extends Controller
             ->getRepository('AuthenticationBundle:User')
             ->findAll();
 
-
         $formatted = [];
         foreach ($users as $user) {
             $formatted[] = [

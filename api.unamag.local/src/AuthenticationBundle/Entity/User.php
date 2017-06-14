@@ -81,9 +81,9 @@ class User
     /**
      * @var string
      *
-     * @ORM\Column(name="cityOfBorn", type="string")
+     * @ORM\Column(name="birthCity", type="string")
      */
-    private $cityOfBorn;
+    private $birthCity;
 
     /**
      * @var Date
