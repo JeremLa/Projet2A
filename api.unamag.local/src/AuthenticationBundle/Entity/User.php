@@ -92,6 +92,12 @@ class User
      */
     private $birthDate;
 
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="level", type="integer")
+     */
+    private $level;
 
     /**
      * Get id
@@ -261,6 +267,22 @@ class User
     public function setBirthDate(Date $birthDate)
     {
         $this->birthDate = $birthDate;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLevel()
+    {
+        return $this->level;
+    }
+
+    /**
+     * @param mixed $level
+     */
+    public function setLevel($level)
+    {
+        $this->level = $level;
     }
 }
 
