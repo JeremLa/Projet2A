@@ -86,9 +86,9 @@ class User
     private $birthCity;
 
     /**
-     * @var Date
+     * @var string
      *
-     * @ORM\Column(name="birthDate", type="date")
+     * @ORM\Column(name="birthDate", type="string")
      */
     private $birthDate;
 
@@ -112,7 +112,7 @@ class User
     /**
      * @return string
      */
-    public function getFirstname(): string
+    public function getFirstname()
     {
         return $this->firstname;
     }
@@ -128,7 +128,7 @@ class User
     /**
      * @return string
      */
-    public function getLastname(): string
+    public function getLastname()
     {
         return $this->lastname;
     }
@@ -144,7 +144,7 @@ class User
     /**
      * @return string
      */
-    public function getAdress(): string
+    public function getAdress()
     {
         return $this->adress;
     }
@@ -160,7 +160,7 @@ class User
     /**
      * @return string
      */
-    public function getCity(): string
+    public function getCity()
     {
         return $this->city;
     }
@@ -176,7 +176,7 @@ class User
     /**
      * @return int
      */
-    public function getZipCode(): int
+    public function getZipCode()
     {
         return $this->zipCode;
     }
@@ -192,7 +192,7 @@ class User
     /**
      * @return string
      */
-    public function getTel(): string
+    public function getTel()
     {
         return $this->tel;
     }
@@ -208,7 +208,7 @@ class User
     /**
      * @return string
      */
-    public function getMail(): string
+    public function getMail()
     {
         return $this->mail;
     }
@@ -224,7 +224,7 @@ class User
     /**
      * @return string
      */
-    public function getPassword(): string
+    public function getPassword()
     {
         return $this->password;
     }
@@ -240,7 +240,7 @@ class User
     /**
      * @return string
      */
-    public function getBirthCity(): string
+    public function getBirthCity()
     {
         return $this->birthCity;
     }
@@ -254,17 +254,17 @@ class User
     }
 
     /**
-     * @return Date
+     * @return string
      */
-    public function getBirthDate(): Date
+    public function getBirthDate()
     {
         return $this->birthDate;
     }
 
     /**
-     * @param Date $birthDate
+     * @param string $birthDate
      */
-    public function setBirthDate(Date $birthDate)
+    public function setBirthDate(string $birthDate)
     {
         $this->birthDate = $birthDate;
     }

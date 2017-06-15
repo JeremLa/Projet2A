@@ -3,71 +3,71 @@
 namespace AuthenticationBundle\Controller;
 
 use AuthenticationBundle\Entity\User;
+use AuthenticationBundle\Form\UserType;
+use FOS\RestBundle\View\View;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use FOS\RestBundle\Controller\Annotations\Get;
+use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\VarDumper\VarDumper;
 
 class UserController extends Controller
 {
 
     /**
-     * @Get("/user/{id}")
+     * @Rest\Get("/user/{id}")
      */
     public function getUserAction($id)
     {
-        /* @var $user User */
-        $user = $this->get('unamag.service.user')->findOneOr404($id);
-
-        $formatted = [
-            'id' => $user->getId(),
-        ];
-
-        return new JsonResponse($formatted);
+        return $this->get('unamag.service.user')->findOneOr404($id);
     }
 
-
+    /**
+     * @Rest\View()
+     * @Rest\Get("/users")
+     */
     public function getUsersAction(Request $request)
     {
-        /* @var $users User[] */
-        $users = $this->get('doctrine.orm.entity_manager')
+        return $this->get('doctrine.orm.entity_manager')
             ->getRepository('AuthenticationBundle:User')
             ->findAll();
-
-        $formatted = [];
-        foreach ($users as $user) {
-            $formatted[] = [
-                'id' => $user->getId(),
-            ];
-        }
-
-        return new JsonResponse($formatted);
     }
 
+    /**
+     * @Rest\View()
+     * @Rest\Post("/users/create")
+     */
     public function createUserAction(Request $request)
     {
-        /* @var $user User */
+        /** @var  $user User */
         $user = new User();
-        $user->setFirstname($request->get("firstName"));
-        $user->setLastname($request->get("lastName"));
-        $user->setAdress($request->get("adress"));
-        $user->setBirthCity($request->get("birthCity"));
-        $user->setBirthDate($request->get("birthDate"));
-        $user->setCity($request->get("city"));
-        $user->setZipCode($request->get("zipCode"));
-        $user->setMail($request->get("mail"));
-        $user->setTel($request->get("tel"));
-        $user->setPassword($request->get("password"));
-        $user->setLevel($request->get("level"));
+        $form = $this->createForm(UserType::class, $user);
 
-        $em = $this->get('doctrine.orm.entity_manager');
+
+        $form->submit($request->request->all());
+
+
+        $user = $form->getData();
+
+        $user->setPassword($this->get('unamag.service.user')->encodePassword($user->getPassword()));
+
+        $from = $request->get('from');
+        $level = 2;
+
+        if($from === 'client'){
+            $level = 2;
+        }else if( $from === 'gestion'){
+            $level = 1;
+        }
+
+        $user->setLevel($level);
+
+        $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();
 
-
-        return new JsonResponse("",200);
-
+        return $user;
     }
 }
