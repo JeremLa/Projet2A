@@ -1,3 +1,7 @@
 authentication_homepage:
     path:     /
-    defaults: { _controller: AuthenticationBundle:Default:index }
+    defaults: { _controller: AuthenticationBundle:Authentication:index }
+
+authentication_create:
+    path:     /inscription
+    defaults: { _controller: AuthenticationBundle:Authentication:createAccount }

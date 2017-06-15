@@ -1,0 +1,7 @@
+parameters:
+    api.url: "http://api.unamag.local"
+    api:
+        user:
+            get: "%api.url%/user/"
+            get_all: "%api.url%/users"
+            create: "%api.url%/users/create"

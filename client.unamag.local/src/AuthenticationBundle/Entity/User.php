@@ -5,99 +5,27 @@ namespace AuthenticationBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\Date;
 use FOS\UserBundle\Model\User as BaseUser;
-/**
- * User
- *
- * @ORM\Table(name="entity_user")
- * @ORM\Entity(repositoryClass="AuthenticationBundle\Repository\UserRepository")
- */
-class User extends BaseUser
+
+class User
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
     private $id;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="firstname", type="string")
-     */
     private $firstname;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="lastname", type="string")
-     */
     private $lastname;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="adress", type="string")
-     */
     private $adress;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="city", type="string")
-     */
     private $city;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="zipCode", type="integer")
-     */
     private $zipCode;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="tel", type="string", length=10)
-     */
     private $tel;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="mail", type="string")
-     */
     private $mail;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="password", type="string")
-     */
     private $password;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="birthCity", type="string")
-     */
     private $birthCity;
-
-    /**
-     * @var Date
-     *
-     * @ORM\Column(name="birthDate", type="date")
-     */
     private $birthDate;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="level", type="integer")
-     */
     private $level;
+
+    function __construct()
+    {
+        $date = new \DateTime('now', new \DateTimeZone('europe/paris'));
+        $this->birthDate = $date->format('Y-m-d');
+    }
 
     /**
      * Get id
@@ -112,7 +40,7 @@ class User extends BaseUser
     /**
      * @return string
      */
-    public function getFirstname(): string
+    public function getFirstname()
     {
         return $this->firstname;
     }
@@ -128,7 +56,7 @@ class User extends BaseUser
     /**
      * @return string
      */
-    public function getLastname(): string
+    public function getLastname()
     {
         return $this->lastname;
     }
@@ -144,7 +72,7 @@ class User extends BaseUser
     /**
      * @return string
      */
-    public function getAdress(): string
+    public function getAdress()
     {
         return $this->adress;
     }
@@ -160,7 +88,7 @@ class User extends BaseUser
     /**
      * @return string
      */
-    public function getCity(): string
+    public function getCity()
     {
         return $this->city;
     }
@@ -176,7 +104,7 @@ class User extends BaseUser
     /**
      * @return int
      */
-    public function getZipCode(): int
+    public function getZipCode()
     {
         return $this->zipCode;
     }
@@ -192,7 +120,7 @@ class User extends BaseUser
     /**
      * @return string
      */
-    public function getTel(): string
+    public function getTel()
     {
         return $this->tel;
     }
@@ -208,7 +136,7 @@ class User extends BaseUser
     /**
      * @return string
      */
-    public function getMail(): string
+    public function getMail()
     {
         return $this->mail;
     }
@@ -224,7 +152,7 @@ class User extends BaseUser
     /**
      * @return string
      */
-    public function getPassword(): string
+    public function getPassword()
     {
         return $this->password;
     }
@@ -232,7 +160,7 @@ class User extends BaseUser
     /**
      * @param string $password
      */
-    public function setPassword(string $password)
+    public function setPassword($password)
     {
         $this->password = $password;
     }
@@ -240,7 +168,7 @@ class User extends BaseUser
     /**
      * @return string
      */
-    public function getBirthCity(): string
+    public function getBirthCity()
     {
         return $this->birthCity;
     }
@@ -254,17 +182,17 @@ class User extends BaseUser
     }
 
     /**
-     * @return Date
+     * @return string
      */
-    public function getBirthDate(): Date
+    public function getBirthDate()
     {
         return $this->birthDate;
     }
 
     /**
-     * @param Date $birthDate
+     * @param string $birthDate
      */
-    public function setBirthDate(Date $birthDate)
+    public function setBirthDate(string $birthDate)
     {
         $this->birthDate = $birthDate;
     }
