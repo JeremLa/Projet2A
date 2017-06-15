@@ -36,7 +36,7 @@ class AuthController extends Controller
         if ($form->isValid() && $form->isSubmitted()) {
             $user_form = $form->getData();
             $user = $this->get('unamag.service.user')->findByMailOrNull($user->getMail());
-            if(!$user){
+            if(!$user  || $user->getLevel() == 2){
                 $errors[] = "auth.error";
                 return $this->render('AuthenticationBundle:Default:login.html.twig', array('form' => $form->createView(), 'errors' => $errors));
             }
