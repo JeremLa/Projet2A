@@ -1,0 +1,10 @@
+{% block content %}
+    {% set user = app.session.get('User') %}
+    {% if(user) %}
+        <h1>Bienvenu {{ user.firstname|capitalize ~ ' ' ~ user.lastname|capitalize }}</h1>
+        <a href='/Logout'>Se deconnecter</a>
+    {% else %}
+        <h1>Bienvenu dans l'appli de gestion</h1>
+        <a href='/Auth'>Se connecter</a>
+    {% endif %}
+{% endblock %}
