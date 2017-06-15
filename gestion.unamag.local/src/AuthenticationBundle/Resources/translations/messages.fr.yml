@@ -1,0 +1,8 @@
+auth:
+    connect: Se connecter
+    disconnect: Se deconnecter
+    mail: Identifiant
+    password: Mot de passe
+    error: Identifiant ou Mot de passe incorrect
+
+welcome: Bienvenu dans l'appli de gestion

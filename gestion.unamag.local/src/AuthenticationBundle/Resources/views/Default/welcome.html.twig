@@ -1,10 +1,9 @@
+{% extends 'layout.html.twig' %}
 {% block content %}
-    {% set user = app.session.get('User') %}
-    {% if(user) %}
-        <h1>Bienvenu {{ user.firstname|capitalize ~ ' ' ~ user.lastname|capitalize }}</h1>
-        <a href='/Logout'>Se deconnecter</a>
-    {% else %}
-        <h1>Bienvenu dans l'appli de gestion</h1>
-        <a href='/Auth'>Se connecter</a>
-    {% endif %}
+    <div class="row">
+        <div class="jumbotron col-md-12">
+            <h1>{{ 'welcome'|trans }}</h1>
+            {#<p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>#}
+        </div>
+    </div>
 {% endblock %}

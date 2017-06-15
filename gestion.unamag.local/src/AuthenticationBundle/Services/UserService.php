@@ -38,6 +38,16 @@ class UserService
         return $user;
     }
 
+    public function findByMailOrNull(string $mail){
+        $user = $this->em->getRepository("AuthenticationBundle:User")->findOneBy(['mail' => $mail]);
+
+        if(!$user){
+            return null;
+        }
+
+        return $user;
+    }
+
     public function encodePassword(string $password){
         return hash("sha512", $password);
     }

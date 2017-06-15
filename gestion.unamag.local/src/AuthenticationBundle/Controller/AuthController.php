@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\VarDumper\VarDumper;
 
 class AuthController extends Controller
 {
@@ -27,29 +28,28 @@ class AuthController extends Controller
     public function  authenticateAction(Request $request)
     {
         /* @var $user User */
-
-        $form = $this->createFormBuilder(new UserType())
-            ->add("mail", EmailType::class, array('data_class' => null, 'mapped' => false))
-            ->add("password", TextType::class, array('data_class' => null, 'mapped' => false))
-            ->add("save", SubmitType::class, array('label' => 'Se connecter'))
-            ->getForm();
+        $user = new User();
+        $errors = [];
+        $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
-        if ($form->isValid()) {
-            $mail = $request->get("form")['mail'];
-            $password = $request->get("form")['password'];
-            $user = $this->get('unamag.service.user')->findByMailOr404($mail);
-
-            $password = $this->get('unamag.service.user')->encodePassword($password);
-
+        if ($form->isValid() && $form->isSubmitted()) {
+            $user_form = $form->getData();
+            $user = $this->get('unamag.service.user')->findByMailOrNull($user->getMail());
+            if(!$user){
+                $errors[] = "auth.error";
+                return $this->render('AuthenticationBundle:Default:login.html.twig', array('form' => $form->createView(), 'errors' => $errors));
+            }
+            $password = $this->get('unamag.service.user')->encodePassword($user_form->getPassword());
             if($password !== $user->getPassword()){
-                throw new HttpException(215, "Authentication error");
+                $errors[] = "auth.error";
+                return $this->render('AuthenticationBundle:Default:login.html.twig', array('form' => $form->createView(), 'errors' => $errors));
             }
             $this->get('session')->set('User', $user);
             return $this->redirectToRoute('authentication_homepage');
         }
 
-        return $this->render('AuthenticationBundle:Default:index.html.twig', array('form' => $form->createView()));
+        return $this->render('AuthenticationBundle:Default:login.html.twig', array('form' => $form->createView()));
 
     }
 
