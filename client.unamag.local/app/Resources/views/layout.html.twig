@@ -18,12 +18,12 @@
             {% if(user) %}
                 <ul class="nav navbar-nav navbar-right">
                     <li><a>{{ user.firstname|capitalize ~ ' ' ~ user.lastname|capitalize }}</a></li>
-                    <li><a href="logout">{{ 'auth.disconnect'|trans }}</a></li>
+                    <li><a href="{{ path('authentication_logout') }}">{{ 'auth.disconnect'|trans }}</a></li>
                 </ul>
             {% else %}
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="login">{{ 'auth.connect'|trans }}</a></li>
+                    <li><a href="{{ path('authentication_homepage') }}">{{ 'auth.connect'|trans }}</a></li>
                 </ul>
             {% endif %}
         </div>

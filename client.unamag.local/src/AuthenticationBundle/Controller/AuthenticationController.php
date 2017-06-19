@@ -45,7 +45,7 @@ class AuthenticationController extends Controller
 //        $response = Request::post('http://api.unamag.local/users/create', [], http_build_query($data));
 //        VarDumper::dump($this->get('session')->get('User')->body);
 //        die;
-        return $this->render('AuthenticationBundle:user:index.html.twig');
+        return $this->render('AuthenticationBundle::index.html.twig');
     }
 
 
@@ -71,8 +71,10 @@ class AuthenticationController extends Controller
 
             }
 //            VarDumper::dump($response->body);die;
-            $this->connectUser($response->body);
-            return $this->redirectToRoute('authentication_homepage');
+            $user =  $this->cast($user,$response->body);
+
+            $this->connectUser($user);
+            return $this->redirectToRoute('user_homepage');
         }
 
         return $this->render('AuthenticationBundle:user:login.html.twig', array(
@@ -93,8 +95,9 @@ class AuthenticationController extends Controller
             $url = $this->getParameter('api')['user']['create'];
             $response = APIRequest::post($url, [], http_build_query($request->get('user')));
 //VarDumper::dump($response);
-            $this->connectUser($response->body);
-            return $this->redirectToRoute('authentication_homepage');
+            $user =  $this->cast($user,$response->body);
+            $this->connectUser($user);
+            return $this->redirectToRoute('user_homepage');
         }
 
         return $this->render('AuthenticationBundle:user:create.html.twig', array(
@@ -110,5 +113,35 @@ class AuthenticationController extends Controller
 
     private function connectUser($user){
         $this->get('session')->set('User', $user);
+    }
+
+    /**
+     * Class casting
+     *
+     * @param string|User $destination
+     * @param object $sourceObject
+     * @return object
+     */
+    private function cast($destination, $sourceObject)
+    {
+        if (is_string($destination)) {
+            $destination = new $destination();
+        }
+        $sourceReflection = new \ReflectionObject($sourceObject);
+        $destinationReflection = new \ReflectionObject($destination);
+        $sourceProperties = $sourceReflection->getProperties();
+        foreach ($sourceProperties as $sourceProperty) {
+            $sourceProperty->setAccessible(true);
+            $name = $sourceProperty->getName();
+            $value = $sourceProperty->getValue($sourceObject);
+            if ($destinationReflection->hasProperty($name)) {
+                $propDest = $destinationReflection->getProperty($name);
+                $propDest->setAccessible(true);
+                $propDest->setValue($destination,$value);
+            } else {
+                $destination->$name = $value;
+            }
+        }
+        return $destination;
     }
 }

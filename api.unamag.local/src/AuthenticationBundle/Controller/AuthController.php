@@ -22,6 +22,7 @@ class AuthController extends Controller
      * @Rest\View()
      * @Rest\Post("/users/login")
      * @param Request $request
+     * @return User
      */
     public function  authenticateAction(Request $request)
     {

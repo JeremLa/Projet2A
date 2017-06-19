@@ -33,3 +33,9 @@ auth:
     password: Mot de passe
 
 welcome: Bienvenu dans l'appli cliente
+
+error:
+    noAccess: Il semblerait que vous n'ayez pas le droit d'être ici. Faites demi-tour dès que possible.
+
+user:
+    myInfo: Mes informations

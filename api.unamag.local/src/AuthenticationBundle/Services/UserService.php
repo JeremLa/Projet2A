@@ -28,7 +28,14 @@ class UserService
         return $user;
     }
 
+    /**
+     * @param string $mail
+     * @return User
+     */
     public function findByMailOr404(string $mail){
+        /**
+         * @var $user User
+         */
         $user = $this->em->getRepository("AuthenticationBundle:User")->findOneBy(['mail' => $mail]);
 
         if(!$user){
