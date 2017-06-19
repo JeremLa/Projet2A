@@ -60,7 +60,6 @@ class UserType extends AbstractType
                 'trim' => true,
                 'label' => 'form.mail.label',
                 'translation_domain' => 'messages',
-                'invalid_message' => 'le format du mail est invalide.'
             ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,

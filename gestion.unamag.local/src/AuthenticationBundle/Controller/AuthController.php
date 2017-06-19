@@ -25,7 +25,7 @@ class AuthController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function  authenticateAction(Request $request)
+    public function authenticateAction(Request $request)
     {
         /* @var $user User */
         $user = new User();
