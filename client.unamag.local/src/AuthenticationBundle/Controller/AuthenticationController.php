@@ -10,6 +10,7 @@ namespace AuthenticationBundle\Controller;
 
 
 use AuthenticationBundle\Entity\User;
+use AuthenticationBundle\Form\LoginType;
 use AuthenticationBundle\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -23,11 +24,11 @@ class AuthenticationController extends Controller
 {
     public function indexAction()
     {
-        $url = $this->getParameter('api')['user']['get_all'];
-        $response = APIRequest::get($url, [], []);
-
-        VarDumper::dump(new \DateTime('now'));
-        die;
+//        $url = $this->getParameter('api')['user']['get_all'];
+//        $response = APIRequest::get($url, [], []);
+//
+//        VarDumper::dump(new \DateTime('now'));
+//        die;
 //        $data = [];
 //        $data['firstName'] = 'Jérémy';
 //        $data['lastName']  = 'Lahore';
@@ -42,14 +43,42 @@ class AuthenticationController extends Controller
 //        $data['level']     = 0;
 
 //        $response = Request::post('http://api.unamag.local/users/create', [], http_build_query($data));
-//        VarDumper::dump($response);
+//        VarDumper::dump($this->get('session')->get('User')->body);
 //        die;
-        return $this->render('AuthenticationBundle:index.html.twig');
+        return $this->render('AuthenticationBundle:user:index.html.twig');
     }
 
 
-    public function loginAction(){
+    public function loginAction(Request $request){
 
+        $user = new User();
+        $errors = [];
+
+        $form = $this->createForm(LoginType::class, $user);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()){
+            $url = $this->getParameter('api')['user']['login'];
+            $response = APIRequest::post($url, [], http_build_query($request->get('login')));
+
+            if($response->code != 200){
+                $errors[] = "auth.error";
+                return $this->render('AuthenticationBundle:user:login.html.twig', array(
+                    'form' => $form->createView(),
+                    'errors' => $errors,
+                ));
+
+            }
+//            VarDumper::dump($response->body);die;
+            $this->connectUser($response->body);
+            return $this->redirectToRoute('authentication_homepage');
+        }
+
+        return $this->render('AuthenticationBundle:user:login.html.twig', array(
+            'form' => $form->createView(),
+            'errors' => $errors,
+        ));
     }
 
     public function createAccountAction(Request $request){
@@ -63,13 +92,23 @@ class AuthenticationController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $url = $this->getParameter('api')['user']['create'];
             $response = APIRequest::post($url, [], http_build_query($request->get('user')));
-
-            VarDumper::dump($response);
-            die;
+//VarDumper::dump($response);
+            $this->connectUser($response->body);
+            return $this->redirectToRoute('authentication_homepage');
         }
 
         return $this->render('AuthenticationBundle:user:create.html.twig', array(
             'form' => $form->createView(),
         ));
+    }
+
+    public function logoutAction()
+    {
+        $this->get('session')->clear();
+        return $this->redirectToRoute('authentication_homepage');
+    }
+
+    private function connectUser($user){
+        $this->get('session')->set('User', $user);
     }
 }
