@@ -51,4 +51,12 @@ class UserService
     public function encodePassword(string $password){
         return hash("sha512", $password);
     }
+
+    public function getSerializer(){
+        $encoders = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+
+        return new Serializer($normalizers, $encoders);
+    }
+
 }
