@@ -63,7 +63,6 @@ class AuthenticationController extends Controller
     }
 
     public function createAccountAction(Request $request){
-        // just setup a fresh $task object (remove the dummy data)
         $user = new User();
 
         $form = $this->createForm(UserType::class, $user);
