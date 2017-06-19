@@ -17,7 +17,7 @@ class UserController extends Controller
 {
     public function indexAction()
     {
-        VarDumper::dump($this->get('session')->get('User'));die;
+//        VarDumper::dump($this->get('session')->get('User'));die;
         return $this->render('UserBundle:Default:index.html.twig');
     }
 
