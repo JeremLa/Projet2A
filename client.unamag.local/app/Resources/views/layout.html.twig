@@ -17,7 +17,7 @@
             {% set user = app.session.get('User') %}
             {% if(user) %}
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a>{{ user.firstname|capitalize ~ ' ' ~ user.lastname|capitalize }}</a></li>
+                    <li><a>{{ user.firstName|capitalize ~ ' ' ~ user.lastName|capitalize }}</a></li>
                     <li><a href="logout">{{ 'auth.disconnect'|trans }}</a></li>
                 </ul>
             {% else %}

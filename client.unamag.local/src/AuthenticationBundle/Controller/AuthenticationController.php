@@ -24,27 +24,6 @@ class AuthenticationController extends Controller
 {
     public function indexAction()
     {
-//        $url = $this->getParameter('api')['user']['get_all'];
-//        $response = APIRequest::get($url, [], []);
-//
-//        VarDumper::dump(new \DateTime('now'));
-//        die;
-//        $data = [];
-//        $data['firstName'] = 'Jérémy';
-//        $data['lastName']  = 'Lahore';
-//        $data['adress']    = 'rue de la bas';
-//        $data['city']      = 'pasla';
-//        $data['zipCode']   = '30200';
-//        $data['mail']      = 'mail@mail.com';
-//        $data['tel']       = '0000000000';
-//        $data['birthDate'] = '03-10-1985';
-//        $data['birthCity'] = 'pasla';
-//        $data['password']  = '123';
-//        $data['level']     = 0;
-
-//        $response = Request::post('http://api.unamag.local/users/create', [], http_build_query($data));
-//        VarDumper::dump($this->get('session')->get('User')->body);
-//        die;
         return $this->render('AuthenticationBundle:user:index.html.twig');
     }
 
@@ -70,7 +49,6 @@ class AuthenticationController extends Controller
                 ));
 
             }
-//            VarDumper::dump($response->body);die;
             $this->connectUser($response->body);
             return $this->redirectToRoute('authentication_homepage');
         }
@@ -92,7 +70,6 @@ class AuthenticationController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $url = $this->getParameter('api')['user']['create'];
             $response = APIRequest::post($url, [], http_build_query($request->get('user')));
-//VarDumper::dump($response);
             $this->connectUser($response->body);
             return $this->redirectToRoute('authentication_homepage');
         }

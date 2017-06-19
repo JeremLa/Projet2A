@@ -88,7 +88,7 @@ class User
     /**
      * @var string
      *
-     * @ORM\Column(name="birthDate", type="date")
+     * @ORM\Column(name="birthDate", type="string")
      */
     private $birthDate;
 

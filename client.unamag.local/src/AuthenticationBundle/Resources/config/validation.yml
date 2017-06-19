@@ -1,0 +1,7 @@
+AuthenticationBundle\Entity\User:
+    properties:
+        mail:
+            - AuthenticationBundle\Validator\Constraints\ValidMail: ~
+
+        tel:
+            - AuthenticationBundle\Validator\Constraints\PhoneFormat: ~
