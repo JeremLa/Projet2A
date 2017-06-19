@@ -23,8 +23,8 @@ class User
 
     function __construct()
     {
-        $date = new \DateTime('now', new \DateTimeZone('europe/paris'));
-        $this->birthDate = $date->format('Y-m-d');
+//        $date = new \DateTime('now', new \DateTimeZone('europe/paris'));
+//        $this->birthDate = $date->format('Y-m-d');
     }
 
     /**

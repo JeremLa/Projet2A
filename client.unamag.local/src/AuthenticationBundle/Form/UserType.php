@@ -70,15 +70,10 @@ class UserType extends AbstractType
                 'second_options' => array('label' => 'form.password.label2'),
                 'translation_domain' => 'messages'
             ])
-            ->add('birthDate', BirthdayType::class, [
+            ->add('birthDate', TextType::class, [
                 'required' => true,
                 'label' => 'form.birthDate.label',
                 'translation_domain' => 'messages',
-                'years' => range (1950, 2050),
-                'model_timezone' => 'Europe/Paris',
-                'format' => 'dd/MM/yyyy',
-                'input' => 'string',
-                'widget' => 'single_text'
             ])
             ->add('birthCity', TextType::class, [
                 'required' => true,
