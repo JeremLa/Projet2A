@@ -3,5 +3,5 @@ user_homepage:
     defaults: { _controller: UserBundle:User:index }
 
 user_get:
-    path:     /get/{id}
+    path:     /mesInformations
     defaults: { _controller: UserBundle:User:editUser }

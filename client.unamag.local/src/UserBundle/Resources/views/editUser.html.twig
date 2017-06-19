@@ -4,9 +4,20 @@
         <div class="jumbotron col-md-12">
             <span class="text-center"><h2>{{ 'user.myInfo'|trans }}</h2></span>
             <div>
-            {{ form_start(form) }}
-            {{ form_widget(form) }}
-            {{ form_end(form) }}
+                {{ form_start(form, {'method': 'POST'}) }}
+                    {{ form_errors(form) }}
+                    {{ form_row(form.firstName) }}
+                    {{ form_row(form.lastName) }}
+                    {{ form_row(form.adress) }}
+                    {{ form_row(form.city) }}
+                    {{ form_row(form.zipCode) }}
+                    {{ form_row(form.tel) }}
+                    {{ form_row(form.mail) }}
+                    {{ form_row(form.birthDate) }}
+                    {{ form_row(form.birthCity) }}
+                    {{ form_row(form.submit) }}
+                    {{ form_row(form._token) }}
+                {{ form_end(form, {'render_rest': false}) }}
             </div>
         </div>
     </div>
