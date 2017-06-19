@@ -1,14 +1,10 @@
-authentication_login:
-    path:     /login
-    defaults: { _controller: AuthenticationBundle:Authentication:login }
-
 authentication_logout:
     path:     /logout
     defaults: { _controller: AuthenticationBundle:Authentication:logout }
 
 authentication_homepage:
     path:     /
-    defaults: { _controller: AuthenticationBundle:Authentication:index }
+    defaults: { _controller: AuthenticationBundle:Authentication:login }
 
 authentication_create:
     path:     /inscription

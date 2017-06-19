@@ -1,0 +1,13 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    <div class="row">
+        <div class="jumbotron col-md-12">
+            <span class="text-center"><h2>{{ 'user.myInfo'|trans }}</h2></span>
+            <div>
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

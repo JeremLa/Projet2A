@@ -25,6 +25,29 @@ class UserController extends Controller
     }
 
     /**
+     * @Rest\Post("/user/edit")
+     */
+    public function editUserAction(Request  $request)
+    {
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
+
+
+        $form->submit($request->request->all());
+
+
+        $user = $form->getData();
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        return $user;
+
+
+    }
+
+
+    /**
      * @Rest\View()
      * @Rest\Get("/users")
      */
