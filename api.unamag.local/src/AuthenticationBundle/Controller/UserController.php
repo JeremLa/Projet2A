@@ -45,7 +45,6 @@ class UserController extends Controller
          * Rzjouter les validateurs !!!
          */
 
-
         $userDb = $this->get('unamag.service.user')->findOneOr404($user->getId());
         $userDb = $serializer->deserialize($request->get('serializeObject'),User::class, 'json',  array('object_to_populate' => $userDb));
 
@@ -53,7 +52,7 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->flush();
 
-        return $userDb;
+        return $user;
 
 
     }

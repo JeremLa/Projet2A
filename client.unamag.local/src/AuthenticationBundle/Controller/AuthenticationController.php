@@ -50,7 +50,7 @@ class AuthenticationController extends Controller
 
             }
 
-            $user =  $this->cast($user,$response->body);
+            $user =  $this->get('unamag.service.user')->cast($user,$response->body);
 
             $this->connectUser($user);
             return $this->redirectToRoute('user_homepage');
@@ -72,7 +72,7 @@ class AuthenticationController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $url = $this->getParameter('api')['user']['create'];
             $response = APIRequest::post($url, [], http_build_query($request->get('user')));
-            $user =  $this->cast($user,$response->body);
+            $user =  $this->get('unamag.service.user')->cast($user,$response->body);
             $this->connectUser($user);
             return $this->redirectToRoute('user_homepage');
         }
@@ -85,40 +85,10 @@ class AuthenticationController extends Controller
     public function logoutAction()
     {
         $this->get('session')->clear();
-        return $this->redirectToRoute('authentication_homepage');
+        return $this->redirectToRoute('authentication_login');
     }
-
-    private function connectUser($user){
+    public function connectUser($user){
         $this->get('session')->set('User', $user);
     }
 
-    /**
-     * Class casting
-     *
-     * @param string|User $destination
-     * @param object $sourceObject
-     * @return object
-     */
-    private function cast($destination, $sourceObject)
-    {
-        if (is_string($destination)) {
-            $destination = new $destination();
-        }
-        $sourceReflection = new \ReflectionObject($sourceObject);
-        $destinationReflection = new \ReflectionObject($destination);
-        $sourceProperties = $sourceReflection->getProperties();
-        foreach ($sourceProperties as $sourceProperty) {
-            $sourceProperty->setAccessible(true);
-            $name = $sourceProperty->getName();
-            $value = $sourceProperty->getValue($sourceObject);
-            if ($destinationReflection->hasProperty($name)) {
-                $propDest = $destinationReflection->getProperty($name);
-                $propDest->setAccessible(true);
-                $propDest->setValue($destination,$value);
-            } else {
-                $destination->$name = $value;
-            }
-        }
-        return $destination;
-    }
 }

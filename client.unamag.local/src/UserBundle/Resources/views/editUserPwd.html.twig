@@ -1,0 +1,16 @@
+{% extends 'layout.html.twig' %}
+{% block content %}
+    <div class="row">
+        <div class="jumbotron col-md-12">
+            <span class="text-center"><h2>{{ 'user.password'|trans }}</h2></span>
+            <div>
+                {{ form_start(form, {'method': 'POST'}) }}
+                    {{ form_errors(form) }}
+                    {{ form_row(form.password) }}
+                    {{ form_row(form.submit) }}
+                    {{ form_row(form._token) }}
+                {{ form_end(form, {'render_rest': false}) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
