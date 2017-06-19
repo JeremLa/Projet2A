@@ -14,11 +14,11 @@ security:
             security: false
 
         main:
-            anonymous:
-            form_login:
-                login_path: authentication_login
-                check_path: authentication_login
+            anonymous: ~
+#            form_login:
+#                login_path: authentication_login
+#                check_path: authentication_login
 
-    access_control:
-      - { path: /auth/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-      - { path: ^/, roles: ROLE_ADMIN }
+#    access_control:
+#      - { path: /auth/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+#      - { path: ^/, roles: ROLE_ADMIN }

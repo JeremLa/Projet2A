@@ -4,7 +4,7 @@ authentication_logout:
 
 authentication_login:
     path:     /login
-    defaults: { _controller: AuthenticationBundle:Security:login }
+    defaults: { _controller: AuthenticationBundle:Authentication:login }
 
 authentication_create:
     path:     /inscription
