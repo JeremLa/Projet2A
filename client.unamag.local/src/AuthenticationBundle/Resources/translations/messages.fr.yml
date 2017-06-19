@@ -24,3 +24,12 @@ form:
     submit:
         label: Enregistrer
 
+auth:
+    error: Identifiant ou Mot de passe incorrect
+    connect: Se connecter
+    account: Créer un compte
+    disconnect: Se deconnecter
+    mail: Identifiant
+    password: Mot de passe
+
+welcome: Bienvenu dans l'appli cliente

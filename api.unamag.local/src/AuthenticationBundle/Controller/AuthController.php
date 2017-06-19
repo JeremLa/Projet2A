@@ -19,9 +19,9 @@ class AuthController extends Controller
     }
 
     /**
-     * @Rest\Post("/Auth")
+     * @Rest\View()
+     * @Rest\Post("/users/login")
      * @param Request $request
-     * @param UserPasswordEncoderInterface $encoder
      */
     public function  authenticateAction(Request $request)
     {
@@ -38,6 +38,6 @@ class AuthController extends Controller
             throw new HttpException(215, "Authentication error");
         }
 
-        return new JsonResponse("", 200);
+        return $user;
     }
 }
