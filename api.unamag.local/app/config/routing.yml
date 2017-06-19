@@ -4,4 +4,6 @@ user:
 authentication:
     type:     rest
     resource: "@AuthenticationBundle/Controller/AuthController.php"
-
+publication:
+    type:     rest
+    resource: "@PublicationBundle/Resources/config/routing.yml"

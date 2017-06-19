@@ -4,14 +4,56 @@ namespace PublicationBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Publication
+ *
+ * @ORM\Table(name="publication")
+ * @ORM\Entity(repositoryClass="PublicationBundle\Repository\PublicationRepository")
+ */
 class Publication
 {
-
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
     private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="title", type="string")
+     */
     private $title;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="count_by_year", type="integer")
+     */
     private $countByYear;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="picture", type="text")
+     */
     private $picture;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text")
+     */
     private $description;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="annual_cost", type="float")
+     */
     private $annualCost;
 
     /**
