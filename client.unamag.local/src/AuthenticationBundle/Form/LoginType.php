@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LoginType extends AbstractType
 {
@@ -38,6 +39,15 @@ class LoginType extends AbstractType
                 'label' => 'auth.connect',
                 'translation_domain' => 'messages'
             ])
+
         ;
+    }
+
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => 'AuthenticationBundle\Entity\User',
+            'validation_groups' => array('registration'),
+        ]);
     }
 }

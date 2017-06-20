@@ -17,8 +17,41 @@ class UserController extends Controller
 {
     public function indexAction()
     {
+//        VarDumper::dump($this->get('session')->get('User'));die;
         return $this->render('UserBundle:Default:index.html.twig');
     }
+
+
+    public function  editUserPasswordAction(Request $request)
+    {
+        /**
+         * @var $user User
+         * @var $serializer Serializer
+         */
+        $user = $this->get('session')->get('User');
+
+        if(!$user){
+            return $this->redirectToRoute('user_homepage');
+        }
+
+        $newPwd = new User();
+        $form = $this->createForm(UserType::class, $newPwd);
+        $form->handleRequest($request);
+        if($form->isSubmitted()) {
+            $newPwd = $form->getData();
+            $password = $this->get('unamag.service.user')->encodePassword($newPwd->getPassword());
+            $url = $this->getParameter('api')['user']['update'];
+            $serializer = $this->get('unamag.service.user')->getSerializer();
+            $response = APIRequest::post($url, [], ['serializeObject' => $serializer->serialize($user, 'json')]);
+            if($response->code == 200){
+                $user->setPassword($password);
+                return $this->redirectToRoute('user_homepage');
+            }
+        }
+        return $this->render('UserBundle::editUserPwd.html.twig',array('form' => $form->createView()));
+
+    }
+
 
     public function editUserAction(Request $request)
     {
@@ -43,22 +76,26 @@ class UserController extends Controller
             $userMod = $form->getData();
             $userMod->setPassword($user->getPassword());
             $url = $this->getParameter('api')['user']['update'];
-//            $request->get('user')[] = ['id' => $userMod->getId()];
-            $encoders = array(new XmlEncoder(), new JsonEncoder());
-            $normalizers = array(new ObjectNormalizer());
-
-            $serializer = new Serializer($normalizers, $encoders);
+            $serializer =  $this->get('unamag.service.user')->getSerializer();
 
 
 
             $response = APIRequest::post($url, [], ['serializeObject' => $serializer->serialize($userMod,'json')]);
-
-            VarDumper::dump($response);die;
+            if($response->code == 200){
+                $this->connectUser($userMod);
+                return $this->redirectToRoute('user_homepage');
+            }
+//            $user =  $this->get('unamag.service.user')->cast($user,$response->body);
+//            VarDumper::dump($this->get('session')->get('User'));die;
 
         }
 
 
         return $this->render('UserBundle::editUser.html.twig',array('form' => $form->createView()));
 
+    }
+
+    public function connectUser($user){
+        $this->get('session')->set('User', $user);
     }
 }
