@@ -5,6 +5,9 @@ namespace PublicationBundle\Controller;
 use PublicationBundle\Entity\Publication;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\VarDumper\VarDumper;
+use Unirest\Request as APIRequest;
 
 /**
  * Publication controller.
@@ -18,12 +21,13 @@ class PublicationController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
 
-        $publications = $em->getRepository('PublicationBundle:Publication')->findAll();
+        $url = $this->getParameter('api')[PubliConst::KEYPUBLICATION]['get_all'];
 
-        return $this->render('PublicationBundle\Resources\views\publication\index.html.twig', array(
-            'publications' => $publications,
+        $response = APIRequest::get($url, [], []);
+
+        return $this->render('PublicationBundle:publication:index.html.twig', array(
+            'publications' => $response->body,
         ));
     }
 
@@ -33,20 +37,24 @@ class PublicationController extends Controller
      */
     public function newAction(Request $request)
     {
+        /**
+         * @var $publication Publication
+         */
         $publication = new Publication();
         $form = $this->createForm('PublicationBundle\Form\PublicationType', $publication);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-//            $em = $this->getDoctrine()->getManager();
-//            $em->persist($publication);
-//            $em->flush();
 
-            return $this->redirectToRoute('publication_show', array('id' => $publication->getId()));
+            /** @var  $serializer Serializer*/
+            $serializer = $this->get('unamag.service.user')->getSerializer();
+            APIRequest::post($this->getParameter('api')[PubliConst::KEYPUBLICATION]['create'], ['Content-Type' => "application/json"], $serializer->serialize($publication, 'json'));
+
+            return $this->redirectToRoute('publication_index');
         }
 
-        return $this->render('publication/new.html.twig', array(
-            'publication' => $publication,
+        return $this->render('PublicationBundle:publication:new.html.twig', array(
+            PubliConst::KEYPUBLICATION => $publication,
             'form' => $form->createView(),
         ));
     }

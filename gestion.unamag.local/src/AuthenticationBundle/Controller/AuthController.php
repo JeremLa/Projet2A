@@ -16,8 +16,6 @@ class AuthController extends Controller
 {
     public function indexAction()
     {
-
-
         return $this->render('AuthenticationBundle:Default:welcome.html.twig');
     }
 

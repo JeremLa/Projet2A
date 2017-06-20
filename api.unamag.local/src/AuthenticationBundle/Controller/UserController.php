@@ -72,7 +72,7 @@ class UserController extends Controller
 
     /**
      * @Rest\View()
-     * @Rest\Post("/users/create")
+     * @Rest\Post("/users/new")
      */
     public function createUserAction(Request $request)
     {

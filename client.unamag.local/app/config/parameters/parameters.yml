@@ -4,6 +4,6 @@ parameters:
         user:
             get: "%api.url%/user/"
             get_all: "%api.url%/users"
-            create: "%api.url%/users/create"
+            create: "%api.url%/users/new"
             login: "%api.url%/users/login"
             update: "%api.url%/user/edit"
