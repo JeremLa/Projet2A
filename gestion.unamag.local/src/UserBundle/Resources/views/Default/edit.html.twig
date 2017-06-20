@@ -1,5 +1,8 @@
 {% extends 'layout.html.twig' %}
-
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/user/css/style.css') }}">
+{% endblock %}
 {% block content %}
 <div class="row">
     <div class="col-md-12 col-sd-12"></div>
