@@ -109,7 +109,7 @@ class User
         return $this->id;
     }
 
-    public function  setId(int $id){
+    public function  setId( $id){
         $this->id = $id;
     }
 
@@ -124,7 +124,7 @@ class User
     /**
      * @param string $firstname
      */
-    public function setFirstname(string $firstname)
+    public function setFirstname( $firstname)
     {
         $this->firstname = $firstname;
     }
@@ -140,7 +140,7 @@ class User
     /**
      * @param string $lastname
      */
-    public function setLastname(string $lastname)
+    public function setLastname( $lastname)
     {
         $this->lastname = $lastname;
     }
@@ -172,7 +172,7 @@ class User
     /**
      * @param string $city
      */
-    public function setCity(string $city)
+    public function setCity( $city)
     {
         $this->city = $city;
     }
@@ -188,7 +188,7 @@ class User
     /**
      * @param int $zipCode
      */
-    public function setZipCode(int $zipCode)
+    public function setZipCode($zipCode)
     {
         $this->zipCode = $zipCode;
     }
@@ -220,7 +220,7 @@ class User
     /**
      * @param string $mail
      */
-    public function setMail(string $mail)
+    public function setMail($mail)
     {
         $this->mail = $mail;
     }
@@ -236,7 +236,7 @@ class User
     /**
      * @param string $password
      */
-    public function setPassword(string $password)
+    public function setPassword($password)
     {
         $this->password = $password;
     }
@@ -252,7 +252,7 @@ class User
     /**
      * @param string $birthCity
      */
-    public function setBirthCity(string $birthCity)
+    public function setBirthCity($birthCity)
     {
         $this->birthCity = $birthCity;
     }
@@ -268,7 +268,7 @@ class User
     /**
      * @param string $birthDate
      */
-    public function setBirthDate(string $birthDate)
+    public function setBirthDate($birthDate)
     {
         $this->birthDate = $birthDate;
     }

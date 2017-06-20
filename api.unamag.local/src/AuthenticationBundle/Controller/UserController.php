@@ -21,14 +21,18 @@ class UserController extends Controller
 {
 
     /**
+     * @Rest\View()
      * @Rest\Get("/user/{id}")
      */
     public function getUserAction($id)
     {
-        return $this->get('unamag.service.user')->findOneOr404($id);
+        $user =$this->get('unamag.service.user')->findOneOr404($id);
+//     var_dump($user);die;
+        return $user;
     }
 
     /**
+     * @Rest\View()
      * @Rest\Post("/user/edit")
      */
     public function editUserAction(Request  $request)
@@ -39,7 +43,8 @@ class UserController extends Controller
          */
         $serializer = $this->get('unamag.service.user')->getSerializer();
         $user = $serializer->deserialize($request->get('serializeObject'),User::class, 'json');
-        //var_dump($serializer->deserialize($request->get('serializeObject'),User::class, 'json'));die;
+
+//        var_dump($serializer->deserialize($request->get('serializeObject'),User::class, 'json'));die;
 
         /**
          * Rzjouter les validateurs !!!
@@ -66,7 +71,9 @@ class UserController extends Controller
     {
         return $this->get('doctrine.orm.entity_manager')
             ->getRepository('AuthenticationBundle:User')
-            ->findAll();
+            ->findBy(['level'=>2],['id'=> 'ASC' ]);
+//            ->orderBy('id', 'ASC');
+//            ->findAll();
     }
 
     /**
