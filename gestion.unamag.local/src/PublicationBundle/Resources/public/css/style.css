@@ -1,0 +1,24 @@
+.publication-card{
+    height: 383px;
+    margin-bottom: 15px;
+}
+
+.publication-card a{
+    text-decoration: none;
+}
+
+.publication-card .thumbnail{
+    height: 383px;
+    background-color: #F1EAF2;
+}
+
+.publication-card img{
+    height: 260px;
+}
+
+.jumbotron p{
+    font-size: 17px;
+}
+.jumbotron img{
+    margin-top: 20px;
+}

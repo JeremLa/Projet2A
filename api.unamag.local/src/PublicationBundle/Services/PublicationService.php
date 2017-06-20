@@ -18,7 +18,7 @@ class PublicationService
         $publication = $this->em->getRepository('PublicationBundle:Publication')->findOneBy(['id' => $id]);
 
         if(!$publication){
-            throw new NotFoundHttpException('Publication not found');
+            throw new NotFoundHttpException('Publication not found for ID : '.$id);
         }
 
         return $publication;

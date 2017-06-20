@@ -46,6 +46,13 @@ class PublicationController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+            $file = $publication->getPicture();
+            $file_real_path = $file->getRealPath();
+            $file_binary = fread(fopen($file_real_path, "r"), filesize($file_real_path));
+            $img_str = base64_encode($file_binary);
+
+            $publication->setPicture($img_str);
+
             /** @var  $serializer Serializer*/
             $serializer = $this->get('unamag.service.user')->getSerializer();
             APIRequest::post($this->getParameter('api')[PubliConst::KEYPUBLICATION]['create'], ['Content-Type' => "application/json"], $serializer->serialize($publication, 'json'));
@@ -63,13 +70,13 @@ class PublicationController extends Controller
      * Finds and displays a publication entity.
      *
      */
-    public function showAction(Publication $publication)
+    public function showAction($id)
     {
-        $deleteForm = $this->createDeleteForm($publication);
+        $url = $this->getParameter('api')[PubliConst::KEYPUBLICATION]['get'];
+        $publication = APIRequest::get($url, [], ['publicationId' => $id]);
 
-        return $this->render('publication/show.html.twig', array(
-            'publication' => $publication,
-            'delete_form' => $deleteForm->createView(),
+        return $this->render('PublicationBundle:publication:show.html.twig', array(
+            'publication' => $publication->body,
         ));
     }
 
@@ -79,54 +86,20 @@ class PublicationController extends Controller
      */
     public function editAction(Request $request, Publication $publication)
     {
-        $deleteForm = $this->createDeleteForm($publication);
         $editForm = $this->createForm('PublicationBundle\Form\PublicationType', $publication);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $serializer = $this->get('unamag.service.user')->getSerializer();
+            $url = $this->getParameter('api')[PubliConst::KEYPUBLICATION]['update'];
+            APIRequest::post($url, ['Content-Type' => "application/json"], $serializer->serialize($publication, 'json'));
 
-            return $this->redirectToRoute('publication_edit', array('id' => $publication->getId()));
+            return $this->redirectToRoute('publication_index');
         }
 
         return $this->render('PublicationBundle:publication:edit.html.twig', array(
             'publication' => $publication,
             'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
-    }
-
-    /**
-     * Deletes a publication entity.
-     *
-     */
-    public function deleteAction(Request $request, Publication $publication)
-    {
-        $form = $this->createDeleteForm($publication);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($publication);
-            $em->flush();
-        }
-
-        return $this->redirectToRoute('publication_index');
-    }
-
-    /**
-     * Creates a form to delete a publication entity.
-     *
-     * @param Publication $publication The publication entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm(Publication $publication)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('publication_delete', array('id' => $publication->getId())))
-            ->setMethod('DELETE')
-            ->getForm()
-        ;
     }
 }

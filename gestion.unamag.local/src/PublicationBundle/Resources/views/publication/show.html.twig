@@ -1,48 +1,74 @@
-{% extends 'base.html.twig' %}
+{% extends '@Publication/publicationLayout.html.twig' %}
 
-{% block body %}
-    <h1>Publication</h1>
+{% block content %}
 
-    <table>
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ publication.id }}</td>
-            </tr>
-            <tr>
-                <th>Title</th>
-                <td>{{ publication.title }}</td>
-            </tr>
-            <tr>
-                <th>Countbyyear</th>
-                <td>{{ publication.countByYear }}</td>
-            </tr>
-            <tr>
-                <th>Picture</th>
-                <td>{{ publication.picture }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ publication.description }}</td>
-            </tr>
-            <tr>
-                <th>Annualcost</th>
-                <td>{{ publication.annualCost }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="row">
+        <div class="jumbotron">
+            <div class="container">
+                <div class="col-md-12 text-right">
+                    <span><strong>{{ 'publication.annualPrice'|trans }}</strong> : {{ publication.annualCost ~ ' ' ~ 'devise.symbol'|trans }}</span>
+                    |
+                    <span><strong>{{ 'publication.countByYear'|trans }}</strong> : {{ publication.countByYear }}</span>
+                </div>
+            </div>
+            <div class="container">
+                <div class="col-md-4 text-center">
+                    <img src="data:image/jpeg;base64,{{ publication.picture }}">
+                </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('publication_index') }}">Back to the list</a>
-        </li>
-        <li>
-            <a href="{{ path('publication_edit', { 'id': publication.id }) }}">Edit</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+                <div class="col-md-8">
+                    <h1>{{ publication.title|capitalize }}</h1>
+                    <p class="text-justify">{{ publication.description }}</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <a href="{{ path('publication_index') }}" class="btn btn-success">Liste des publications</a>
+                    <a href="{{ path('publication_edit', {'id':publication.id}) }}" class="btn btn-success">Editer la publication</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {#<table>#}
+        {#<tbody>#}
+            {#<tr>#}
+                {#<th>Id</th>#}
+                {#<td>{{ publication.id }}</td>#}
+            {#</tr>#}
+            {#<tr>#}
+                {#<th>Title</th>#}
+                {#<td>{{ publication.title }}</td>#}
+            {#</tr>#}
+            {#<tr>#}
+                {#<th>Countbyyear</th>#}
+                {#<td>{{ publication.countByYear }}</td>#}
+            {#</tr>#}
+            {#<tr>#}
+                {#<th>Picture</th>#}
+                {#<td>{{ publication.picture }}</td>#}
+                {#<td><img src="data:image/jpeg;base64,{{ publication.picture }}"></td>#}
+
+            {#</tr>#}
+            {#<tr>#}
+                {#<th>Description</th>#}
+                {#<td>{{ publication.description }}</td>#}
+            {#</tr>#}
+            {#<tr>#}
+                {#<th>Annualcost</th>#}
+                {#<td>{{ publication.annualCost }}</td>#}
+            {#</tr>#}
+        {#</tbody>#}
+    {#</table>#}
+
+    {#<ul>#}
+        {#<li>#}
+            {#<a href="{{ path('publication_index') }}">Back to the list</a>#}
+        {#</li>#}
+        {#<li>#}
+            {#<a href="{{ path('publication_edit', { 'id': publication.id }) }}">Edit</a>#}
+        {#</li>#}
+    {#</ul>#}
 {% endblock %}

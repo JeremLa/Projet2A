@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use Symfony\Component\VarDumper\VarDumper;
 
 /**
  * Publication controller.
@@ -61,11 +62,13 @@ class PublicationController extends Controller
      */
     public function editAction(Request $request)
     {
-        $publication = $this->get('unamag.service.publication')->findOneOr404($request->get('publicationId'));
+        $publication = $this->get('unamag.service.publication')->findOneOr404($request->get('id'));
         $editForm = $this->createForm('PublicationBundle\Form\PublicationType', $publication);
         $editForm->submit($request->request->all());
 
-        if ($editForm->isSubmitted() && $editForm->isValid()) {
+        VarDumper::dump($publication);die;
+
+        if ($editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
             return $publication;

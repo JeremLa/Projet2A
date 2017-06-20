@@ -14,9 +14,9 @@ publication_new:
     methods:  [GET, POST]
 
 publication_edit:
-    path:     /{id}/edit
+    path:     /update
     defaults: { _controller: "PublicationBundle:Publication:edit" }
-    methods:  [GET, POST]
+    methods:  [POST, PUT]
 
 publication_delete:
     path:     /{id}/delete

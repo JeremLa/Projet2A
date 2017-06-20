@@ -4,7 +4,7 @@ publication_index:
     methods:  GET
 
 publication_show:
-    path:     /{id}/show
+    path:     /show/{id}
     defaults: { _controller: "PublicationBundle:Publication:show" }
     methods:  GET
 
@@ -14,11 +14,6 @@ publication_new:
     methods:  [GET, POST]
 
 publication_edit:
-    path:     /{id}/edit
+    path:     /update/{id}
     defaults: { _controller: "PublicationBundle:Publication:edit" }
     methods:  [GET, POST]
-
-publication_delete:
-    path:     /{id}/delete
-    defaults: { _controller: "PublicationBundle:Publication:delete" }
-    methods:  DELETE
