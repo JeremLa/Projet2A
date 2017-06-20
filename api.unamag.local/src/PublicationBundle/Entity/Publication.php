@@ -146,20 +146,5 @@ class Publication
     {
         $this->annualCost = $annualCost;
     }
-
-    public function toArray($withId = false){
-        $return = [];
-        if($withId){
-            $return['id'] = $this->id;
-        }
-
-        $return['title'] = $this->title;
-        $return['countByYear'] = $this->countByYear;
-        $return['picture'] = $this->picture;
-        $return['description'] = $this->description;
-        $return['annualCost']  = $this->annualCost;
-
-        return $return;
-    }
 }
 

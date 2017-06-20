@@ -1,0 +1,49 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+
+    <h1>Publications list</h1>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Title</th>
+                <th>Countbyyear</th>
+                <th>Picture</th>
+                <th>Description</th>
+                <th>Annualcost</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for publication in publications %}
+            <tr>
+                {#<td><a href="{{ path('publication_show', { 'id': publication.id }) }}">{{ publication.id }}</a></td>#}
+                <td>{{ loop.index }}</td>
+                <td>{{ publication.title }}</td>
+                <td>{{ publication.countByYear }}</td>
+                <td>{{ publication.picture }}</td>
+                <td>{{ publication.description }}</td>
+                <td>{{ publication.annualCost }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('publication_show', { 'id': publication.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('publication_edit', { 'id': publication.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('publication_new') }}">Create a new publication</a>
+        </li>
+    </ul>
+{% endblock %}

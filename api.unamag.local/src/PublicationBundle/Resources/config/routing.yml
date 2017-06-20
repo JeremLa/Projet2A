@@ -1,3 +1,4 @@
 publication_publication:
     resource: "@PublicationBundle/Resources/config/routing/publication.yml"
     prefix:   /publication
+
