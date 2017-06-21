@@ -1,0 +1,5 @@
+publication_show:
+    path:     /show/{id}
+    defaults: { _controller: "PublicationBundle:Publication:show" }
+    methods:  GET
+

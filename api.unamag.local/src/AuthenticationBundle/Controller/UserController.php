@@ -71,9 +71,7 @@ class UserController extends Controller
     {
         return $this->get('doctrine.orm.entity_manager')
             ->getRepository('AuthenticationBundle:User')
-            ->findBy(['level'=>2],['id'=> 'ASC' ]);
-//            ->orderBy('id', 'ASC');
-//            ->findAll();
+            ->findAll();
     }
 
     /**

@@ -1,7 +1,15 @@
+publication:
+    resource: "@PublicationBundle/Resources/config/routing.yml"
+    prefix:   /
+
 user:
     resource: "@UserBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /users
 
 authentication:
     resource: "@AuthenticationBundle/Resources/config/routing.yml"
     prefix:   /auth
+
+test:
+    resource: "@PublicationBundle/Resources/config/routing.yml"
+    prefix:   /
