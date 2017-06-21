@@ -1,24 +1,19 @@
-{% extends 'layout.html.twig' %}
-{% block title %} Connexion {% endblock %}
-{% block content %}
-    <div class="row">
-        <div class="jumbotron col-md-12">
-            <span class="text-center"><h2>{{ 'auth.connect'|trans }}</h2></span>
-            {% if errors is defined %}
-                {% for error in errors %}
-                    <span class="alert alert-danger col-md-offset-3 col-md-6">
-                    {{ error|trans }}
-                        </span>
-                {% endfor %}
-            {% endif %}
-            <div>
+<header class="w3-container w3-teal">
+    <span id="close-login" class="w3-button w3-display-topright">&times;</span>
+    <h2>{{ 'auth.connect'|trans }}</h2>
+</header>
 
-                {{ form_start(form, { 'attr': {'class': 'col-md-offset-3 col-md-6'} }) }}
-                {{ form_widget(form) }}
-                {{ form_end(form) }}
-                <a href="inscription">{{ 'auth.account'|trans }}</a>
-            </div>
-        </div>
-    </div>
+<div class="w3-container">
+    {% if errors is defined %}
+        {% for error in errors %}
+            <span class="alert alert-danger col-md-offset-3 col-md-6">
+                {{ error|trans }}
+            </span>
+        {% endfor %}
+    {% endif %}
 
-{% endblock %}
+    {{ form_start(login_form, { 'attr': {'class': 'w3-container'} }) }}
+    {{ form_widget(login_form) }}
+    <p><button type="submit" class="w3-btn w3-blue-grey">Se connecter</button></p>
+    {{ form_end(login_form) }}
+</div>

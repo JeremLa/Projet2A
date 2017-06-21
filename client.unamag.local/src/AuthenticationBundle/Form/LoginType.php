@@ -26,19 +26,25 @@ class LoginType extends AbstractType
                 'trim' => true,
                 'label' => 'form.mail.label',
                 'translation_domain' => 'messages',
-                'invalid_message' => 'le format du mail est invalide.'
+                'invalid_message' => 'le format du mail est invalide.',
+                'label_attr' => ['class' => 'w3-text-teal'],
+                'attr' => ['class' => 'w3-input w3-border w3-light-grey']
             ])
             ->add('password', PasswordType::class, [
                 'invalid_message' => 'Les champs mot de passe doitvent être identique.',
                 'required' => true,
                 'label' => 'form.password.label1',
-                'translation_domain' => 'messages'
+                'translation_domain' => 'messages',
+                'label_attr' => ['class' => 'w3-text-teal'],
+                'attr' => ['class' => 'w3-input w3-border w3-light-grey']
+
             ])
 
-            ->add('submit', SubmitType::class, [
-                'label' => 'auth.connect',
-                'translation_domain' => 'messages'
-            ])
+//            ->add('submit', SubmitType::class, [
+//                'label' => 'auth.connect',
+//                'translation_domain' => 'messages',
+//                'attr' => ['class' => 'w3-btn w3-blue-grey']
+//            ])
 
         ;
     }

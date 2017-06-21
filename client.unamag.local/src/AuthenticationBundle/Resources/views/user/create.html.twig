@@ -1,23 +1,40 @@
-{% extends 'layout.html.twig' %}
-{% block title %} Connexion {% endblock %}
-{% block content %}
-    <div class="row">
-        <div class="jumbotron col-md-12">
-            <span class="text-center"><h2>{{ 'auth.account'|trans }}</h2></span>
-            {% if errors is defined %}
-                {% for error in errors %}
-                    <span class="alert alert-danger col-md-offset-3 col-md-6">
+{#{% block content %}#}
+    {#<div class="row">#}
+        {#<div class="jumbotron col-md-12">#}
+            {#<span class="text-center"><h2>{{ 'auth.account'|trans }}</h2></span>#}
+            {#{% if errors is defined %}#}
+                {#{% for error in errors %}#}
+                    {#<span class="alert alert-danger col-md-offset-3 col-md-6">#}
+                    {#{{ error|trans }}#}
+                        {#</span>#}
+                {#{% endfor %}#}
+            {#{% endif %}#}
+            {#<div>#}
+
+                {#{{ form_start(create_form, { 'attr': {'class': 'col-md-offset-3 col-md-6'} }) }}#}
+                {#{{ form_widget(create_form) }}#}
+                {#{{ form_end(create_form) }}#}
+            {#</div>#}
+        {#</div>#}
+    {#</div>#}
+{#{% endblock %}#}
+
+<header class="w3-container w3-teal">
+    <span id="close-register" class="w3-button w3-display-topright">&times;</span>
+    <h2>{{ 'auth.connect'|trans }}</h2>
+</header>
+
+<div class="w3-container">
+    {% if errors is defined %}
+        {% for error in errors %}
+            <span class="alert alert-danger col-md-offset-3 col-md-6">
                     {{ error|trans }}
-                        </span>
-                {% endfor %}
-            {% endif %}
-            <div>
+                </span>
+        {% endfor %}
+    {% endif %}
 
-                {{ form_start(form, { 'attr': {'class': 'col-md-offset-3 col-md-6'} }) }}
-                {{ form_widget(form) }}
-                {{ form_end(form) }}
-            </div>
-        </div>
-    </div>
-
-{% endblock %}
+    {{ form_start(create_form, { 'attr': {'class': 'w3-container'} }) }}
+    {{ form_widget(create_form) }}
+    <p><button type="submit" class="w3-btn w3-blue-grey">Enregistrer</button></p>
+    {{ form_end(create_form) }}
+</div>

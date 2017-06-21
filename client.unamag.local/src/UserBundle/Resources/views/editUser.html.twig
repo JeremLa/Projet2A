@@ -1,9 +1,10 @@
-{% extends 'layout.html.twig' %}
+{% extends '@User/userLayout.html.twig' %}
 {% block content %}
-    <div class="row">
-        <div class="jumbotron col-md-12">
-            <span class="text-center"><h2>{{ 'user.myInfo'|trans }}</h2></span>
-            <div>
+    <div class="w3-content w3-container w3-padding-64" id="about">
+        <div class="w3-container w3-teal">
+            <h2>{{ 'user.myInfo'|trans }}</h2>
+        </div>
+
                 {{ form_start(form, {'method': 'POST'}) }}
                     {{ form_errors(form) }}
                     {{ form_row(form.firstName) }}
@@ -15,10 +16,8 @@
                     {{ form_row(form.mail) }}
                     {{ form_row(form.birthDate) }}
                     {{ form_row(form.birthCity) }}
-                    {{ form_row(form.submit) }}
                     {{ form_row(form._token) }}
+                    <p><button type="submit" class="w3-btn w3-blue-grey">Enregistrer</button></p>
                 {{ form_end(form, {'render_rest': false}) }}
-            </div>
-        </div>
     </div>
 {% endblock %}

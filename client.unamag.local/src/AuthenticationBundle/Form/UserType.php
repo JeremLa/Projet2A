@@ -23,25 +23,33 @@ class UserType extends AbstractType
                 'required' => true,
                 'trim' => true,
                 'label' => 'form.firstName.label',
-                'translation_domain' => 'messages'
+                'translation_domain' => 'messages',
+                'label_attr' => ['class' => 'w3-text-teal'],
+                'attr' => ['class' => 'w3-input w3-border w3-light-grey']
             ])
             ->add('lastName', TextType::class, [
                 'required' => true,
                 'trim' => true,
                 'label' => 'form.lastName.label',
-                'translation_domain' => 'messages'
+                'translation_domain' => 'messages',
+                'label_attr' => ['class' => 'w3-text-teal'],
+                'attr' => ['class' => 'w3-input w3-border w3-light-grey']
             ])
             ->add('adress', TextType::class, [
                 'required' => true,
                 'trim' => true,
                 'label' => 'form.adress.label',
-                'translation_domain' => 'messages'
+                'translation_domain' => 'messages',
+                'label_attr' => ['class' => 'w3-text-teal'],
+                'attr' => ['class' => 'w3-input w3-border w3-light-grey']
             ])
             ->add('city', TextType::class, [
                 'required' => true,
                 'trim' => true,
                 'label' => 'form.city.label',
-                'translation_domain' => 'messages'
+                'translation_domain' => 'messages',
+                'label_attr' => ['class' => 'w3-text-teal'],
+                'attr' => ['class' => 'w3-input w3-border w3-light-grey']
             ])
             ->add('zipCode', IntegerType::class, [
                 'required' => true,
@@ -49,46 +57,62 @@ class UserType extends AbstractType
                 'label' => 'form.zipcode.label',
                 'translation_domain' => 'messages',
                 'invalid_message' => 'le format du zipcode n\'est pas correcte.',
+                'label_attr' => ['class' => 'w3-text-teal'],
+                'attr' => ['class' => 'w3-input w3-border w3-light-grey']
             ])
             ->add('tel', TextType::class, [
                 'required' => true,
                 'trim' => true,
                 'label' => 'form.tel.label',
-                'translation_domain' => 'messages'
+                'translation_domain' => 'messages',
+                'label_attr' => ['class' => 'w3-text-teal'],
+                'attr' => ['class' => 'w3-input w3-border w3-light-grey']
             ])
             ->add('mail', EmailType::class, [
                 'required' => true,
                 'trim' => true,
                 'label' => 'form.mail.label',
                 'translation_domain' => 'messages',
+                'label_attr' => ['class' => 'w3-text-teal'],
+                'attr' => ['class' => 'w3-input w3-border w3-light-grey']
             ])
             ->add('password', RepeatedType::class, [
                 'type' => PasswordType::class,
                 'invalid_message' => 'Les champs mot de passe doitvent être identique.',
                 'options' => array('attr' => array('class' => 'password-field')),
                 'required' => true,
-                'first_options'  => array('label' => 'form.password.label1'),
-                'second_options' => array('label' => 'form.password.label2'),
-                'translation_domain' => 'messages'
+                'first_options'  => [
+                    'label' => 'form.password.label1',
+                    'label_attr' => ['class' => 'w3-text-teal'],
+                    'attr' => ['class' => 'w3-input w3-border w3-light-grey']
+                    ],
+                'second_options' => [
+                    'label' => 'form.password.label2',
+                    'label_attr' => ['class' => 'w3-text-teal'],
+                    'attr' => ['class' => 'w3-input w3-border w3-light-grey']
+                    ],
+                'translation_domain' => 'messages',
             ])
             ->add('birthDate', TextType::class, [
                 'required' => true,
                 'label' => 'form.birthDate.label',
                 'translation_domain' => 'messages',
+                'label_attr' => ['class' => 'w3-text-teal'],
+                'attr' => ['class' => 'w3-input w3-border w3-light-grey']
             ])
             ->add('birthCity', TextType::class, [
                 'required' => true,
                 'trim' => true,
                 'label' => 'form.birthCity.label',
-                'translation_domain' => 'messages'
+                'translation_domain' => 'messages',
+                'label_attr' => ['class' => 'w3-text-teal'],
+                'attr' => ['class' => 'w3-input w3-border w3-light-grey']
             ])
             ->add('from', HiddenType::class, [
                 'data' => 'client',
-                'mapped' => false
-            ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'form.submit.label',
-                'translation_domain' => 'messages'
+                'mapped' => false,
+                'label_attr' => ['class' => 'w3-text-teal'],
+                'attr' => ['class' => 'w3-input w3-border w3-light-grey']
             ])
         ;
     }

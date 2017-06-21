@@ -53,7 +53,7 @@ class AuthenticationController extends Controller
             $user =  $this->get('unamag.service.user')->cast($user,$response->body);
 
             $this->connectUser($user);
-            return $this->redirectToRoute('user_homepage');
+            return $this->redirectToRoute('user_get');
         }
 
         return $this->render('AuthenticationBundle:user:login.html.twig', array(
@@ -85,7 +85,7 @@ class AuthenticationController extends Controller
     public function logoutAction()
     {
         $this->get('session')->clear();
-        return $this->redirectToRoute('authentication_login');
+        return $this->redirectToRoute('user_homepage');
     }
     public function connectUser($user){
         $this->get('session')->set('User', $user);

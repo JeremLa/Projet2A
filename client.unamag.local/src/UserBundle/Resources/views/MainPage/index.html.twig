@@ -1,0 +1,27 @@
+{% extends '@User/userLayout.html.twig' %}
+{% block content %}
+    <div class="bgimg-1 w3-display-container w3-opacity-min" id="home">
+        <div class="w3-display-middle w3-black w3-padding-large" style="white-space:nowrap;">
+            <div class="w3-center w3-padding-large w3-animate-opacity">
+                <h1 class="w3-xxxlarge">UNAMAG</h1>
+                <p class="w3-small">Votre manager de magazine</p>
+            </div>
+            <div class="w3-padding-large w3-xlarge">
+                <button id="open-login" class="w3-btn w3-white w3-medium w3-hover-blue">se connecter</button>
+                <button id="open-register" class="w3-btn w3-white w3-medium w3-hover-green">s'enregistrer</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="modal-login" class="w3-modal">
+        <div class="w3-modal-content">
+            {% include '@Authentication/user/login.html.twig' %}
+        </div>
+    </div>
+
+    <div id="modal-register" class="w3-modal">
+        <div class="w3-modal-content">
+            {% include '@Authentication/user/create.html.twig' %}
+        </div>
+    </div>
+{% endblock %}

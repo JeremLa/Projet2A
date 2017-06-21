@@ -3,6 +3,7 @@
 namespace UserBundle\Controller;
 
 use AuthenticationBundle\Entity\User;
+use AuthenticationBundle\Form\LoginType;
 use AuthenticationBundle\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,8 +18,22 @@ class UserController extends Controller
 {
     public function indexAction()
     {
-//        VarDumper::dump($this->get('session')->get('User'));die;
-        return $this->render('UserBundle:Default:index.html.twig');
+        $userLogin = new User();
+        $loginForm = $this->createForm(LoginType::class, $userLogin, [
+            'action' => $this->generateUrl('authentication_login'),
+            'method' => 'POST',
+        ]);
+
+        $userCreate = new User();
+        $createForm = $this->createForm(UserType::class, $userCreate, [
+            'action' => $this->generateUrl('authentication_create'),
+            'method' => 'POST',
+        ]);
+
+        return $this->render('UserBundle:MainPage:index.html.twig', [
+            'login_form' => $loginForm->createView(),
+            'create_form' => $createForm->createView()
+        ]);
     }
 
 
@@ -60,8 +75,8 @@ class UserController extends Controller
          * @var $userMod User
          */
 
-
         $user = $this->get('session')->get('User');
+        $this->getUser();
 
         if(!$user){
             return $this->redirectToRoute('user_homepage');
@@ -69,7 +84,6 @@ class UserController extends Controller
 
         $userMod = clone $user;
 
-//        VarDumper::dump($user);die;
         $form = $this->createForm(UserType::class, $userMod);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
@@ -83,11 +97,8 @@ class UserController extends Controller
             $response = APIRequest::post($url, [], ['serializeObject' => $serializer->serialize($userMod,'json')]);
             if($response->code == 200){
                 $this->connectUser($userMod);
-                return $this->redirectToRoute('user_homepage');
+                return $this->redirectToRoute('user_get');
             }
-//            $user =  $this->get('unamag.service.user')->cast($user,$response->body);
-//            VarDumper::dump($this->get('session')->get('User'));die;
-
         }
 
 
