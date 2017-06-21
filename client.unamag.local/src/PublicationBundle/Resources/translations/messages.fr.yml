@@ -1,0 +1,6 @@
+devise:
+    name: euro
+    symbol: €
+publication:
+    annualPrice: Prix annuel
+    countByYear: Nombre de parution annuel

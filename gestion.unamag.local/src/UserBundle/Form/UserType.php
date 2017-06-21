@@ -23,7 +23,7 @@ class UserType extends AbstractType
             ->add('firstName', TextType::class, [
                 'required' => true,
                 'trim' => true,
-                'label' => 'form.firstName.label',
+                'label' => 'user.firstName.label',
                 'translation_domain' => 'messages',
                 'attr' => [
                     'class' => 'form-control'
@@ -32,7 +32,7 @@ class UserType extends AbstractType
             ->add('lastName', TextType::class, [
                 'required' => true,
                 'trim' => true,
-                'label' => 'form.lastName.label',
+                'label' => 'user.lastName.label',
                 'translation_domain' => 'messages',
                 'attr' => [
                     'class' => 'form-control'
@@ -41,7 +41,7 @@ class UserType extends AbstractType
             ->add('adress', TextareaType::class, [
                 'required' => true,
                 'trim' => true,
-                'label' => 'form.adress.label',
+                'label' => 'user.adress.label',
                 'translation_domain' => 'messages',
                 'attr' => [
                     'class' => 'form-control'
@@ -50,7 +50,7 @@ class UserType extends AbstractType
             ->add('city', TextType::class, [
                 'required' => true,
                 'trim' => true,
-                'label' => 'form.city.label',
+                'label' => 'user.city.label',
                 'translation_domain' => 'messages',
                 'attr' => [
                     'class' => 'form-control'
@@ -59,7 +59,7 @@ class UserType extends AbstractType
             ->add('zipCode', IntegerType::class, [
                 'required' => true,
                 'trim' => true,
-                'label' => 'form.zipcode.label',
+                'label' => 'user.zipcode.label',
                 'translation_domain' => 'messages',
                 'invalid_message' => 'le format du zipcode n\'est pas correcte.',
                 'attr' => [
@@ -69,7 +69,7 @@ class UserType extends AbstractType
             ->add('tel', TextType::class, [
                 'required' => true,
                 'trim' => true,
-                'label' => 'form.tel.label',
+                'label' => 'user.tel.label',
                 'translation_domain' => 'messages',
                 'attr' => [
                     'class' => 'form-control'
@@ -78,7 +78,7 @@ class UserType extends AbstractType
             ->add('mail', EmailType::class, [
                 'required' => true,
                 'trim' => true,
-                'label' => 'form.mail.label',
+                'label' => 'user.mail.label',
                 'translation_domain' => 'messages',
                 'attr' => [
                     'class' => 'form-control'
@@ -89,14 +89,14 @@ class UserType extends AbstractType
                 'invalid_message' => 'Les champs mot de passe doitvent être identique.',
                 'options' => array('attr' => array('class' => 'password-field form-control')),
                 'required' => true,
-                'first_options'  => array('label' => 'form.password.label1'),
-                'second_options' => array('label' => 'form.password.label2'),
+                'first_options'  => array('label' => 'user.password.label1'),
+                'second_options' => array('label' => 'user.password.label2'),
                 'translation_domain' => 'messages',
 
             ])
             ->add('birthDate', TextType::class, [
                 'required' => true,
-                'label' => 'form.birthDate.label',
+                'label' => 'user.birthDate.label',
                 'translation_domain' => 'messages',
                 'attr' => [
                     'class' => 'form-control'
@@ -105,7 +105,7 @@ class UserType extends AbstractType
             ->add('birthCity', TextType::class, [
                 'required' => true,
                 'trim' => true,
-                'label' => 'form.birthCity.label',
+                'label' => 'user.birthCity.label',
                 'translation_domain' => 'messages',
                 'attr' => [
                     'class' => 'form-control'
@@ -119,10 +119,10 @@ class UserType extends AbstractType
                 'mapped' => false,
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'form.submit.label',
+                'label' => 'user.submit.label',
                 'translation_domain' => 'messages',
                 'attr' => [
-                    'class' => 'btn btn-default'
+                    'class' => 'btn btn-success'
                 ]
             ])
         ;

@@ -3,3 +3,7 @@ form > div > ul{
     background-color: #f2dede;
 
 }
+
+ul{
+    list-style-type:none;
+}

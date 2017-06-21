@@ -1,0 +1,32 @@
+{% extends '@Publication/publicationLayout.html.twig' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="jumbotron">
+            <div class="container">
+                <div class="col-md-12 text-right">
+                    <span><strong>{{ 'publication.annualPrice'|trans }}</strong> : {{ publication.annualCost ~ ' ' ~ 'devise.symbol'|trans }}</span>
+                    |
+                    <span><strong>{{ 'publication.countByYear'|trans }}</strong> : {{ publication.countByYear }}</span>
+                </div>
+            </div>
+            <div class="container">
+                <div class="col-md-4 text-center">
+                    <img src="data:image/jpeg;base64,{{ publication.picture }}">
+                </div>
+
+                <div class="col-md-8">
+                    <h1>{{ publication.title|capitalize }}</h1>
+                    <p class="text-justify">{{ publication.description }}</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <a href="{{ path('publication_index') }}" class="btn btn-primary">Liste des publications</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

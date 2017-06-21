@@ -25,7 +25,6 @@ class UserController extends Controller
         $url = $this->getParameter('api')['user']['get_all'];
         $response = APIRequest::get($url);
 
-//        VarDumper::dump($response);die;
         return $this->render('UserBundle:default:index.html.twig',array('users' => $response->body));
     }
 
@@ -34,7 +33,6 @@ class UserController extends Controller
         /** ici on recupere un utilisateur */
         $url = $this->getParameter('api')['user']['get'].$id;
         $response = APIRequest::get($url);
-//        VarDumper::dump($response->body);die;
         return $this->render('UserBundle:default:show.html.twig', array('client'=> $response->body));
 
     }
@@ -69,15 +67,10 @@ class UserController extends Controller
                     $serializer = $this->get('unamag.service.user')->getSerializer();
 
                     $response = APIRequest::post($url, [], ['serializeObject' => $serializer->serialize($user, 'json')]);
-//                    VarDumper::dump($response);die;
                     return $this->redirectToRoute('user_homepage');
                 }
             }
         }
-
-
-
-
 
         return $this->render('UserBundle:default:edit.html.twig', array('form' => $form->createView(), 'formPassword' => $formPassword->createView()));
     }

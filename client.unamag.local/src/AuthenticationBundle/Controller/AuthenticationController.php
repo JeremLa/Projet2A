@@ -17,6 +17,19 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager;
+use Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider;
+use Symfony\Component\Security\Core\Authentication\Provider\SimpleAuthenticationProvider;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
+use Symfony\Component\Security\Core\Authorization\Voter\AuthenticatedVoter;
+use Symfony\Component\Security\Core\Authorization\Voter\RoleVoter;
+use Symfony\Component\Security\Core\Encoder\EncoderFactory;
+use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
+use Symfony\Component\Security\Core\User\InMemoryUserProvider;
+use Symfony\Component\Security\Core\User\UserChecker;
+use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\VarDumper\VarDumper;
 use Unirest\Request as APIRequest;
 
@@ -49,8 +62,20 @@ class AuthenticationController extends Controller
                 ));
 
             }
-
+            /** @var  $user User*/
             $user =  $this->get('unamag.service.user')->cast($user,$response->body);
+
+            $unauthenticatedToken = new UsernamePasswordToken(
+                $user->getMail(),
+                $user->getPassword(),
+                'main',
+                $user->getRoles()
+            );
+            $this->get('security.token_storage')->setToken($unauthenticatedToken);
+            $request->getSession()->set('_security_main', serialize($unauthenticatedToken));
+            $event = new InteractiveLoginEvent($request, $unauthenticatedToken);
+            $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
+
 
             $this->connectUser($user);
             return $this->redirectToRoute('user_get');
@@ -74,6 +99,7 @@ class AuthenticationController extends Controller
             $response = APIRequest::post($url, [], http_build_query($request->get('user')));
             $user =  $this->get('unamag.service.user')->cast($user,$response->body);
             $this->connectUser($user);
+
             return $this->redirectToRoute('user_homepage');
         }
 
@@ -85,8 +111,10 @@ class AuthenticationController extends Controller
     public function logoutAction()
     {
         $this->get('session')->clear();
-        return $this->redirectToRoute('user_homepage');
+        $this->get('security.token_storage')->setToken(null);
+        return $this->redirectToRoute('authentication_login');
     }
+
     public function connectUser($user){
         $this->get('session')->set('User', $user);
     }

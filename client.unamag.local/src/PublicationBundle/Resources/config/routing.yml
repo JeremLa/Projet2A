@@ -1,0 +1,12 @@
+publication_publication:
+    resource: "@PublicationBundle/Resources/config/routing/publication.yml"
+    prefix:   /publication
+
+publication_index:
+    path:     /
+    defaults: { _controller: "PublicationBundle:Publication:index" }
+    methods:  GET
+
+test:
+    path:     /admin
+    defaults: { _controller: "PublicationBundle:Publication:test" }
