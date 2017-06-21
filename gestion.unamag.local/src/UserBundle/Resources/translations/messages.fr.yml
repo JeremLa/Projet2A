@@ -1,4 +1,4 @@
-form:
+user:
     firstName:
         label: Prénom
     lastName:
@@ -23,3 +23,10 @@ form:
         label: Ville de naissance
     submit:
         label: Enregistrer
+    list: Liste des clients
+    return: Retour à la liste des utilisateurs
+    show: Détails
+    edit: Modifier
+    editUser: Modifier les informations personnelles
+    editPassword: Modifier le mot de passe
+    detail: Informations de l'utilisateur

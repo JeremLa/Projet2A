@@ -3,10 +3,12 @@
 namespace AuthenticationBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints\Date;
 use FOS\UserBundle\Model\User as BaseUser;
 
-class User
+class User implements UserInterface, AdvancedUserInterface
 {
     private $id;
     private $firstname;
@@ -217,5 +219,47 @@ class User
     }
 
 
+    public function getRoles()
+    {
+        return array('ROLE_USER');
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function getUsername()
+    {
+        return $this->firstname;
+    }
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
+
+    public function isAccountNonExpired()
+    {
+        return true;
+        // TODO: Implement isAccountNonExpired() method.
+    }
+
+    public function isAccountNonLocked()
+    {
+        return true;
+        // TODO: Implement isAccountNonLocked() method.
+    }
+
+    public function isCredentialsNonExpired()
+    {
+        return true;
+        // TODO: Implement isCredentialsNonExpired() method.
+    }
+
+    public function isEnabled()
+    {
+        return true;
+    }
 }
 

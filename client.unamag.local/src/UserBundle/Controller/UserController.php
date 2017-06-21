@@ -6,6 +6,7 @@ use AuthenticationBundle\Entity\User;
 use AuthenticationBundle\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\VarDumper\VarDumper;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
@@ -17,7 +18,9 @@ class UserController extends Controller
 {
     public function indexAction()
     {
-//        VarDumper::dump($this->get('session')->get('User'));die;
+        /** @var  $user User */
+//        VarDumper::dump($this->get('security.token_storage'));die;
+        //        VarDumper::dump($this->get('session')->get('User'));die;
         return $this->render('UserBundle:Default:index.html.twig');
     }
 

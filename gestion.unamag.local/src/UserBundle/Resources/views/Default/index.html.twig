@@ -2,18 +2,18 @@
 
 {% block content %}
 
-    <h1>Users list</h1>
+    <h1>{{ 'user.list'|trans }}</h1>
 
     <table class="table table-striped">
         <thead>
         <tr>
-            <th></th>
-            <th>firstName</th>
-            <th>lastName</th>
-            <th>mail</th>
-            <th>tel</th>
-            <th>birthDate</th>
-            <th>birthCity</th>
+            <th>#</th>
+            <th>{{ 'user.firstName.label'|trans }}</th>
+            <th>{{ 'user.lastName.label'|trans }}</th>
+            <th>{{ 'user.mail.label'|trans }}</th>
+            <th>{{ "user.tel.label"|trans }}</th>
+            <th>{{ 'user.birthDate.label'|trans }}</th>
+            <th>{{ 'user.birthCity.label'|trans }}</th>
         </tr>
         </thead>
         <tbody>
@@ -28,14 +28,8 @@
                 <td>{{ user.birthDate }}</td>
                 <td>{{ user.birthCity }}</td>
                 <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('user_show', { 'id': user.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('user_edit', { 'id': user.id }) }}">edit</a>
-                        </li>
-                    </ul>
+                            <a class="btn btn-info" href="{{ path('user_show', { 'id': user.id }) }}">{{ 'user.show'|trans }}</a>
+                            <a class="btn btn-warning" href="{{ path('user_edit', { 'id': user.id }) }}">{{ 'user.edit'|trans }}</a>
                 </td>
             </tr>
         {% endfor %}
