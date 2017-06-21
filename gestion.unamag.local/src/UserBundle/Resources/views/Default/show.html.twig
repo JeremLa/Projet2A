@@ -1,0 +1,65 @@
+{% extends 'layout.html.twig' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12"></div>
+    <div class="jumbotron row">
+        <div class="row">
+            <div class="text-center"><h2> User Informations</h2></div>
+        </div>
+        <div class="row">
+            <div class="col-md-offset-5 col-md-7">
+    <table class="text-center">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ client.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ client.firstname }}</td>
+            </tr>
+            <tr>
+                <th>Countbyyear</th>
+                <td>{{ client.lastname }}</td>
+            </tr>
+            <tr>
+                <th>adress</th>
+                <td>{{ client.adress }}</td>
+            </tr>
+            <tr>
+                <th>city</th>
+                <td>{{ client.city }}</td>
+            </tr>
+            <tr>
+                <th>zipCode</th>
+                <td>{{ client.zipCode }}</td>
+            </tr>
+            <tr>
+                <th>tel</th>
+                <td>{{ client.tel }}</td>
+            </tr>
+            <tr>
+                <th>mail</th>
+                <td>{{ client.mail }}</td>
+            </tr>
+            <tr>
+                <th>birthDate</th>
+                <td>{{ client.birthDate }}</td>
+            </tr>
+            <tr>
+                <th>birthCity</th>
+                <td>{{ client.birthCity }}</td>
+            </tr>
+        </tbody>
+    </table>
+            </div></div>
+        <ul>
+        <li>
+        <a href="{{ path('user_homepage') }}">Back to the list</a>
+        </li>
+        <li>
+        <a href="{{ path('user_edit', { 'id': client.id }) }}">Edit</a>
+        </li>
+        </ul>
+{% endblock %}

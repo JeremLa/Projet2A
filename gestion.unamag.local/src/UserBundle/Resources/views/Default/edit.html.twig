@@ -1,0 +1,52 @@
+{% extends 'layout.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/user/css/style.css') }}">
+{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-12 col-sd-12"></div>
+    <div class="jumbotron row">
+        <div class="row">
+            <div class="text-center"><h2> User edit</h2></div>
+        </div>
+        <div class="row">
+        <div class="col-md-6 col-sd-12">
+        {{ form_start(form, {'method': 'POST'  }) }}
+        {{ form_errors(form , {'attr':{'class': 'danger'}}) }}
+        {{ form_row(form.firstName) }}
+        {{ form_row(form.lastName) }}
+        {{ form_row(form.adress) }}
+        {{ form_row(form.city) }}
+        {{ form_row(form.zipCode) }}
+        {{ form_row(form.tel) }}
+        {{ form_row(form.mail) }}
+        {{ form_row(form.birthDate) }}
+        {{ form_row(form.birthCity) }}
+        {{ form_row(form.submit) }}
+        {{ form_row(form._token) }}
+        {{ form_row(form.formName, {'attr': {'value': 'user'}}) }}
+            {{ form_end(form, {'render_rest': false}) }}
+
+        </div>
+
+       <div class="col-md-6 col-sd-12">
+           {{ form_start(formPassword, {'method': 'POST'  }) }}
+           {{ form_errors(formPassword) }}
+           {{ form_row(formPassword.password) }}
+           {{ form_row(formPassword.submit) }}
+           {{ form_row(formPassword._token) }}
+           {{ form_row(formPassword.formName, {'attr': {'value': 'password'}}) }}
+           {{ form_end(formPassword, {'render_rest': false}) }}
+
+       </div>
+        </div>
+    </div>
+    </div>
+</div>
+    <ul>
+        <li>
+            <a href="{{ path('user_homepage') }}">Back to the list</a>
+        </li>
+    </ul>
+{% endblock %}

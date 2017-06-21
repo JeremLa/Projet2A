@@ -1,0 +1,25 @@
+form:
+    firstName:
+        label: Prénom
+    lastName:
+        label: Nom
+    adress:
+        label: Adresse
+    city:
+        label: Ville
+    tel:
+        label: Téléphone
+    mail:
+        label: E-mail
+    password:
+        label1: Mot de passe
+        label2: Confirmer mot de passe
+    zipcode:
+        label: Code postal
+        error: "le format du zipcode n'est pas correcte."
+    birthDate:
+        label: Date de naissance
+    birthCity:
+        label: Ville de naissance
+    submit:
+        label: Enregistrer
