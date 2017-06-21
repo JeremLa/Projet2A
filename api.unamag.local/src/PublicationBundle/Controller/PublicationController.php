@@ -66,8 +66,6 @@ class PublicationController extends Controller
         $editForm = $this->createForm('PublicationBundle\Form\PublicationType', $publication);
         $editForm->submit($request->request->all());
 
-        VarDumper::dump($publication);die;
-
         if ($editForm->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 

@@ -10,4 +10,8 @@ namespace PublicationBundle\Repository;
  */
 class PublicationRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findAll()
+    {
+        return $this->findBy([], ['id' => 'DESC']);
+    }
 }

@@ -4,6 +4,7 @@ namespace PublicationBundle\Controller;
 
 use PublicationBundle\Entity\Publication;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\VarDumper\VarDumper;
@@ -45,9 +46,15 @@ class PublicationController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /** @var  $file UploadedFile */
+            $file = $request->files->all()['publicationbundle_publication']['file'];
 
-            $file = $publication->getPicture();
-            $file_real_path = $file->getRealPath();
+            if(!$file){
+                $file_real_path = realpath($this->get('kernel')->getRootDir(). " /../web/assets\images\unknown.jpg");
+            }else{
+                $file_real_path = $file->getRealPath();
+            }
+
             $file_binary = fread(fopen($file_real_path, "r"), filesize($file_real_path));
             $img_str = base64_encode($file_binary);
 
@@ -90,6 +97,19 @@ class PublicationController extends Controller
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+
+            /** @var  $file UploadedFile */
+            $file = $request->files->all()['publicationbundle_publication']['file'];
+
+            if($file){
+                $file_real_path = $file->getRealPath();
+                $file_binary = fread(fopen($file_real_path, "r"), filesize($file_real_path));
+                $img_str = base64_encode($file_binary);
+
+
+                $publication->setPicture($img_str);
+            }
+
             $serializer = $this->get('unamag.service.user')->getSerializer();
             $url = $this->getParameter('api')[PubliConst::KEYPUBLICATION]['update'];
             APIRequest::post($url, ['Content-Type' => "application/json"], $serializer->serialize($publication, 'json'));
@@ -99,7 +119,7 @@ class PublicationController extends Controller
 
         return $this->render('PublicationBundle:publication:edit.html.twig', array(
             'publication' => $publication,
-            'edit_form' => $editForm->createView(),
+            'form' => $editForm->createView(),
         ));
     }
 }

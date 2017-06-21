@@ -1,16 +1,52 @@
-{% extends 'layout.html.twig' %}
+{% extends '@Publication/publicationLayout.html.twig' %}
 
 {% block content %}
-    <h1>Publication creation</h1>
+    <div class="row">
+        <div class="jumbotron">
+            <div class="container">
+                <h2 class="text-center">Créer une publication</h2>
+                <br>
+                <div class="col-md-offset-3 col-md-6">
+                {{ form_start(form) }}
+                    {{ form_errors(form) }}
 
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-        <input type="submit" value="Create" />
-    {{ form_end(form) }}
+                    <div class="form-group">
+                        {{ form_label(form.title) }}
+                        {{ form_errors(form.title) }}
+                        {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.file) }}
+                        {{ form_errors(form.file) }}
+                        {{ form_widget(form.file, {'attr': {'class': 'form-control'}}) }}
+                        <p class="help-block">Le jpg est accepté, une image par défaut est selectionée si ce champ est vide.</p>
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.description) }}
+                        {{ form_errors(form.description) }}
+                        {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': 4}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.countByYear) }}
+                        {{ form_errors(form.countByYear) }}
+                        {{ form_widget(form.countByYear, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="form-group">
+                        {{ form_label(form.annualCost) }}
+                        {{ form_errors(form.annualCost) }}
+                        {{ form_widget(form.annualCost, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    {{ form_widget(form) }}
 
-    <ul>
-        <li>
-            <a href="{{ path('publication_index') }}">Back to the list</a>
-        </li>
-    </ul>
+                    <div class="form-group">
+                        <a href="{{ path('publication_index') }}" class="btn btn-primary">Liste des publications</a>
+                        <input type="submit" value="Créer" class="btn btn-success"/>
+                    </div>
+
+                {{ form_end(form) }}
+                </div>
+
+            </div>
+        </div>
+    </div>
 {% endblock %}

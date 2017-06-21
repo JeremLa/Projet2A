@@ -12,13 +12,26 @@
     background-color: #F1EAF2;
 }
 
+.publication-card .thumbnail:hover{
+    background-color: #d4d4d4;
+}
+
 .publication-card img{
     height: 260px;
 }
 
 .jumbotron p{
     font-size: 17px;
+    word-wrap: break-word;
 }
 .jumbotron img{
     margin-top: 20px;
+}
+
+form .help-block{
+    font-size: 12px;
+}
+
+form textarea{
+    resize: none;
 }
