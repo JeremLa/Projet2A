@@ -90,9 +90,7 @@ class AuthenticationController extends Controller
         $user = new User();
 
         $form = $this->createForm(UserType::class, $user);
-
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $url = $this->getParameter('api')['user']['create'];
             $response = APIRequest::post($url, [], http_build_query($request->get('user')));
@@ -104,8 +102,8 @@ class AuthenticationController extends Controller
             }else{
                 $this->get('session')->getFlashBag()->add('success', 'Un mail viens de vous être envoyé, merci de confirmer votre inscription pour activer votre compte');
             }
-            $user =  $this->get('unamag.service.user')->cast($user,$response->body);
-            $this->connectUser($user);
+//            $user =  $this->get('unamag.service.user')->cast($user,$response->body);
+
 
             return $this->redirectToRoute('user_homepage');
         }

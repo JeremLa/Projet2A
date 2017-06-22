@@ -9,6 +9,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -30,7 +31,7 @@ class UserType extends AbstractType
                 'label' => 'form.lastName.label',
                 'translation_domain' => 'messages'
             ])
-            ->add('adress', TextType::class, [
+            ->add('adress', TextareaType::class, [
                 'required' => true,
                 'trim' => true,
                 'label' => 'form.adress.label',
@@ -42,7 +43,7 @@ class UserType extends AbstractType
                 'label' => 'form.city.label',
                 'translation_domain' => 'messages'
             ])
-            ->add('zipCode', IntegerType::class, [
+            ->add('zipCode', TextType::class, [
                 'required' => true,
                 'trim' => true,
                 'label' => 'form.zipcode.label',
@@ -71,15 +72,10 @@ class UserType extends AbstractType
                 'second_options' => array('label' => 'form.password.label2'),
                 'translation_domain' => 'messages'
             ])
-            ->add('birthDate', BirthdayType::class, [
+            ->add('birthDate', TextType::class, [
                 'required' => true,
                 'label' => 'form.birthDate.label',
                 'translation_domain' => 'messages',
-                'years' => range (1950, 2050),
-                'model_timezone' => 'Europe/Paris',
-                'format' => 'dd/MM/yyyy',
-                'input' => 'string',
-                'widget' => 'single_text'
             ])
             ->add('birthCity', TextType::class, [
                 'required' => true,

@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -35,13 +36,14 @@ class UserType extends AbstractType
                 'label_attr' => ['class' => 'w3-text-teal'],
                 'attr' => ['class' => 'w3-input w3-border w3-light-grey']
             ])
-            ->add('adress', TextType::class, [
+            ->add('adress', TextareaType::class, [
                 'required' => true,
                 'trim' => true,
                 'label' => 'form.adress.label',
                 'translation_domain' => 'messages',
                 'label_attr' => ['class' => 'w3-text-teal'],
-                'attr' => ['class' => 'w3-input w3-border w3-light-grey']
+                'attr' => ['class' => 'w3-input w3-border w3-light-grey',
+                    'style' => 'resize:none']
             ])
             ->add('city', TextType::class, [
                 'required' => true,

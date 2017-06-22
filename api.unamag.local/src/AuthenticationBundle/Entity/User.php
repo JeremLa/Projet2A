@@ -100,6 +100,13 @@ class User
     private $level;
 
     /**
+     * @var int
+     *
+     * @ORM\Column(name="actif", type="integer", options={"default":1})
+     */
+    private $actif = 1;
+
+    /**
      * Get id
      *
      * @return int
@@ -109,9 +116,11 @@ class User
         return $this->id;
     }
 
+
     public function  setId( $id){
         $this->id = $id;
     }
+
 
     /**
      * @return string
@@ -287,6 +296,22 @@ class User
     public function setLevel($level)
     {
         $this->level = $level;
+    }
+
+    /**
+     * @return int
+     */
+    public function getActif()
+    {
+        return $this->actif;
+    }
+
+    /**
+     * @param int $actif
+     */
+    public function setActif($actif)
+    {
+        $this->actif = $actif;
     }
 }
 

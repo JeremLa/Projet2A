@@ -99,13 +99,17 @@ class UserController extends Controller
 
         $from = $request->get('from');
         $level = 2;
+        $actif = 0;
 
         if($from === 'client'){
             $level = 2;
+            $actif = 0;
         }else if( $from === 'gestion'){
             $level = 1;
+            $actif = 1;
         }
 
+        $user->setActif($actif);
         $user->setLevel($level);
 
         $em = $this->getDoctrine()->getManager();
