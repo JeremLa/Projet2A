@@ -17,6 +17,8 @@
     {% set user = app.session.get('User') %}
     {% if(user) %}
                 <ul class="nav navbar-nav navbar-right">
+                    <li><a href={{ path('publication_index') }}>Publications</a></li>
+                    <li><a href={{ path('user_homepage') }}>Client</a></li>
                     <li><a>{{ user.firstname|capitalize ~ ' ' ~ user.lastname|capitalize }}</a></li>
                     <li><a href={{ path('authentication_logout') }}>{{ 'auth.disconnect'|trans }}</a></li>
                 </ul>

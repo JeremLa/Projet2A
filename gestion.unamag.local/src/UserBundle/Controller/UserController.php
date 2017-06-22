@@ -33,6 +33,7 @@ class UserController extends Controller
         /** ici on recupere un utilisateur */
         $url = $this->getParameter('api')['user']['get'].$id;
         $response = APIRequest::get($url);
+
         return $this->render('UserBundle:default:show.html.twig', array('client'=> $response->body));
 
     }
@@ -40,7 +41,6 @@ class UserController extends Controller
     public function editUserAction(User $user ,Request $request)
     {
         /** ici on edit le user */
-
         $userMod = clone $user;
 
         $form = $this->createForm(UserType::class, $userMod);
@@ -56,7 +56,7 @@ class UserController extends Controller
                     $serializer = $this->get('unamag.service.user')->getSerializer();
 
                     $response = APIRequest::post($url, [], ['serializeObject' => $serializer->serialize($userMod, 'json')]);
-                    return $this->redirectToRoute('user_homepage');
+                    return $this->redirectToRoute('user_show', ['id'=> $user->getId()]);
                 }
             } else if ($formName == 'password') {
                 $formPassword->handleRequest($request);
@@ -67,7 +67,7 @@ class UserController extends Controller
                     $serializer = $this->get('unamag.service.user')->getSerializer();
 
                     $response = APIRequest::post($url, [], ['serializeObject' => $serializer->serialize($user, 'json')]);
-                    return $this->redirectToRoute('user_homepage');
+                    return $this->redirectToRoute('user_show', ['id'=> $user->getId()]);
                 }
             }
         }

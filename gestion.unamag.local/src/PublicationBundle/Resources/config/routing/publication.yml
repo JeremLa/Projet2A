@@ -12,3 +12,8 @@ publication_edit:
     path:     /update/{id}
     defaults: { _controller: "PublicationBundle:Publication:edit" }
     methods:  [GET, POST]
+
+publication_list:
+    path:     /
+    defaults: { _controller: "PublicationBundle:Publication:index" }
+    methods:  GET

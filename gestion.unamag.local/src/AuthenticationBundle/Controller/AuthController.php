@@ -44,7 +44,7 @@ class AuthController extends Controller
                 return $this->render('AuthenticationBundle:Default:login.html.twig', array('form' => $form->createView(), 'errors' => $errors));
             }
             $this->get('session')->set('User', $user);
-            return $this->redirectToRoute('authentication_homepage');
+            return $this->redirectToRoute('publication_index');
         }
 
         return $this->render('AuthenticationBundle:Default:login.html.twig', array('form' => $form->createView()));
