@@ -7,16 +7,16 @@ AuthenticationBundle\Entity\User:
             - AuthenticationBundle\Validator\Constraints\PhoneFormat: ~
 
         firstname:
-            - AuthenticationBundle\Validator\Constraints\IsString: ~
+            - AuthenticationBundle\Validator\Constraints\NotNull: ~
 
         lastname:
-            - AuthenticationBundle\Validator\Constraints\IsString: ~
+            - AuthenticationBundle\Validator\Constraints\NotNull: ~
 
         city:
-            - AuthenticationBundle\Validator\Constraints\IsString: ~
+            - AuthenticationBundle\Validator\Constraints\NotNull: ~
 
         birthCity:
-            - AuthenticationBundle\Validator\Constraints\IsString: ~
+            - AuthenticationBundle\Validator\Constraints\NotNull: ~
 
         zipCode:
             - AuthenticationBundle\Validator\Constraints\ZipCode: ~
