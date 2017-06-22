@@ -2,31 +2,25 @@
 
 {% block content %}
 
-    <div class="row">
-        <div class="jumbotron">
-            <div class="container">
-                <div class="col-md-12 text-right">
-                    <span><strong>{{ 'publication.annualPrice'|trans }}</strong> : {{ publication.annualCost ~ ' ' ~ 'devise.symbol'|trans }}</span>
-                    |
-                    <span><strong>{{ 'publication.countByYear'|trans }}</strong> : {{ publication.countByYear }}</span>
-                </div>
-            </div>
-            <div class="container">
-                <div class="col-md-4 text-center">
-                    <img src="data:image/jpeg;base64,{{ publication.picture }}">
-                </div>
+<div class="w3-content w3-container w3-padding-64">
+    <div class="w3-card-2 w3-display-container w3-margin-bottom" style="transition:0.5s;width:100%">
+        <img src="data:image/jpeg;base64,{{ publication.picture }}" style="min-height: 350px; width: 100%;">
 
-                <div class="col-md-8">
-                    <h1>{{ publication.title|capitalize }}</h1>
-                    <p class="text-justify">{{ publication.description }}</p>
+        <div class="w3-container">
+            <div class="w3-row show-info">
+                <div class="w3-col s4">
+                    <button type="button" class="w3-green w3-btn w3-margin w3-round disabled" title="S'abonner"><i class="fa fa-shopping-cart w3-text-white"></i> {{ publication.annualCost }}€</button>
+                </div>
+                <div class="w3-col s4">
+                    <button type="button" class="w3-pink w3-btn w3-margin w3-round disabled" title="Nombre de numéro annuel">{{ publication.countByYear }} <i class="fa fa-book w3-text-white"></i></button>
+                </div>
+                <div class="w3-col s4">
+                    <button type="button" class="w3-light-grey w3-btn w3-margin w3-round disabled" title="Nombre d'abonnés">0 <i class="fa fa-user w3-text-red"></i></button>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <a href="{{ path('publication_index') }}" class="btn btn-primary">Liste des publications</a>
-                </div>
-            </div>
+            <h1>{{ publication.title|capitalize }}</h1>
+            <p class="text-justify" style="word-wrap: break-word;">{{ publication.description }}</p>
         </div>
     </div>
+</div>
 {% endblock %}

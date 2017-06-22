@@ -39,4 +39,4 @@ error:
 
 user:
     myInfo: Mes informations
-    password: Modifier mon mot de passe
+    editPassword: Editer le mot de passe

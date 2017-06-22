@@ -1,11 +1,7 @@
+user_user:
+    resource: "@UserBundle/Resources/config/routing/user.yml"
+    prefix:   /user
+
 user_homepage:
     path:     /
     defaults: { _controller: UserBundle:User:index }
-
-user_get:
-    path:     /mesInformations
-    defaults: { _controller: UserBundle:User:editUser }
-
-user_password:
-    path:     /motDePasse
-    defaults: { _controller: UserBundle:User:editUserPassword }

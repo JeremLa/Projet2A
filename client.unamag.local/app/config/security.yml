@@ -13,14 +13,22 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         login:
-            pattern:  ^/auth/login$
+            pattern:  ^/auth/login
+            security: false
+
+        subscribe:
+            pattern: ^/auth/inscription
+            security: false
+
+        home:
+            pattern: ^/$
             security: false
 
         main:
             pattern: ^/
             anonymous: ~
             form_login:
-                login_path: authentication_login
+                login_path: user_homepage
                 check_path: authentication_login
 
     access_control:

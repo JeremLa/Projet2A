@@ -6,22 +6,17 @@
                 <h1 class="w3-xxxlarge">UNAMAG</h1>
                 <p class="w3-small">Votre manager de magazine</p>
             </div>
-            <div class="w3-padding-large w3-xlarge">
-                <button id="open-login" class="w3-btn w3-white w3-medium w3-hover-blue">se connecter</button>
-                <button id="open-register" class="w3-btn w3-white w3-medium w3-hover-green">s'enregistrer</button>
+
+            <div>
+                {% for flashSuccess in app.session.flashbag.get('success') %}
+                    <p class="w3-panel w3-green">{{ flashSuccess }}</p>
+                {% endfor %}
             </div>
-        </div>
-    </div>
 
-    <div id="modal-login" class="w3-modal">
-        <div class="w3-modal-content">
-            {% include '@Authentication/user/login.html.twig' %}
-        </div>
-    </div>
-
-    <div id="modal-register" class="w3-modal">
-        <div class="w3-modal-content">
-            {% include '@Authentication/user/create.html.twig' %}
+            <div class="w3-padding-large w3-xlarge">
+                <a href="{{ path('authentication_login') }}" id="open-login" class="w3-btn w3-white w3-medium w3-hover-blue">se connecter</a>
+                <a href="{{ path('authentication_create') }}" id="open-register" class="w3-btn w3-white w3-medium w3-hover-green">s'enregistrer</a>
+            </div>
         </div>
     </div>
 {% endblock %}

@@ -44,7 +44,6 @@ class AuthenticationController extends Controller
     public function loginAction(Request $request){
 
         $user = new User();
-        $errors = [];
 
         $form = $this->createForm(LoginType::class, $user);
 
@@ -55,10 +54,12 @@ class AuthenticationController extends Controller
             $response = APIRequest::post($url, [], http_build_query($request->get('login')));
 
             if($response->code != 200){
-                $errors[] = "auth.error";
+
+                $error = $this->get('translator')->trans('auth.error');
+                $this->get('session')->getFlashBag()->add('errors', $error);
+
                 return $this->render('AuthenticationBundle:user:login.html.twig', array(
                     'form' => $form->createView(),
-                    'errors' => $errors,
                 ));
 
             }
@@ -76,14 +77,12 @@ class AuthenticationController extends Controller
             $event = new InteractiveLoginEvent($request, $unauthenticatedToken);
             $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
 
-
             $this->connectUser($user);
-            return $this->redirectToRoute('user_get');
+            return $this->redirectToRoute('publication_index');
         }
 
         return $this->render('AuthenticationBundle:user:login.html.twig', array(
             'form' => $form->createView(),
-            'errors' => $errors,
         ));
     }
 
@@ -112,7 +111,7 @@ class AuthenticationController extends Controller
     {
         $this->get('session')->clear();
         $this->get('security.token_storage')->setToken(null);
-        return $this->redirectToRoute('authentication_login');
+        return $this->redirectToRoute('user_homepage');
     }
 
     public function connectUser($user){

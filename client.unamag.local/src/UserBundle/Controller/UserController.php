@@ -19,6 +19,10 @@ class UserController extends Controller
 {
     public function indexAction()
     {
+        if($this->get('session')->get('User')){
+            return $this->redirectToRoute('publication_index');
+        }
+
         $userLogin = new User();
         $loginForm = $this->createForm(LoginType::class, $userLogin, [
             'action' => $this->generateUrl('authentication_login'),
@@ -61,7 +65,8 @@ class UserController extends Controller
             $response = APIRequest::post($url, [], ['serializeObject' => $serializer->serialize($user, 'json')]);
             if($response->code == 200){
                 $user->setPassword($password);
-                return $this->redirectToRoute('user_homepage');
+                $this->get('session')->getFlashBag()->add('success', 'Le nouveau mot de passe a bien été enregistré.');
+                return $this->redirectToRoute('user_profil');
             }
         }
         return $this->render('UserBundle::editUserPwd.html.twig',array('form' => $form->createView()));
@@ -69,7 +74,7 @@ class UserController extends Controller
     }
 
 
-    public function editUserAction(Request $request)
+    public function userProfilAction(Request $request)
     {
         /**
          * @var $user User
@@ -93,17 +98,16 @@ class UserController extends Controller
             $url = $this->getParameter('api')['user']['update'];
             $serializer =  $this->get('unamag.service.user')->getSerializer();
 
-
-
             $response = APIRequest::post($url, [], ['serializeObject' => $serializer->serialize($userMod,'json')]);
             if($response->code == 200){
                 $this->connectUser($userMod);
-                return $this->redirectToRoute('user_get');
+                return $this->redirectToRoute('user_profil');
             }
         }
 
-
-        return $this->render('UserBundle::editUser.html.twig',array('form' => $form->createView()));
+        return $this->render('UserBundle::profil.html.twig',[
+            'form' => $form->createView(),
+        ]);
 
     }
 

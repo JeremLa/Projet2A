@@ -1,0 +1,7 @@
+user_profil:
+    path:     /profil
+    defaults: { _controller: UserBundle:User:userProfil }
+
+user_edit_password:
+    path:     /edit/password
+    defaults: { _controller: UserBundle:User:editUserPassword }

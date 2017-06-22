@@ -1,3 +1,8 @@
+publication_index:
+    path:     /
+    defaults: { _controller: "PublicationBundle:Publication:index" }
+    methods:  GET
+
 publication_show:
     path:     /show/{id}
     defaults: { _controller: "PublicationBundle:Publication:show" }

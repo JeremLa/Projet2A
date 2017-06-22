@@ -1,16 +1,18 @@
 {% extends 'layout.html.twig' %}
 {% block content %}
-    <div class="row">
-        <div class="jumbotron col-md-12">
-            <span class="text-center"><h2>{{ 'user.password'|trans }}</h2></span>
-            <div>
-                {{ form_start(form, {'method': 'POST'}) }}
-                    {{ form_errors(form) }}
-                    {{ form_row(form.password) }}
-                    {{ form_row(form.submit) }}
-                    {{ form_row(form._token) }}
-                {{ form_end(form, {'render_rest': false}) }}
-            </div>
+    <div class="w3-content w3-container w3-padding-64" id="about">
+        <div class="w3-container w3-teal">
+            <h2>{{ 'user.editPassword'|trans }}</h2>
         </div>
+
+        {{ form_start(form, {'method': 'POST'}) }}
+            {{ form_errors(form) }}
+            {{ form_row(form.password) }}
+            {{ form_row(form._token) }}
+            <p>
+                <a href="{{ path('user_profil') }}" class="w3-btn w3-red">Annuler</a>
+                <button type="submit" class="w3-btn w3-green">Enregistrer</button>
+            </p>
+        {{ form_end(form, {'render_rest': false}) }}
     </div>
 {% endblock %}
