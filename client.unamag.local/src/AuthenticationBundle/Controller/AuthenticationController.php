@@ -96,6 +96,14 @@ class AuthenticationController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $url = $this->getParameter('api')['user']['create'];
             $response = APIRequest::post($url, [], http_build_query($request->get('user')));
+            if($response->code == 400){
+                $this->get('session')->getFlashBag()->add('errors', 'Impossible de créer le compte, l\'adresse mail est déjà utilisé');
+                return $this->render('AuthenticationBundle:user:create.html.twig', array(
+                    'form' => $form->createView(),
+                ));
+            }else{
+                $this->get('session')->getFlashBag()->add('success', 'Un mail viens de vous être envoyé, merci de confirmer votre inscription pour activer votre compte');
+            }
             $user =  $this->get('unamag.service.user')->cast($user,$response->body);
             $this->connectUser($user);
 

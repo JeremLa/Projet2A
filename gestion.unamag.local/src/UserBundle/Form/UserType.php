@@ -44,7 +44,8 @@ class UserType extends AbstractType
                 'label' => 'user.adress.label',
                 'translation_domain' => 'messages',
                 'attr' => [
-                    'class' => 'form-control'
+                    'class' => 'form-control',
+                    'style' => 'resize: none'
                 ]
             ])
             ->add('city', TextType::class, [
@@ -56,7 +57,7 @@ class UserType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-            ->add('zipCode', IntegerType::class, [
+            ->add('zipCode', TextType::class, [
                 'required' => true,
                 'trim' => true,
                 'label' => 'user.zipcode.label',

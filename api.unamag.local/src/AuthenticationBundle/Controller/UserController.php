@@ -90,6 +90,11 @@ class UserController extends Controller
 
         $user = $form->getData();
 
+         $reponse = $this->get('unamag.service.user')->findByMailOrNull($user->getMail());
+
+         if(get_class($reponse) === User::class){
+             return new JsonResponse("",400);
+         }
         $user->setPassword($this->get('unamag.service.user')->encodePassword($user->getPassword()));
 
         $from = $request->get('from');

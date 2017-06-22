@@ -51,7 +51,7 @@ class UserType extends AbstractType
                 'label_attr' => ['class' => 'w3-text-teal'],
                 'attr' => ['class' => 'w3-input w3-border w3-light-grey']
             ])
-            ->add('zipCode', IntegerType::class, [
+            ->add('zipCode', TextType::class, [
                 'required' => true,
                 'trim' => true,
                 'label' => 'form.zipcode.label',

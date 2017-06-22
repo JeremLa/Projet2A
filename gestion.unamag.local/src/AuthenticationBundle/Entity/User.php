@@ -51,9 +51,9 @@ class User
     private $city;
 
     /**
-     * @var int
+     * @var string
      *
-     * @ORM\Column(name="zipCode", type="integer")
+     * @ORM\Column(name="zipCode", type="string")
      */
     private $zipCode;
 
@@ -179,7 +179,7 @@ class User
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getZipCode()
     {
@@ -187,7 +187,7 @@ class User
     }
 
     /**
-     * @param int $zipCode
+     * @param string $zipCode
      */
     public function setZipCode($zipCode)
     {

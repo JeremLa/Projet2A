@@ -107,7 +107,7 @@ class User implements UserInterface, AdvancedUserInterface
     }
 
     /**
-     * @return int
+     * @return string
      */
     public function getZipCode()
     {
@@ -115,9 +115,9 @@ class User implements UserInterface, AdvancedUserInterface
     }
 
     /**
-     * @param int $zipCode
+     * @param string $zipCode
      */
-    public function setZipCode(int $zipCode)
+    public function setZipCode($zipCode)
     {
         $this->zipCode = $zipCode;
     }
