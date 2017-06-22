@@ -3,6 +3,7 @@
 namespace AuthenticationBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints\Date;
 
 /**
@@ -11,7 +12,7 @@ use Symfony\Component\Validator\Constraints\Date;
  * @ORM\Table(name="entity_user")
  * @ORM\Entity(repositoryClass="AuthenticationBundle\Repository\UserRepository")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @var int
@@ -99,6 +100,14 @@ class User
      */
     private $level;
 
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="actif", type="integer", options={"default":1})
+     */
+    private $actif = 1;
+
     /**
      * Get id
      *
@@ -108,6 +117,8 @@ class User
     {
         return $this->id;
     }
+
+
 
     public function setId($id)
     {
@@ -275,7 +286,7 @@ class User
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getLevel()
     {
@@ -283,11 +294,47 @@ class User
     }
 
     /**
-     * @param mixed $level
+     * @param int $level
      */
     public function setLevel($level)
     {
         $this->level = $level;
+    }
+
+    /**
+     * @return int
+     */
+    public function getActif()
+    {
+        return $this->actif;
+    }
+
+    /**
+     * @param int $actif
+     */
+    public function setActif($actif)
+    {
+        $this->actif = $actif;
+    }
+
+    public function getRoles()
+    {
+        return array('ROLE_ADMIN');
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function getUsername()
+    {
+        return $this->firstname;
+    }
+
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
     }
 }
 

@@ -13,9 +13,21 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
+        login:
+            pattern: ^/auth/login
+            security: false
+
         main:
+            pattern: ^/
             anonymous: ~
-            # activate different ways to authenticate
+            form_login:
+                login_path: authentication_login
+                check_path: authentication_login
+
+    access_control:
+        - { path: ^/auth/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: ROLE_ADMIN }
+        # activate different ways to authenticate
 
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
             #http_basic: ~
