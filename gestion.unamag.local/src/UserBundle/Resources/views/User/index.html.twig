@@ -1,12 +1,8 @@
-{% extends '@Publication/publicationLayout.html.twig' %}
+{% extends 'layout.html.twig' %}
 
 {% block content %}
 
-    <div class="row">
-        <div class="col-md-12 text-center">
-            <h1>Les publications</h1>
-        </div>
-    </div>
+    <h1>{{ 'user.list'|trans }}</h1>
 
     {% if response.pagination.nbPages > 0 %}
         <ul class="pagination">
@@ -50,35 +46,36 @@
         </ul>
     {% endif %}
 
-    <div class="row">
-        <div class="col-md-12 text-center">
-            <a href="{{ path('publication_new') }}" class="btn btn-success">Créer une nouvelle publication</a>
-        </div>
-    </div>
-    <br>
-    <br>
-    <div class="row">
-        <div class="col-md-12">
-            {% for publication in response.publications %}
-            <div class="col-md-4 publication-card">
-                <a href="{{ path('publication_show', { 'id': publication.id }) }}">
-                    <div class="thumbnail">
-                        <img src="data:image/jpeg;base64,{{ publication.picture }}">
-                        <div class="caption">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <h4>{{ publication.title }}</h4>
-                                </div>
-                                <div class="col-md-6 text-right">
-                                    <h4><span class="glyphicon glyphicon-user"></span>0</h4>
-                                </div>
-                            </div>
-                            <p>{{ publication.description|length > 25 ?  publication.description|slice(0, 25) ~ '...' : publication.description }}</p>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>{{ 'user.firstName.label'|trans }}</th>
+            <th>{{ 'user.lastName.label'|trans }}</th>
+            <th>{{ 'user.mail.label'|trans }}</th>
+            <th>{{ "user.tel.label"|trans }}</th>
+            <th>{{ 'user.birthDate.label'|trans }}</th>
+            <th>{{ 'user.birthCity.label'|trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in response.users %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ user.firstname }}</td>
+                <td>{{ user.lastname }}</td>
+                <td>{{ user.mail }}</td>
+                <td>{{ user.tel }}</td>
+                <td>{{ user.birthDate }}</td>
+                <td>{{ user.birthCity }}</td>
+                <td>
+                    <a class="btn btn-info" href="{{ path('user_show', { 'id': user.id }) }}">{{ 'user.show'|trans }}</a>
+                    <a class="btn btn-warning" href="{{ path('user_edit', { 'id': user.id }) }}">{{ 'user.edit'|trans }}</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+
 {% endblock %}

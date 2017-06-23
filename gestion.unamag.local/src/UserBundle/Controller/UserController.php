@@ -20,12 +20,16 @@ use Unirest\Request as APIRequest;
 
 class UserController extends Controller
 {
-    public function indexAction(){
+    public function indexAction(Request $request){
         /** ici liste des users */
-        $url = $this->getParameter('api')['user']['get_all'];
-        $response = APIRequest::get($url);
+        $page = $request->get('page') ? $request->get('page') : 1;
 
-        return $this->render('UserBundle:default:index.html.twig',array('users' => $response->body));
+        $url = $this->getParameter('api')['user']['get_all'];
+        $response = APIRequest::get($url, [], ['page' => $page, 'limit' => 1]);
+        
+        return $this->render('UserBundle:User:index.html.twig', [
+            'response' => $response->body
+        ]);
     }
 
     public function getUserAction($id)
@@ -34,7 +38,7 @@ class UserController extends Controller
         $url = $this->getParameter('api')['user']['get'].$id;
         $response = APIRequest::get($url);
 
-        return $this->render('UserBundle:default:show.html.twig', array('client'=> $response->body));
+        return $this->render('UserBundle:User:show.html.twig', array('client'=> $response->body));
 
     }
 
@@ -72,7 +76,7 @@ class UserController extends Controller
             }
         }
 
-        return $this->render('UserBundle:default:edit.html.twig', array('form' => $form->createView(), 'formPassword' => $formPassword->createView()));
+        return $this->render('UserBundle:User:edit.html.twig', array('form' => $form->createView(), 'formPassword' => $formPassword->createView()));
     }
 
 

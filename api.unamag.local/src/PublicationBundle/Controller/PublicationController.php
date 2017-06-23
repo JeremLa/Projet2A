@@ -19,11 +19,25 @@ class PublicationController extends Controller
      * @Rest\View()
      * @Rest\Post("/publication")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
+        $limit = $request->get('limit');
+        $page = $request->get('page');
 
-        return $em->getRepository('PublicationBundle:Publication')->findAll();
+        $em = $this->getDoctrine()->getManager();
+        $publications = $em->getRepository('PublicationBundle:Publication')->findAllPagineEtTrie($page, $limit);
+
+        $pagination = array(
+            'page' => $page,
+            'nbPages' => ceil(count($publications) / $limit),
+            'nomRoute' => 'publication_list',
+            'paramsRoute' => array()
+        );
+
+        return array(
+            'publications' => $publications,
+            'pagination' => $pagination
+        );
     }
 
     /**
@@ -37,6 +51,9 @@ class PublicationController extends Controller
         $form->submit($request->request->all());
 
         if ($form->isValid()) {
+
+            $publication->setCanonicalTitle($this->get('unamag.tools.service.string')->canonicolize($publication->getTitle()));
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($publication);
             $em->flush();
@@ -85,5 +102,30 @@ class PublicationController extends Controller
         $em = $this->get('doctrine.orm.default_entity_manager');
         $em->remove($publication);
         $em->flush();
+    }
+
+    /**
+     * @Rest\View()
+     * @Rest\Post("/publication/search")
+     */
+    public function searchAction(Request $request){
+        $limit = $request->get('limit') ? $request->get('limit') : 15;
+        $page = $request->get('page') ? $request->get('page') : 1;
+        $search = $request->get('search');
+
+        $em = $this->getDoctrine()->getManager();
+        $publications = $em->getRepository('PublicationBundle:Publication')->findAllPagineEtTrie($page, $limit, $this->get('unamag.tools.service.string')->canonicolize($search));
+
+        $pagination = array(
+            'page' => $page,
+            'nbPages' => ceil(count($publications) / $limit),
+            'nomRoute' => 'publication_list',
+            'paramsRoute' => array()
+        );
+
+        return array(
+            'publications' => $publications,
+            'pagination' => $pagination
+        );
     }
 }

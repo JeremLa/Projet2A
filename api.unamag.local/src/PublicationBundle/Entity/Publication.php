@@ -29,6 +29,13 @@ class Publication
     private $title;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="canonical_title", type="string", nullable=true)
+     */
+    private $canonicalTitle;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="count_by_year", type="integer")
@@ -80,6 +87,22 @@ class Publication
     public function setTitle($title)
     {
         $this->title = $title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCanonicalTitle()
+    {
+        return $this->canonicalTitle;
+    }
+
+    /**
+     * @param string $canonical_title
+     */
+    public function setCanonicalTitle($canonicalTitle)
+    {
+        $this->canonicalTitle = $canonicalTitle;
     }
 
     /**

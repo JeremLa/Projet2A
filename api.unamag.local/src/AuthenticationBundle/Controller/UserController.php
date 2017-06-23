@@ -26,8 +26,7 @@ class UserController extends Controller
      */
     public function getUserAction($id)
     {
-        $user =$this->get('unamag.service.user')->findOneOr404($id);
-//     var_dump($user);die;
+        $user = $this->get('unamag.service.user')->findOneOr404($id);
         return $user;
     }
 
@@ -44,11 +43,7 @@ class UserController extends Controller
         $serializer = $this->get('unamag.service.user')->getSerializer();
         $user = $serializer->deserialize($request->get('serializeObject'),User::class, 'json');
 
-//        var_dump($serializer->deserialize($request->get('serializeObject'),User::class, 'json'));die;
-
-        /**
-         * Rzjouter les validateurs !!!
-         */
+        // @TODO Rzjouter les validateurs !!!
 
         $userDb = $this->get('unamag.service.user')->findOneOr404($user->getId());
         $userDb = $serializer->deserialize($request->get('serializeObject'),User::class, 'json',  array('object_to_populate' => $userDb));
@@ -69,9 +64,23 @@ class UserController extends Controller
      */
     public function getUsersAction(Request $request)
     {
-        return $this->get('doctrine.orm.entity_manager')
-            ->getRepository('AuthenticationBundle:User')
-            ->findAll();
+        $limit = $request->get('limit');
+        $page = $request->get('page');
+
+        $em = $this->getDoctrine()->getManager();
+        $publications = $em->getRepository('AuthenticationBundle:User')->findAllPagineEtTrie($page, $limit);
+
+        $pagination = array(
+            'page' => $page,
+            'nbPages' => ceil(count($publications) / $limit),
+            'nomRoute' => 'user_homepage',
+            'paramsRoute' => array()
+        );
+
+        return array(
+            'users' => $publications,
+            'pagination' => $pagination
+        );
     }
 
     /**
@@ -107,11 +116,37 @@ class UserController extends Controller
         }
 
         $user->setLevel($level);
+        $user->setCanonicalFullname($this->get('unamag.tools.service.string')->canonicolize($user->getFirstname().' '.$user->getLastname()));
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();
 
         return $user;
+    }
+
+    /**
+     * @Rest\View()
+     * @Rest\Get("/users/search")
+     */
+    public function searchAction(Request $request){
+        $limit = $request->get('limit') ? $request->get('limit') : 15;
+        $page = $request->get('page') ? $request->get('page') : 1;
+        $search = $request->get('search');
+
+        $em = $this->getDoctrine()->getManager();
+        $users = $em->getRepository('AuthenticationBundle:User')->findAllPagineEtTrie($page, $limit, $this->get('unamag.tools.service.string')->canonicolize($search));
+
+        $pagination = array(
+            'page' => $page,
+            'nbPages' => ceil(count($users) / $limit),
+            'nomRoute' => 'publication_list',
+            'paramsRoute' => array()
+        );
+
+        return array(
+            'users' => $users,
+            'pagination' => $pagination
+        );
     }
 }

@@ -39,6 +39,13 @@ class User
     /**
      * @var string
      *
+     * @ORM\Column(name="canonical_fullname", type="string", nullable=true)
+     */
+    private $canonicalFullname;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="adress", type="string")
      */
     private $adress;
@@ -143,6 +150,22 @@ class User
     public function setLastname( $lastname)
     {
         $this->lastname = $lastname;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCanonicalFullname()
+    {
+        return $this->canonicalFullname;
+    }
+
+    /**
+     * @param string $canonicalFullname
+     */
+    public function setCanonicalFullname($canonicalFullname)
+    {
+        $this->canonicalFullname = $canonicalFullname;
     }
 
     /**

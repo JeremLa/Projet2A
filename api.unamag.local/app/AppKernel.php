@@ -18,6 +18,8 @@ class AppKernel extends Kernel
             new FOS\RestBundle\FOSRestBundle(),
             new AuthenticationBundle\AuthenticationBundle(),
             new PublicationBundle\PublicationBundle(),
+            new ToolsBundle\ToolsBundle(),
+            new HistoricalBundle\HistoricalBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

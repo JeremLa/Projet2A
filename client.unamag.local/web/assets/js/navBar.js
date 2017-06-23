@@ -3,7 +3,7 @@ window.onscroll = function() {myFunction()};
 function myFunction() {
   var navbar = document.getElementById("myNavbar");
   if(navbar){
-    if (document.body.scrollTop > 60 || document.documentElement.scrollTop > 60) {
+    if (document.body.scrollTop > 30 || document.documentElement.scrollTop > 30) {
       navbar.className = "w3-bar" + " w3-animate-top" + " w3-white";
     } else {
       navbar.className = navbar.className.replace(" w3-animate-top w3-white", "");

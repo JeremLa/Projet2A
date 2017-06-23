@@ -22,3 +22,7 @@ publication_delete:
     path:     /{id}/delete
     defaults: { _controller: "PublicationBundle:Publication:delete" }
     methods:  DELETE
+
+publication_search:
+    path:     /search
+    defaults: { _controller: "PublicationBundle:Publication:search" }
