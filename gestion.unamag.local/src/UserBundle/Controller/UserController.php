@@ -11,6 +11,7 @@ namespace UserBundle\Controller;
 
 use AuthenticationBundle\Entity\User;
 use Doctrine\DBAL\VersionAwarePlatformDriver;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use UserBundle\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -74,6 +75,13 @@ class UserController extends Controller
 
         return $this->render('UserBundle:default:edit.html.twig', array('form' => $form->createView(), 'formPassword' => $formPassword->createView()));
     }
+
+public function changeActifAction(Request $request){
+        $url = $this->getParameter('api')['user']['activation'];
+        $response = APIRequest::post($url, [], ['id' => $request->get('id')]);
+
+        return new JsonResponse("",$response->code);
+}
 
 
 }

@@ -37,12 +37,25 @@ class AuthenticationController extends Controller
 {
     public function indexAction()
     {
+
         return $this->render('AuthenticationBundle:user:index.html.twig');
     }
 
 
     public function loginAction(Request $request){
 
+
+        if($request->get('key')){
+            $url = $this->getParameter('api')['activation'];
+            $response = APIRequest::post($url, [], ['key'=>$request->get('key')]);
+            if($response->code == 404){
+                $this->get('session')->getFlashBag()->add('errors', 'Le lien de connexion est expiré ou ne correspond à aucun compte, veuillez contacter le service client d\'unamag');
+                return $this->redirectToRoute('user_homepage');
+            }
+            $this->get('session')->getFlashBag()->add('success', 'Votre compte est activé, vous pouvez vous connecter');
+            return $this->redirectToRoute('authentication_login');
+
+        }
         $user = new User();
 
         $form = $this->createForm(LoginType::class, $user);

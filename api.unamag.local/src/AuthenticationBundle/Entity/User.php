@@ -165,7 +165,7 @@ class User
     /**
      * @param string $adress
      */
-    public function setAdress(string $adress)
+    public function setAdress($adress)
     {
         $this->adress = $adress;
     }
@@ -213,7 +213,7 @@ class User
     /**
      * @param string $tel
      */
-    public function setTel(string $tel)
+    public function setTel($tel)
     {
         $this->tel = $tel;
     }

@@ -9,6 +9,7 @@
         {#</div>#}
         {#<div class="row">#}
             {#<div class="col-md-offset-4">#}
+        <div class="errors alert alert-danger hidden"></div>
                 <div class="w3-container">
                     <div class="w3-card">
                         <header class="w3-container w3-blue">
@@ -31,8 +32,21 @@
             <div class="col-md-offset-4">
                 <a class="btn btn-primary" href="{{ path('user_homepage') }}">{{ 'user.return'|trans }}</a>
                 <a class="btn btn-warning" href="{{ path('user_edit', { 'id': client.id }) }}">{{ 'user.edit'|trans }}</a>
+                {%  if(client.actif) %}
+                    {% set class = " btn-danger" %}
+                    {% set txt = 'user.activation.true' %}
+                {%  else %}
+                    {% set class = " btn-success" %}
+                    {% set txt = 'user.activation.false' %}
+                {%  endif %}
+                <button class="btn{{ class }} user-activation-button" data-id="{{ client.id }}">{{ txt|trans }}</button>
             </div>
         </div>
         </div>
 </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src = "{{ asset('bundles/user/js/script.js') }}"></script>
+
 {% endblock %}

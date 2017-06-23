@@ -21,6 +21,9 @@ user:
         label: Date de naissance
     birthCity:
         label: Ville de naissance
+    activation:
+        true: Désactiver le compte
+        false: Activer le compte
     submit:
         label: Enregistrer
     list: Liste des clients

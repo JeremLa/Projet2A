@@ -8,6 +8,7 @@ parameters:
             create: "%api.url%/users/new"
             login: "%api.url%/users/login"
             update: "%api.url%/user/edit"
+            activation: "%api.url%/users/actif"
         publication:
             get: "%api.url%/publication/show"
             get_all: "%api.url%/publication"

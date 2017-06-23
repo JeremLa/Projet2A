@@ -2,6 +2,7 @@
 
 namespace AuthenticationBundle\Controller;
 
+use AuthenticationBundle\Entity\ActivationLink;
 use AuthenticationBundle\Entity\User;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -35,10 +36,43 @@ class AuthController extends Controller
 
         $password = $this->get('unamag.service.user')->encodePassword($password);
 
-        if($password !== $user->getPassword()){
+        if($password !== $user->getPassword() || $user->getActif() == 0){
             throw new HttpException(215, "Authentication error");
         }
 
         return $user;
+    }
+
+    /**
+     * @Rest\View()
+     * @Rest\Post("/activation")
+     * @param Request $request
+     * @return mixed
+     */
+    public function getActivationLinkAction(Request $request)
+    {
+
+        $key = $request->get('key');
+        $em = $this->getDoctrine()->getManager();
+        $activation =  $em->getRepository("AuthenticationBundle:ActivationLink")->findOneBy(['hash' => $key]);
+
+        $date = new \DateTime('now');
+        if(!$activation){
+            return new JsonResponse("",404);
+        }
+        if($date > $activation->getExpirationDate()){
+            return new JsonResponse("",404);
+        }
+
+        $activation->getUser()->setActif(1);
+        $em->flush();
+        $em->remove($activation);
+        $em->flush();
+        $user = clone $activation->getUser();
+
+
+
+        return $user;
+
     }
 }
