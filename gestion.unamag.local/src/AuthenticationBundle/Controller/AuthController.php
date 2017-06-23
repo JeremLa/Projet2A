@@ -10,6 +10,8 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
+use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 use Symfony\Component\VarDumper\VarDumper;
 
 class AuthController extends Controller
@@ -43,7 +45,22 @@ class AuthController extends Controller
                 $errors[] = "auth.error";
                 return $this->render('AuthenticationBundle:Default:login.html.twig', array('form' => $form->createView(), 'errors' => $errors));
             }
+            $unauthenticatedToken = new UsernamePasswordToken(
+                $user->getMail(),
+                $user->getPassword(),
+                'main',
+                $user->getRoles()
+            );
+            $this->get('security.token_storage')->setToken($unauthenticatedToken);
+            $request->getSession()->set('_security_main', serialize($unauthenticatedToken));
+            $event = new InteractiveLoginEvent($request, $unauthenticatedToken);
+            $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
+
+
+
             $this->get('session')->set('User', $user);
+
+
             return $this->redirectToRoute('publication_index');
         }
 
@@ -54,6 +71,7 @@ class AuthController extends Controller
     public function logoutAction()
     {
         $this->get('session')->clear();
+        $this->get('security.token_storage')->setToken(null);
         return $this->redirectToRoute('authentication_homepage');
     }
 }

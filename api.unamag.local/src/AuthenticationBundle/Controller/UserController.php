@@ -2,6 +2,7 @@
 
 namespace AuthenticationBundle\Controller;
 
+use AuthenticationBundle\Entity\ActivationLink;
 use AuthenticationBundle\Entity\User;
 use AuthenticationBundle\Form\UserType;
 use FOS\RestBundle\View\View;
@@ -11,6 +12,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\VarDumper\VarDumper;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
@@ -53,8 +56,6 @@ class UserController extends Controller
         $em->flush();
 
         return $user;
-
-
     }
 
 
@@ -108,19 +109,77 @@ class UserController extends Controller
 
         $from = $request->get('from');
         $level = 2;
+        $actif = 0;
 
         if($from === 'client'){
             $level = 2;
+            $actif = 0;
         }else if( $from === 'gestion'){
             $level = 1;
+            $actif = 1;
         }
 
+        $user->setActif($actif);
         $user->setLevel($level);
         $user->setCanonicalFullname($this->get('unamag.tools.service.string')->canonicolize($user->getFirstname().' '.$user->getLastname()));
 
+        $activation = $this->generateActivationLink($user);
+
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
+        $em->persist($activation);
         $em->flush();
+
+
+        $message = new \Swift_Message('Confirmation d\'inscription');
+        $message->setFrom(['projet@simed.fr'])
+            ->setTo($user->getMail())
+//                ->setTo(['hermesalexis@gmail.com'])
+        ->setBody(
+            $this->renderView('@Authentication/Emails/registration.html.twig', array('name'=> $user->getFirstname().' '.$user->getLastname(),'hash' => $activation->getHash())),
+            'text/html'
+        );
+        $this->get('mailer')->send($message);
+
+        return $user;
+    }
+
+    public function generateActivationLink(User $user){
+        $activation = new ActivationLink();
+        $activation->setSalt($this->randomString());
+        $activation->setUser($user);
+        $activation->setHash($this->get('unamag.service.user')->encodePassword($activation->getSalt().$user->getMail()));
+        $date = new \DateTime('now');
+        $date->add(new \DateInterval('P7D'));
+        $activation->setExpirationDate($date);
+        return $activation;
+
+    }
+
+    private function randomString($length = 6) {
+        $str = "";
+        $characters = array_merge(range('A','Z'), range('a','z'), range('0','9'));
+        $max = count($characters) - 1;
+        for ($i = 0; $i < $length; $i++) {
+            $rand = mt_rand(0, $max);
+            $str .= $characters[$rand];
+        }
+        return $str;
+    }
+
+    /**
+     * @Rest\View()
+     * @Rest\Post("/users/actif")
+     */
+    public function changeActifStatutAction(Request $request){
+        $id = $request->get('id');
+        /**  @var $user User */
+        $user = $this->get('unamag.service.user')->findOneOr404($id);
+        if($user){
+            $user->setActif(!$user->getActif());
+            $em = $this->getDoctrine()->getManager();
+            $em->flush();
+        }
 
         return $user;
     }

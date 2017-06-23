@@ -19,7 +19,7 @@ class UserController extends Controller
 {
     public function indexAction()
     {
-        if($this->get('session')->get('User')){
+        if($this->getUser()){
             return $this->redirectToRoute('publication_index');
         }
 

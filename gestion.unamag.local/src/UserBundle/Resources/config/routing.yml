@@ -2,6 +2,10 @@ user_homepage:
     path:     /
     defaults: { _controller: UserBundle:User:index }
 
+user_activation:
+    path:     /changeActif
+    defaults: { _controller: UserBundle:User:changeActif }
+
 user_show:
     path:     /{id}/show
     defaults: { _controller: UserBundle:User:getUser }
@@ -9,3 +13,5 @@ user_show:
 user_edit:
     path:     /{id}/edit
     defaults: { _controller: UserBundle:User:editUser }
+
+

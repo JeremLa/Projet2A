@@ -10,3 +10,4 @@ parameters:
         publication:
                     get: "%api.url%/publication/show"
                     get_all: "%api.url%/publication"
+        activation: "%api.url%/activation"

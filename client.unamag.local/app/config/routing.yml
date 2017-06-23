@@ -10,6 +10,3 @@ user:
     resource: "@UserBundle/Resources/config/routing.yml"
     prefix:   /
 
-test:
-    resource: "@PublicationBundle/Resources/config/routing.yml"
-    prefix:   /
