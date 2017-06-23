@@ -47,7 +47,7 @@ class Historical
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date_create", type="Date")
+     * @ORM\Column(name="date_create", type="date")
      */
     private $dateCreate;
 
@@ -143,4 +143,3 @@ class Historical
         $this->dateCreate = $dateCreate;
     }
 }
-
