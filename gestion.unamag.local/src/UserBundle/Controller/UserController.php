@@ -26,8 +26,8 @@ class UserController extends Controller
         $page = $request->get('page') ? $request->get('page') : 1;
 
         $url = $this->getParameter('api')['user']['get_all'];
-        $response = APIRequest::get($url, [], ['page' => $page, 'limit' => 1]);
-        
+        $response = APIRequest::get($url, [], ['page' => $page, 'limit' => 10]);
+
         return $this->render('UserBundle:User:index.html.twig', [
             'response' => $response->body
         ]);
@@ -80,12 +80,41 @@ class UserController extends Controller
         return $this->render('UserBundle:User:edit.html.twig', array('form' => $form->createView(), 'formPassword' => $formPassword->createView()));
     }
 
-public function changeActifAction(Request $request){
-        $url = $this->getParameter('api')['user']['activation'];
-        $response = APIRequest::post($url, [], ['id' => $request->get('id')]);
+    public function changeActifAction(Request $request){
+            $url = $this->getParameter('api')['user']['activation'];
+            $response = APIRequest::post($url, [], ['id' => $request->get('id')]);
 
-        return new JsonResponse("",$response->code);
-}
+            return new JsonResponse("",$response->code);
+    }
 
+    public function searchAction(Request $request){
 
+        $page = $request->get('page') ? $request->get('page') : 1;
+        $search = $request->get('search') ? $request->get('search') : '';
+
+        $url = $this->getParameter('api')['user']['search'];
+
+        APIRequest::jsonOpts(true);
+
+        $response = APIRequest::get($url, [], [
+            'page' => $page,
+            'search' => $search
+        ])->body;
+
+        $return = [];
+
+        foreach ($response as $key=>$value){
+            if($key === 'users'){
+                $return[$key]['view'] = $this->renderView('@User/User/index-partial/user-list.html.twig', [
+                    'response' => ['users' => $value]
+                ]);
+            }elseif ($key === 'pagination'){
+                $return[$key]['view'] = $this->renderView('@User/User/index-partial/pagination.html.twig', [
+                    'response' => ['pagination' => $value]
+                ]);
+            }
+        }
+
+        return new JsonResponse($return);
+    }
 }

@@ -189,8 +189,8 @@ class UserController extends Controller
      * @Rest\Get("/users/search")
      */
     public function searchAction(Request $request){
-        $limit = $request->get('limit') ? $request->get('limit') : 15;
-        $page = $request->get('page') ? $request->get('page') : 1;
+        $limit = $request->get('limit') ? $request->get('limit') : 1;
+        $page = $request->get('page') ? $request->get('page') : 15;
         $search = $request->get('search');
 
         $em = $this->getDoctrine()->getManager();
@@ -199,8 +199,8 @@ class UserController extends Controller
         $pagination = array(
             'page' => $page,
             'nbPages' => ceil(count($users) / $limit),
-            'nomRoute' => 'publication_list',
-            'paramsRoute' => array()
+            'nomRoute' => 'user_search',
+            'paramsRoute' => ['search' => $search]
         );
 
         return array(
