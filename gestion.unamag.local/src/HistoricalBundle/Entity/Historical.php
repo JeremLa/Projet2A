@@ -100,7 +100,7 @@ class Historical
         $this->description = $description;
     }
 
-    public function addUser($user)
+    public function addUser(User $user)
     {
         $this->users[] = $user;
 

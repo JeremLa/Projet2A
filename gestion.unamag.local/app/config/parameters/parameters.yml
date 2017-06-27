@@ -14,3 +14,5 @@ parameters:
             get_all: "%api.url%/publication"
             create: "%api.url%/publication/new"
             update: "%api.url%/publication/update"
+        historical:
+            create: "%api.url%/historical/new"

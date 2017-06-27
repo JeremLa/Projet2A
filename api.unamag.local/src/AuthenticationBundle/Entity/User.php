@@ -2,8 +2,9 @@
 
 namespace AuthenticationBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\Date;
+use HistoricalBundle\Entity\Historical;
 
 /**
  * User
@@ -112,6 +113,18 @@ class User
      * @ORM\Column(name="actif", type="integer", options={"default":1})
      */
     private $actif = 1;
+
+
+    /**
+     * @ORM\ManyToMany(targetEntity="HistoricalBundle\Entity\Historical", mappedBy="users")
+     */
+    private $historical;
+
+    function __construct()
+    {
+        $this->historical = new ArrayCollection();
+    }
+
 
     /**
      * Get id
@@ -336,5 +349,35 @@ class User
     {
         $this->actif = $actif;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getHistorical()
+    {
+        return $this->historical;
+    }
+
+    /**
+     * @param mixed $historical
+     */
+    public function setHistorical($historical)
+    {
+        $this->historical = $historical;
+    }
+
+    public function addHistorical(Historical $historical)
+    {
+        $this->$historical[] = $historical;
+
+        return $this;
+    }
+
+    public function removeHistorical(Historical $historical)
+    {
+        $this->historical->removeElement($historical);
+    }
+
+
 }
 

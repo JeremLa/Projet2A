@@ -1,0 +1,4 @@
+historical_all:
+    path:   /all
+    defaults: { _controller: "HistoricalBundle:Historical:index" }
+    methods:  GET

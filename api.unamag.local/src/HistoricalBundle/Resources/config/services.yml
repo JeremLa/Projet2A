@@ -2,3 +2,7 @@ services:
 #    historical.example:
 #        class: HistoricalBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
+    unamag.service.historical:
+            class: HistoricalBundle\Services\HistoricalService
+            arguments:
+                - "@doctrine.orm.entity_manager"

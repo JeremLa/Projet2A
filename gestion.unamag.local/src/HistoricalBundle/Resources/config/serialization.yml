@@ -1,0 +1,45 @@
+HistoricalBundle\Entity\Historical:
+    attributes:
+        id:
+            groups: ['histo', 'user']
+        methode:
+            groups: ['histo', 'user']
+        description:
+            groups: ['histo', 'user']
+        users:
+            groups: ['histo']
+        dateCreate:
+            groups: ['histo', 'user']
+
+AuthenticationBundle\Entity\User:
+    attributes:
+        id:
+            groups: ['user','histo']
+        firstname:
+            groups: ['user','histo']
+        lastname:
+            groups: ['user','histo']
+        canonicalFullname:
+            groups: ['user']
+        adress:
+            groups: ['user']
+        city:
+            groups: ['user']
+        zipCode:
+            groups: ['user']
+        tel:
+            groups: ['user']
+        mail:
+            groups: ['user']
+        password:
+            groups: ['user']
+        birthCity:
+            groups: ['user']
+        birthDate:
+            groups: ['user']
+        level:
+            groups: ['user']
+        actif:
+            groups: ['user']
+        historical:
+            groups: ['user']

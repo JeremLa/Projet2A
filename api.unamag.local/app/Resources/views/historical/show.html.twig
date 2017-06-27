@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Historical</h1>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ historical.id }}</td>
+            </tr>
+            <tr>
+                <th>Methode</th>
+                <td>{{ historical.methode }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ historical.description }}</td>
+            </tr>
+            <tr>
+                <th>Datecreate</th>
+                <td>{% if historical.dateCreate %}{{ historical.dateCreate|date('Y-m-d') }}{% endif %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('historical_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('historical_edit', { 'id': historical.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

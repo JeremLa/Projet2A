@@ -40,6 +40,14 @@ $(document).ready(function () {
             })
 
         })
-    })
+    });
 
+    $('#recherche').type({
+
+        source : 'http://gestion.unamag.local/users',
+        select: function (event, ui) {
+            $('#recherche').val(ui.item.value);
+        }
+
+    });
 });
