@@ -70,7 +70,7 @@
                                     <h4>{{ publication.title }}</h4>
                                 </div>
                                 <div class="col-md-6 text-right">
-                                    <h4><span class="glyphicon glyphicon-user"></span>0</h4>
+                                    <h4><span class="glyphicon glyphicon-user"></span> {{ publication.subscription|length }}</h4>
                                 </div>
                             </div>
                             <p>{{ publication.description|length > 25 ?  publication.description|slice(0, 25) ~ '...' : publication.description }}</p>

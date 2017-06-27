@@ -120,11 +120,20 @@ class User
      */
     private $historical;
 
+
+
+
+    /**
+     * @ORM\OneToMany(targetEntity="SubscriptionBundle\Entity\Subscription", mappedBy="user")
+     */
+    private $subscription;
+
     function __construct()
     {
         $this->historical = new ArrayCollection();
-    }
 
+        $this->subscription = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -353,6 +362,7 @@ class User
     /**
      * @return mixed
      */
+
     public function getHistorical()
     {
         return $this->historical;
@@ -378,6 +388,20 @@ class User
         $this->historical->removeElement($historical);
     }
 
+
+
+    public function getSubscription()
+    {
+        return $this->subscription;
+    }
+
+    /**
+     * @param mixed $subscription
+     */
+    public function setSubscription($subscription)
+    {
+        $this->subscription = $subscription;
+    }
 
 }
 

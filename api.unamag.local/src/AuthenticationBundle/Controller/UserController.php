@@ -25,6 +25,16 @@ class UserController extends Controller
 
     /**
      * @Rest\View(serializerGroups={"user"})
+     * @Rest\Get("/user/bymail")
+     */
+    public function getUserByMailAction(Request $request)
+    {
+        $user = $this->get('unamag.service.user')->findByMailOrFalse($request->get('mail'));
+        return $user;
+    }
+
+    /**
+     * @Rest\View(serializerGroups={"user"})
      * @Rest\Get("/user/{id}")
      */
     public function getUserAction($id)
@@ -36,7 +46,8 @@ class UserController extends Controller
     /**
      * @Rest\View(serializerGroups={"user"})
      * @Rest\Post("/user/edit")
-     */
+    */
+
     public function editUserAction(Request  $request)
     {
         /**
@@ -51,12 +62,12 @@ class UserController extends Controller
         $userDb = $this->get('unamag.service.user')->findOneOr404($user->getId());
         $userDb = $serializer->deserialize($request->get('serializeObject'),User::class, 'json',  array('object_to_populate' => $userDb));
 
-
         $em = $this->getDoctrine()->getManager();
         $em->flush();
 
         return $user;
     }
+
 
 
     /**
@@ -190,8 +201,8 @@ class UserController extends Controller
      * @Rest\Get("/users/search")
      */
     public function searchAction(Request $request){
-        $limit = $request->get('limit') ? $request->get('limit') : 15;
-        $page = $request->get('page') ? $request->get('page') : 1;
+        $limit = $request->get('limit') ? $request->get('limit') : 1;
+        $page = $request->get('page') ? $request->get('page') : 15;
         $search = $request->get('search');
 
         $em = $this->getDoctrine()->getManager();
@@ -200,8 +211,8 @@ class UserController extends Controller
         $pagination = array(
             'page' => $page,
             'nbPages' => ceil(count($users) / $limit),
-            'nomRoute' => 'publication_list',
-            'paramsRoute' => array()
+            'nomRoute' => 'user_search',
+            'paramsRoute' => ['search' => $search]
         );
 
         return array(

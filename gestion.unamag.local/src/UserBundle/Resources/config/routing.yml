@@ -2,6 +2,10 @@ user_homepage:
     path:     /
     defaults: { _controller: UserBundle:User:index }
 
+user_search:
+    path:     /search
+    defaults: { _controller: UserBundle:User:search }
+
 user_activation:
     path:     /changeActif
     defaults: { _controller: UserBundle:User:changeActif }

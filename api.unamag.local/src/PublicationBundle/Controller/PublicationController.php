@@ -16,13 +16,13 @@ use Symfony\Component\VarDumper\VarDumper;
 class PublicationController extends Controller
 {
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"publication"})
      * @Rest\Post("/publication")
      */
     public function indexAction(Request $request)
     {
-        $limit = $request->get('limit');
-        $page = $request->get('page');
+        $limit = $request->get('limit') ? $request->get('limit') : 5;
+        $page = $request->get('page') ? $request->get('page') : 1;
 
         $em = $this->getDoctrine()->getManager();
         $publications = $em->getRepository('PublicationBundle:Publication')->findAllPagineEtTrie($page, $limit);
@@ -41,7 +41,7 @@ class PublicationController extends Controller
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"publication"})
      * @Rest\Post("/publication/new")
      */
     public function newAction(Request $request)
@@ -65,7 +65,7 @@ class PublicationController extends Controller
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"publication"})
      * @Rest\Get("/publication/show")
      */
     public function showAction(Request $request)
@@ -74,7 +74,7 @@ class PublicationController extends Controller
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"publication"})
      * @Rest\Put("/publication/update")
      */
     public function editAction(Request $request)
@@ -105,7 +105,7 @@ class PublicationController extends Controller
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"publication"})
      * @Rest\Post("/publication/search")
      */
     public function searchAction(Request $request){

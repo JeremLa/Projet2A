@@ -8,6 +8,9 @@ parameters:
             login: "%api.url%/users/login"
             update: "%api.url%/user/edit"
         publication:
-                    get: "%api.url%/publication/show"
-                    get_all: "%api.url%/publication"
+            get: "%api.url%/publication/show"
+            get_all: "%api.url%/publication"
         activation: "%api.url%/activation"
+        subscription:
+            get_all: "%api.url%/subscriptions"
+            get_by_user: "%api.url%/subscriptions/user"

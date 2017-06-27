@@ -23,13 +23,14 @@ class PublicationController extends Controller
      */
     public function indexAction()
     {
+        $this->get('security.authentication.provider.dao.main');
 
         $url = $this->getParameter('api')[PubliConst::KEYPUBLICATION]['get_all'];
 
         $response = APIRequest::get($url, [], []);
 
         return $this->render('PublicationBundle:publication:index.html.twig', array(
-            'publications' => $response->body,
+            'response' => $response->body,
         ));
     }
 

@@ -1,20 +1,32 @@
 {% extends '@User/userLayout.html.twig' %}
 
+{% block title %}
+    S'enregistrer
+{% endblock %}
+
 {% block content %}
-    <header class="w3-container w3-teal">
-        <h2>{{ 'auth.connect'|trans }}</h2>
-    </header>
+    <div class="w3-black w3-opacity-min w3-padding-16" id="home">
+        <div class="w3-container">
 
-    <div class="w3-container">
-        <div>
-            {% for flashErrors in app.session.flashbag.get('errors') %}
-                <p class="w3-panel w3-orange">{{ flashErrors }}</p>
-            {% endfor %}
+            <header class="w3-container">
+                <h2>{{ 'auth.account'|trans }}</h2>
+            </header>
+
+            <div>
+                {% for flashErrors in app.session.flashbag.get('errors') %}
+                    <p class="w3-panel w3-orange">{{ flashErrors }}</p>
+                {% endfor %}
+            </div>
+
+            {{ form_start(form, { 'attr': {'class': 'w3-container'} }) }}
+                {{ form_widget(form) }}
+                {#<p><button type="submit" class="w3-btn w3-blue-grey">Enregistrer</button></p>#}
+            <div class="w3-row w3-padding-16">
+            <button type="submit" class="w3-btn w3-small w3-left w3-green w3-col s5">Créer un compte</button>
+            <a href="{{ path('user_homepage') }}" type="submit" class="w3-btn w3-small w3-right w3-red w3-col s5">Annuler</a>
+            </div>
+            <a href="{{ path('authentication_login') }}" class="w3-col s5 w3-text-blue w3-medium">Se connecter</a>
+            {{ form_end(form) }}
         </div>
-
-        {{ form_start(form, { 'attr': {'class': 'w3-container'} }) }}
-            {{ form_widget(form) }}
-            <p><button type="submit" class="w3-btn w3-blue-grey">Enregistrer</button></p>
-        {{ form_end(form) }}
     </div>
 {% endblock %}

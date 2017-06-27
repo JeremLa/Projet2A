@@ -5,6 +5,7 @@ namespace PublicationBundle\Controller;
 use PublicationBundle\Entity\Publication;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\VarDumper\VarDumper;
@@ -122,5 +123,37 @@ class PublicationController extends Controller
             'publication' => $publication,
             'form' => $editForm->createView(),
         ));
+    }
+
+    public function searchAction(Request $request)
+    {
+
+        $page = $request->get('page') ? $request->get('page') : 1;
+        $search = $request->get('search') ? $request->get('search') : '';
+
+        $url = $this->getParameter('api')['publication']['search'];
+
+        APIRequest::jsonOpts(true);
+
+        $response = APIRequest::get($url, [], [
+            'page' => $page,
+            'search' => $search
+        ])->body;
+
+        $return = [];
+
+        foreach ($response as $key => $value) {
+            if ($key === 'users') {
+                $return[$key]['view'] = $this->renderView('@User/User/index-partial/user-list.html.twig', [
+                    'response' => ['users' => $value]
+                ]);
+            } elseif ($key === 'pagination') {
+                $return[$key]['view'] = $this->renderView('@User/User/index-partial/pagination.html.twig', [
+                    'response' => ['pagination' => $value]
+                ]);
+            }
+        }
+
+        return new JsonResponse($return);
     }
 }

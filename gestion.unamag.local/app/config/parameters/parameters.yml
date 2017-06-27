@@ -9,10 +9,14 @@ parameters:
             login: "%api.url%/users/login"
             update: "%api.url%/user/edit"
             activation: "%api.url%/users/actif"
+            search: "%api.url%/users/search"
         publication:
             get: "%api.url%/publication/show"
             get_all: "%api.url%/publication"
             create: "%api.url%/publication/new"
             update: "%api.url%/publication/update"
+            search: "%api.url%/publication/search"
         historical:
             create: "%api.url%/historical/new"
+
+

@@ -1,0 +1,5 @@
+services:
+    unamag.service.subscription:
+        class: SubscriptionBundle\Services\SubscriptionService
+        arguments:
+            - "@doctrine.orm.default_entity_manager"

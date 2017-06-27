@@ -29,11 +29,12 @@ $(document).ready(function () {
                 },
                 error: function (data) {
                     var error = "Une erreur est survenu, merci de re essayer";
-                    $(".errors").html(error);
-                    $(".errors").show();
+                    var $errors = $(".errors");
+                    $errors.html(error);
+                    $errors.show();
                     setTimeout(function () {
-                        $(".errors").hide();
-                        $(".errors").empty();
+                        $errors.hide();
+                        $errors.empty();
                     },3000)
                 }
 

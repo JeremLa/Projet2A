@@ -1,0 +1,86 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}
+    Abonnements
+{% endblock %}
+
+{% block content %}
+    <div class="w3-black w3-opacity-min w3-padding-16" id="home">
+        <div class="w3-container">
+
+            <div>
+                <h2>{{ 'title.subscription'|trans }}</h2>
+            </div>
+
+            <!-- Trigger/Open the Modal -->
+            <span onclick="document.getElementById('id01').style.display='block'">Légende</span>
+
+            <!-- The Modal -->
+            <div id="id01" class="w3-modal">
+                <div class="w3-modal-content">
+                    <div class="w3-container w3-text-black">
+                        <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                        <p class="w3-leftbar w3-border-green w3-padding-small">Abonnement en cours</p>
+                        <p class="w3-leftbar w3-border-red w3-padding-small">Plus que deux mois avant la fin de l'abonnement</p>
+                    </div>
+                </div>
+            </div>
+
+
+
+            {% for subscription in subscriptions %}
+
+                {% set border = 'w3-border-green' %}
+                {% if date('+2 months') >= date(subscription.dateEnd) %}
+                    {% set border = 'w3-border-red' %}
+                {% endif %}
+
+                <div class="w3-card-2 w3-display-container w3-margin-bottom w3-topbar w3-bottombar w3-leftbar and w3-rightbar {{ border }}" style="transition:0.5s;width:100%">
+                    <div>
+                        <img src="data:image/jpeg;base64,{{ subscription.publication.picture }}" alt="Pants" style="width:100%">
+                    </div>
+                    {#<div class="w3-display-topleft w3-display-hover w3-large">#}
+                        {#<button type="button" class="w3-white w3-animate-opacity w3-btn w3-margin w3-round" title="Nombre d'abonnés"><i class="fa fa-user w3-text-green"></i> {{ publication.subscription|length }}</button>#}
+                    {#</div>#}
+                    {#<div class="w3-display-topright w3-display-hover w3-large">#}
+                        {#<button type="button" class="w3-white w3-animate-opacity w3-btn w3-margin w3-round" title="S'abonner"><i class="fa fa-shopping-cart w3-text-grey"></i> {{ publication.annualCost }}€</button>#}
+                    {#</div>#}
+                    <div class="w3-display-bottomleft w3-large w3-text-white">
+                        <button type="button" class="w3-white w3-animate-opacity w3-btn w3-margin w3-round" title="Titre">{{ subscription.publication.title }}</button>
+                    </div>
+                    <div class="w3-display-middle w3-large">
+                        <a href="{{ path('publication_show', { 'id': subscription.publication.id }) }}" class="w3-button w3-round w3-green w3-animate-opacity w3-btn w3-round">En savoir plus</a>
+                    </div>
+                </div>
+            {% endfor %}
+
+            {#<div class="w3-card-2 w3-display-container w3-margin-bottom" style="transition:0.5s;width:100%">#}
+                {#<div class="w3-hover-green w3-hover-opacity">#}
+                    {#<img src="data:image/jpeg;base64,{{ publication.picture }}" alt="Pants" style="width:100%">#}
+                {#</div>#}
+                {#<div class="w3-display-topleft w3-display-hover w3-large">#}
+                    {#<button type="button" class="w3-white w3-animate-opacity w3-btn w3-margin w3-round" title="Nombre d'abonnés"><i class="fa fa-user w3-text-green"></i> {{ publication.subscription|length }}</button>#}
+                {#</div>#}
+                {#<div class="w3-display-topright w3-display-hover w3-large">#}
+                    {#<button type="button" class="w3-white w3-animate-opacity w3-btn w3-margin w3-round" title="S'abonner"><i class="fa fa-shopping-cart w3-text-grey"></i> {{ publication.annualCost }}€</button>#}
+                {#</div>#}
+                {#<div class="w3-display-bottomleft w3-display-hover w3-large w3-text-white">#}
+                    {#<button type="button" class="w3-white w3-animate-opacity w3-btn w3-margin w3-round" title="Titre">{{ publication.title }}</button>#}
+                {#</div>#}
+                {#<div class="w3-display-middle w3-display-hover w3-large">#}
+                    {#<a href="{{ path('publication_show', { 'id': publication.id }) }}" class="w3-button w3-round w3-green w3-animate-opacity w3-btn w3-round">En savoir plus</a>#}
+                {#</div>#}
+            {#</div>#}
+
+            {#{{ form_start(form, { 'attr': {'class': 'w3-container'} }) }}#}
+            {#{{ form_widget(form) }}#}
+            {#<p><button type="submit" class="w3-btn w3-blue-grey">Enregistrer</button></p>#}
+            {#<div class="w3-row w3-padding-16">#}
+                {#<button type="submit" class="w3-btn w3-small w3-left w3-green w3-col s5">Créer un compte</button>#}
+                {#<a href="{{ path('user_homepage') }}" type="submit" class="w3-btn w3-small w3-right w3-red w3-col s5">Annuler</a>#}
+            {#</div>#}
+            {#<a href="{{ path('authentication_login') }}" class="w3-col s5 w3-text-blue w3-medium">Se connecter</a>#}
+            {#{{ form_end(form) }}#}
+        </div>
+    </div>
+{% endblock %}

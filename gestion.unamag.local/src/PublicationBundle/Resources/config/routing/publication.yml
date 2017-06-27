@@ -3,6 +3,10 @@ publication_show:
     defaults: { _controller: "PublicationBundle:Publication:show" }
     methods:  GET
 
+publication_search:
+    path:     /search
+    defaults: { _controller: "PublicationBundle:Publication:search" }
+
 publication_new:
     path:     /new
     defaults: { _controller: "PublicationBundle:Publication:new" }

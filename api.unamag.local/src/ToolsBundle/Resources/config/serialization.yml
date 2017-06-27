@@ -1,3 +1,4 @@
+
 HistoricalBundle\Entity\Historical:
     attributes:
         id:
@@ -11,14 +12,30 @@ HistoricalBundle\Entity\Historical:
         dateCreate:
             groups: ['histo', 'user']
 
+SubscriptionBundle\Entity\Subscription:
+    attributes:
+        id:
+            groups: ['subscription', 'user', 'publication']
+        user:
+            groups: ['subscription', 'publication']
+        publication:
+            groups: ['subscription', 'user']
+        status:
+            groups: ['subscription', 'user', 'publication']
+        dateStart:
+            groups: ['subscription', 'user', 'publication']
+        dateEnd:
+            groups: ['subscription', 'user', 'publication']
+
+
 AuthenticationBundle\Entity\User:
     attributes:
         id:
-            groups: ['user','histo']
+            groups: ['user', 'subscription','histo']
         firstname:
-            groups: ['user','histo']
+            groups: ['user', 'subscription','histo']
         lastname:
-            groups: ['user','histo']
+            groups: ['user', 'subscription','histo']
         canonicalFullname:
             groups: ['user']
         adress:
@@ -43,3 +60,25 @@ AuthenticationBundle\Entity\User:
             groups: ['user']
         historical:
             groups: ['user']
+        subscription:
+            groups: ['user']
+
+PublicationBundle\Entity\Publication:
+    attributes:
+        id:
+            groups: ['publication', 'subscription']
+        title:
+            groups: ['publication', 'subscription']
+        canonicalTitle:
+            groups: []
+        countByYear:
+            groups: ['publication']
+        picture:
+            groups: ['publication', 'subscription']
+        description:
+            groups: ['publication']
+        annualCost:
+            groups: ['publication']
+        subscription:
+            groups: ['publication']
+

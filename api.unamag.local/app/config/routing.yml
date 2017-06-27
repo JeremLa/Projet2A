@@ -2,6 +2,10 @@ historical:
     type:     rest
     resource: "@HistoricalBundle/Controller/HistoricalController.php"
 
+subscription:
+    type: rest
+    resource: "@SubscriptionBundle/Controller/SubscriptionController.php"
+
 user:
     type:     rest
     resource: "@AuthenticationBundle/Controller/UserController.php"

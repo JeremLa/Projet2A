@@ -1,0 +1,19 @@
+{% if(response.users|length == 0) %}
+    <p>Aucun résultat.</p>
+{% else %}
+    {% for user in response.users %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ user.firstname }}</td>
+            <td>{{ user.lastname }}</td>
+            <td>{{ user.mail }}</td>
+            <td>{{ user.tel }}</td>
+            <td>{{ user.birthDate }}</td>
+            <td>{{ user.birthCity }}</td>
+            <td>
+                <a class="btn btn-info" href="{{ path('user_show', { 'id': user.id }) }}">{{ 'user.show'|trans }}</a>
+                <a class="btn btn-warning" href="{{ path('user_edit', { 'id': user.id }) }}">{{ 'user.edit'|trans }}</a>
+            </td>
+        </tr>
+    {% endfor %}
+{% endif %}

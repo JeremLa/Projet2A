@@ -4,47 +4,17 @@
 
     <h1>{{ 'user.list'|trans }}</h1>
 
-    {% if response.pagination.nbPages > 0 %}
-        <ul class="pagination">
-            {% if response.pagination.page > 1 %}
-                <li>
-                    <a href="{{ path(response.pagination.nomRoute, response.pagination.paramsRoute|merge({'page': 1})) }}">
-                        <<
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ path(response.pagination.nomRoute,
-                    response.pagination.paramsRoute|merge({'page': response.pagination.page-1})) }}">
-                        <
-                    </a>
-                </li>
-            {% endif %}
 
-            {# Affichage de toutes les pages entre p-4 et p+4 sauf si < 1 ou > nbPages #}
-            {% for p in range(max(response.pagination.page-4, 1), min(response.pagination.page+4, response.pagination.nbPages)) %}
-                <li {% if p == response.pagination.page %}class="active"{% endif %}>
-                    <a href="{{ path(response.pagination.nomRoute, response.pagination.paramsRoute|merge({'page': p})) }}">
-                        {{ p }}
-                    </a>
-                </li>
-            {% endfor %}
+    <div class="col-md-12">
+        <div class="col-md-3 pagination-wrapper">
+            {% include '@User/User/index-partial/pagination.html.twig' %}
+        </div>
 
-            {% if response.pagination.page < response.pagination.nbPages %}
-                <li>
-                    <a href="{{ path(response.pagination.nomRoute,
-                    response.pagination.paramsRoute|merge({'page': response.pagination.page+1})) }}">
-                        >
-                    </a>
-                </li>
-                <li>
-                    <a href="{{ path(response.pagination.nomRoute,
-                    response.pagination.paramsRoute|merge({'page': response.pagination.nbPages})) }}">
-                        >>
-                    </a>
-                </li>
-            {% endif %}
-        </ul>
-    {% endif %}
+        <div class="col-md-offset-6 col-md-3" style="margin-top:20px; margin-bottom:20px">
+            <input type="text" class="form-control search-input" placeholder="Rechercher...">
+        </div>
+    </div>
+
 
     <table class="table table-striped">
         <thead>
@@ -59,22 +29,8 @@
             <th><button class="btn btn-success user-historical-button" data-toggle="modal" data-target="#myModal">Créer un historique de contact</button></th>
         </tr>
         </thead>
-        <tbody>
-        {% for user in response.users %}
-            <tr>
-                <td>{{ loop.index }}</td>
-                <td>{{ user.firstname }}</td>
-                <td>{{ user.lastname }}</td>
-                <td>{{ user.mail }}</td>
-                <td>{{ user.tel }}</td>
-                <td>{{ user.birthDate }}</td>
-                <td>{{ user.birthCity }}</td>
-                <td>
-                    <a class="btn btn-info" href="{{ path('user_show', { 'id': user.id }) }}">{{ 'user.show'|trans }}</a>
-                    <a class="btn btn-warning" href="{{ path('user_edit', { 'id': user.id }) }}">{{ 'user.edit'|trans }}</a>
-                </td>
-            </tr>
-        {% endfor %}
+        <tbody class="user-list">
+            {% include '@User/User/index-partial/user-list.html.twig' %}
         </tbody>
     </table>
 

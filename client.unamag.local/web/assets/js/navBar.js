@@ -1,5 +1,6 @@
 // Change style of navbar on scroll
 window.onscroll = function() {myFunction()};
+
 function myFunction() {
   var navbar = document.getElementById("myNavbar");
   if(navbar){
@@ -20,3 +21,25 @@ function toggleFunction() {
     x.className = x.className.replace(" w3-show", "");
   }
 }
+
+// function dropDownAction() {
+//   var x = document.getElementById("dropDown");
+//   if (x.className.indexOf("w3-show") === -1) {
+//     x.className += " w3-show";
+//   } else {
+//     x.className = x.className.replace(" w3-show", "");
+//   }
+// }
+
+$(document).ready(function(){
+  $('#dropDown-button').on('click', function(){
+
+    var $dropDown = $('#blabla');
+
+    if ($dropDown.hasClass('hidden')){
+      $dropDown.removeClass('hidden')
+    }else{
+      $dropDown.addClass('hidden');
+    }
+  });
+})

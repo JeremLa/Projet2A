@@ -15,7 +15,7 @@
                     <button type="button" class="w3-pink w3-btn w3-margin w3-round disabled" title="Nombre de numéro annuel">{{ publication.countByYear }} <i class="fa fa-book w3-text-white"></i></button>
                 </div>
                 <div class="w3-col s4">
-                    <button type="button" class="w3-light-grey w3-btn w3-margin w3-round disabled" title="Nombre d'abonnés">0 <i class="fa fa-user w3-text-red"></i></button>
+                    <button type="button" class="w3-light-grey w3-btn w3-margin w3-round disabled" title="Nombre d'abonnés">{{ publication.subscription|length }} <i class="fa fa-user w3-text-red"></i></button>
                 </div>
             </div>
             <h1>{{ publication.title|capitalize }}</h1>
