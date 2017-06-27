@@ -64,6 +64,11 @@ class Publication
     private $annualCost;
 
     /**
+     * @ORM\OneToMany(targetEntity="SubscriptionBundle\Entity\Subscription", mappedBy="publication")
+     */
+    private $subscriptions;
+
+    /**
      * Get id
      *
      * @return int
@@ -168,6 +173,22 @@ class Publication
     public function setAnnualCost($annualCost)
     {
         $this->annualCost = $annualCost;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSubscription()
+    {
+        return $this->subscriptions;
+    }
+
+    /**
+     * @param mixed $subscriptions
+     */
+    public function setSubscription($subscriptions)
+    {
+        $this->subscriptions = $subscriptions;
     }
 }
 

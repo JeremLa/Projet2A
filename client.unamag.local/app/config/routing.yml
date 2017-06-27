@@ -1,3 +1,7 @@
+subscription:
+    resource: "@SubscriptionBundle/Resources/config/routing.yml"
+    prefix:   /abonnement
+
 publication:
     resource: "@PublicationBundle/Resources/config/routing.yml"
     prefix:   /publication

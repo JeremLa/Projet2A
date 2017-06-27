@@ -32,6 +32,16 @@ class UserService
         return $user;
     }
 
+    public function findByMailOrFalse(string $mail){
+        $user = $this->em->getRepository("AuthenticationBundle:User")->findOneBy(['mail' => $mail]);
+
+        if(!$user){
+            return false;
+        }
+
+        return $user;
+    }
+
     /**
      * @param string $mail
      * @return User

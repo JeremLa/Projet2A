@@ -1,0 +1,3 @@
+subscription_homepage:
+    path:     /
+    defaults: { _controller: SubscriptionBundle:Subscription:index }

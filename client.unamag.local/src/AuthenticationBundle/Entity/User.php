@@ -8,6 +8,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints\Date;
 use FOS\UserBundle\Model\User as BaseUser;
 
+
 class User implements UserInterface, AdvancedUserInterface
 {
     private $id;
@@ -231,7 +232,7 @@ class User implements UserInterface, AdvancedUserInterface
 
     public function getUsername()
     {
-        return $this->firstname;
+        return $this->mail;
     }
 
     public function eraseCredentials()

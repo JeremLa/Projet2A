@@ -2,6 +2,7 @@
 
 namespace AuthenticationBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints\Date;
 
@@ -112,6 +113,16 @@ class User
      * @ORM\Column(name="actif", type="integer", options={"default":1})
      */
     private $actif = 1;
+
+    /**
+     * @ORM\OneToMany(targetEntity="SubscriptionBundle\Entity\Subscription", mappedBy="user")
+     */
+    private $subscription;
+
+    function __construct()
+    {
+        $this->subscription = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -335,6 +346,22 @@ class User
     public function setActif($actif)
     {
         $this->actif = $actif;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSubscription()
+    {
+        return $this->subscription;
+    }
+
+    /**
+     * @param mixed $subscription
+     */
+    public function setSubscription($subscription)
+    {
+        $this->subscription = $subscription;
     }
 }
 

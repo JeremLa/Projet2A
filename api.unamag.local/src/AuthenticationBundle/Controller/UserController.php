@@ -25,6 +25,16 @@ class UserController extends Controller
 
     /**
      * @Rest\View()
+     * @Rest\Get("/user/bymail")
+     */
+    public function getUserByMailAction(Request $request)
+    {
+        $user = $this->get('unamag.service.user')->findByMailOrFalse($request->get('mail'));
+        return $user;
+    }
+
+    /**
+     * @Rest\View()
      * @Rest\Get("/user/{id}")
      */
     public function getUserAction($id)
@@ -34,9 +44,9 @@ class UserController extends Controller
     }
 
     /**
-     * @Rest\View()
-     * @Rest\Post("/user/edit")
-     */
+ * @Rest\View()
+ * @Rest\Post("/user/edit")
+ */
     public function editUserAction(Request  $request)
     {
         /**
@@ -51,7 +61,6 @@ class UserController extends Controller
         $userDb = $this->get('unamag.service.user')->findOneOr404($user->getId());
         $userDb = $serializer->deserialize($request->get('serializeObject'),User::class, 'json',  array('object_to_populate' => $userDb));
 
-
         $em = $this->getDoctrine()->getManager();
         $em->flush();
 
@@ -59,8 +68,9 @@ class UserController extends Controller
     }
 
 
+
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"user"})
      * @Rest\Get("/users")
      */
     public function getUsersAction(Request $request)

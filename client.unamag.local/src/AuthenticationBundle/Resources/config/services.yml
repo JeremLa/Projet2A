@@ -2,3 +2,5 @@ services:
 #    authentication.example:
 #        class: AuthenticationBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
+    unamag.security.service:
+        class: AuthenticationBundle\Security\User\WebServiceUserProvider

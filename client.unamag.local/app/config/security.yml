@@ -4,8 +4,13 @@ security:
 
     # https://symfony.com/doc/current/security.html#b-configuring-how-users-are-loaded
     providers:
-        in_memory:
-            memory: ~
+#        in_memory:
+#            memory: ~
+        webservice:
+            id: unamag.security.service
+
+    encoders:
+        AuthenticationBundle\Security\Security\User\WebServiceUser: sha512
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs

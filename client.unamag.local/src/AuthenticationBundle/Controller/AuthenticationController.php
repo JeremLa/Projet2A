@@ -12,6 +12,7 @@ namespace AuthenticationBundle\Controller;
 use AuthenticationBundle\Entity\User;
 use AuthenticationBundle\Form\LoginType;
 use AuthenticationBundle\Form\UserType;
+use AuthenticationBundle\Security\User\WebServiceUser;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -79,8 +80,10 @@ class AuthenticationController extends Controller
             /** @var  $user User*/
             $user =  $this->get('unamag.service.user')->cast($user,$response->body);
 
+            $webServiceUser = new WebServiceUser($user->getId(), $user->getMail(), $user->getPassword(), $user->getSalt(), $user->getRoles());
+
             $unauthenticatedToken = new UsernamePasswordToken(
-                $user->getMail(),
+                $webServiceUser,
                 $user->getPassword(),
                 'main',
                 $user->getRoles()
@@ -91,7 +94,7 @@ class AuthenticationController extends Controller
             $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
 
             $this->connectUser($user);
-            return $this->redirectToRoute('publication_index');
+            return $this->redirectToRoute('subscription_homepage');
         }
 
         return $this->render('AuthenticationBundle:user:login.html.twig', array(

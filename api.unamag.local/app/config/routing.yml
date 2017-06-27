@@ -2,6 +2,10 @@ historical:
     resource: "@HistoricalBundle/Resources/config/routing.yml"
     prefix:   /
 
+subscription:
+    type: rest
+    resource: "@SubscriptionBundle/Controller/SubscriptionController.php"
+
 user:
     type:     rest
     resource: "@AuthenticationBundle/Controller/UserController.php"

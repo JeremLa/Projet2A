@@ -1,0 +1,66 @@
+SubscriptionBundle\Entity\Subscription:
+    attributes:
+        id:
+            groups: ['subscription', 'user', 'publication']
+        user:
+            groups: ['subscription', 'publication']
+        publication:
+            groups: ['subscription', 'user']
+        status:
+            groups: ['subscription', 'user', 'publication']
+        dateStart:
+            groups: ['subscription', 'user', 'publication']
+        dateEnd:
+            groups: ['subscription', 'user', 'publication']
+
+AuthenticationBundle\Entity\User:
+    attributes:
+        id:
+            groups: ['user', 'subscription']
+        firstname:
+            groups: ['user', 'subscription']
+        lastname:
+            groups: ['user', 'subscription']
+        canonicalFullname:
+            groups: []
+        adress:
+            groups: ['user']
+        city:
+            groups: ['user']
+        zipCode:
+            groups: ['user']
+        tel:
+            groups: ['user']
+        mail:
+            groups: ['user']
+        password:
+            groups: ['user']
+        birthCity:
+            groups: ['user']
+        birthDate:
+            groups: ['user']
+        level:
+            groups: ['user']
+        actif:
+            groups: ['user']
+        subscription:
+            groups: ['user']
+
+PublicationBundle\Entity\Publication:
+    attributes:
+        id:
+            groups: ['publication', 'subscription']
+        title:
+            groups: ['publication', 'subscription']
+        canonicalTitle:
+            groups: []
+        countByYear:
+            groups: ['publication']
+        picture:
+            groups: ['publication', 'subscription']
+        description:
+            groups: ['publication']
+        annualCost:
+            groups: ['publication']
+        subscription:
+            groups: ['publication']

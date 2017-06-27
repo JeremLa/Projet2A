@@ -32,6 +32,9 @@ auth:
     mail: Identifiant
     password: Mot de passe
 
+title:
+    subscription: Mes Abonnements
+
 welcome: Bienvenu dans l'appli cliente
 
 error:

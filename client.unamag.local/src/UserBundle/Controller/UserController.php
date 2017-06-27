@@ -20,7 +20,7 @@ class UserController extends Controller
     public function indexAction()
     {
         if($this->getUser()){
-            return $this->redirectToRoute('publication_index');
+            return $this->redirectToRoute('subscription_homepage');
         }
 
         $userLogin = new User();
