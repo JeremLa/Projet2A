@@ -1,0 +1,10 @@
+{% if(response.users|length == 0) %}
+    <p>Aucun résultat.</p>
+{% else %}
+    {% for user in response.users %}
+        <tr>
+            <td><div class="btn glyphicon glyphicon-plus add-historical add-{{ user.id }}" data-user-id="{{ user.id }}" data-user-name="{{ user.firstname|capitalize~' '~user.lastname|capitalize }}">{{ user.firstname|capitalize }} {{ user.lastname|capitalize }}</div></td>
+
+        </tr>
+    {% endfor %}
+{% endif %}

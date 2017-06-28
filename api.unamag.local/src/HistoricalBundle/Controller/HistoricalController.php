@@ -44,12 +44,13 @@ class HistoricalController extends Controller
      * @Rest\View(serializerGroups={"histo"})
      * @Rest\Post("/historical/new")
      */
-    public function newAction(Request $request)
+    public function createNewAction(Request $request)
     {
 
         $historical = new Historical();
         $form = $this->createForm(HistoricalType::class, $historical);
         $form->submit($request->request->all());
+
         if ($form->isValid()) {
 
             $em = $this->getDoctrine()->getManager();

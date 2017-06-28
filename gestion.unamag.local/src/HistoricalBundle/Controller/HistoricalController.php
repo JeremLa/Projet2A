@@ -25,26 +25,34 @@ class HistoricalController extends Controller
 
 
     public function createHistoricalAction(Request $request){
+//        VarDumper::dump($request);die;
 
         $histo = new Historical();
         $form = $this->createForm(HistoricalType::class, $histo );
         $form->handleRequest($request);
         if($form->isValid()){
-            if($request->get('from')=='userPage') {
                 $historical['methode'] = $histo->getMethode();
                 $historical['description'] = $histo->getDescription();
                 $historical['dateCreate'] = $histo->getDateCreate()->format('d/m/Y H:i:s');
 
+            if($request->get('from')=='userPage') {
+
                 $historical['users'] = [$request->get('userId')];
-
-                $url = $this->getParameter('api')['historical']['create'];
-
-                $serializer = $this->get('unamag.service.user')->getSerializer();
-
-                $response = APIRequest::post($url, ['Accept' => 'application/json'], http_build_query($historical));
-            }else{
-                VarDumper::dump($histo);die;
             }
+            else{
+                $tab = [];
+                if($request->get('send-user-list') != '') {
+                    $tab = explode(',',$request->get('send-user-list'));
+                }
+                $historical['users'] = $tab;
+            }
+
+            $url = $this->getParameter('api')['historical']['create'];
+
+            $serializer = $this->get('unamag.service.user')->getSerializer();
+
+            $response = APIRequest::post($url, ['Accept' => 'application/json'], http_build_query($historical));
+
 
             if($response->code != 200){
                 $error = $this->get('translator')->trans('historical.error');

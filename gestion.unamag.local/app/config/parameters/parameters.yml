@@ -18,5 +18,6 @@ parameters:
             search: "%api.url%/publication/search"
         historical:
             create: "%api.url%/historical/new"
+            getAll: "%api.url%/historical/all?userId="
 
 

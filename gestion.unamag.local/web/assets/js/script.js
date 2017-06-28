@@ -23,8 +23,9 @@ $(document).ready(function() {
       $.ajax({
         url: 'http://gestion.unamag.local/users/search',
         data: {
-          search: $elem.val(),
-          page: 1
+            search: $elem.val(),
+            page: 1,
+            view: '@User/User/index-partial/user-list.html.twig'
         },
         success: function(data){
           $('.pagination-wrapper').empty().append(data.pagination.view);

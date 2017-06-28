@@ -34,8 +34,6 @@ class UserController extends Controller
         $form = $this->createForm(HistoricalType::class, $historical);
 
 
-
-
         return $this->render('UserBundle:User:index.html.twig', [
             'response' => $response->body,
             'form' => $form->createView()
@@ -51,8 +49,11 @@ class UserController extends Controller
         $historical = new Historical();
         $form = $this->createForm(HistoricalType::class, $historical);
 
+        $urlHisto = $this->getParameter('api')['historical']['getAll'].$id;
+        $responseHisto = APIRequest::get($urlHisto);
 
-        return $this->render('UserBundle:User:show.html.twig', array('client'=> $response->body, 'form' => $form->createView()));
+
+        return $this->render('UserBundle:User:show.html.twig', array('client'=> $response->body, 'historical' => $responseHisto->body,'form' => $form->createView()));
 
     }
 
@@ -118,7 +119,7 @@ class UserController extends Controller
 
         foreach ($response as $key=>$value){
             if($key === 'users'){
-                $return[$key]['view'] = $this->renderView('@User/User/index-partial/user-list.html.twig', [
+                $return[$key]['view'] = $this->renderView($request->get('view'), [
                     'response' => ['users' => $value]
                 ]);
             }elseif ($key === 'pagination'){

@@ -9,6 +9,15 @@
         {#</div>#}
         {#<div class="row">#}
             {#<div class="col-md-offset-4">#}
+        <div>
+            {% for flashErrors in app.session.flashbag.get('errors') %}
+                <p class="alert alert-danger">{{ flashErrors }}</p>
+            {% endfor %}
+
+            {% for flashSuccess in app.session.flashbag.get('success') %}
+                <p class="alert alert-success">{{ flashSuccess }}</p>
+            {% endfor %}
+        </div>
         <div class="errors alert alert-danger hidden"></div>
                 <div class="w3-container">
                     <div class="w3-card">
@@ -50,12 +59,18 @@
             <th>{{ 'historical.methode'|trans }}</th>
             <th>{{ 'historical.description'|trans }}</th>
             <th>{{ 'historical.createDate'|trans }}</th>
+            <th></th>
 
-        {% for histo in client.historical %}
+        {% for histo in historical %}
             <tr>
                 <td>{{ histo.methode }}</td>
                 <td>{{ histo.description }}</td>
                 <td>{{ histo.dateCreate|date('d/m/Y') }}</td>
+                {%  if(histo.users) %}
+                <td></td>
+                {% else %}
+                <td><b>G</b></td>
+                {% endif %}
             </tr>
 
         {% endfor %}
