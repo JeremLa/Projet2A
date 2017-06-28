@@ -52,7 +52,7 @@ class UserController extends Controller
         $urlHisto = $this->getParameter('api')['historical']['getAll'].$id;
         $responseHisto = APIRequest::get($urlHisto);
 
-
+//VarDumper::dump($response->body);die;
         return $this->render('UserBundle:User:show.html.twig', array('client'=> $response->body, 'historical' => $responseHisto->body,'form' => $form->createView()));
     }
 
@@ -97,7 +97,6 @@ class UserController extends Controller
             $url = $this->getParameter('api')['user']['activation'];
             $response = APIRequest::post($url, [], ['id' => $request->get('id')]);
 
-            VarDumper::dump($response);die;
 
             return new JsonResponse("",$response->code);
     }

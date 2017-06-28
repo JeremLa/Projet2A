@@ -26,7 +26,7 @@ class Subscription
     /**
      * @var $users User
      *
-     * @ORM\ManyToOne(targetEntity="AuthenticationBundle\Entity\User", inversedBy="subsciption")
+     * @ORM\ManyToOne(targetEntity="AuthenticationBundle\Entity\User", inversedBy="subscription")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
@@ -34,7 +34,7 @@ class Subscription
     /**
      * @var $publication Publication
      *
-     * @ORM\ManyToOne(targetEntity="PublicationBundle\Entity\Publication", inversedBy="subsciption")
+     * @ORM\ManyToOne(targetEntity="PublicationBundle\Entity\Publication", inversedBy="subscription")
      * @ORM\JoinColumn(name="publication_id", referencedColumnName="id")
      */
     private $publication;

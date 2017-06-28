@@ -134,4 +134,19 @@ class SubscriptionController extends Controller
 //
 //        return $this->redirectToRoute('subscription_index');
 //    }
+
+    /**
+     * @Rest\View(serializerGroups={"subscription"})
+     * @Rest\Post("/subscriptions/activation")
+     */
+    public function editSubscriptionStatusAction(Request $request){
+        $id = $request->get('id');
+/** @var  $sub Subscription */
+        $subscription = $this->get('unamag.service.subscription')->findOneOr404($id);
+
+        $subscription->setStatus(!$subscription->isStatus());
+        $this->get('unamag.service.subscription')->persist($subscription, true);
+
+        return $subscription;
+    }
 }

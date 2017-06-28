@@ -19,5 +19,7 @@ parameters:
         historical:
             create: "%api.url%/historical/new"
             getAll: "%api.url%/historical/all?userId="
+        subscription:
+            activation: "%api.url%/subscriptions/activation"
 
 

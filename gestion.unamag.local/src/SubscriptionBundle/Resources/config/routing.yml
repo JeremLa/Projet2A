@@ -1,0 +1,8 @@
+subscription_homepage:
+    path:     /
+    defaults: { _controller: SubscriptionBundle:Subscription:index }
+
+
+subscription_show:
+    path:   /changeActif
+    defaults: { _controller: SubscriptionBundle:Subscription:changeActif }
