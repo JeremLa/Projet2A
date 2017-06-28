@@ -28,25 +28,46 @@
                     <button>Prolonger</button>
                 </div>
 
+
                 <div class="w3-row w3-center">
 
-                    <button onclick="document.getElementById('confirm-stop').style.display='block'" class="w3-btn w3-white w3-border w3-block w3-border-green">Arrêter</button>
+                    {% if subscription.status %}
+                        <button onclick="document.getElementById('confirm-stop').style.display='block'" class="w3-btn w3-white w3-border w3-block w3-border-green">Arrêter</button>
 
-                    <div id="confirm-stop" class="w3-modal">
-                        <div class="w3-modal-content">
-                            <div class="w3-container w3-text-black">
-                                <span onclick="document.getElementById('confirm-stop').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-                                <br>
-                                <p class="text-justify">En arrêtant votre abonnement, vous ne recevrez plus cette publication. <br>
-                                En consultant les informations de cet abonnement, vous pourrez reprendre les envois tant que l'abonnement n'est pas expiré.</p>
-                            </div>
+                        <div id="confirm-stop" class="w3-modal">
+                            <div class="w3-modal-content">
+                                <div class="w3-container w3-text-black">
+                                    <span onclick="document.getElementById('confirm-stop').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                    <br>
+                                    <p class="text-justify">En arrêtant votre abonnement, vous ne recevrez plus cette publication. <br>
+                                    En consultant les informations de cet abonnement, vous pourrez reprendre les envois tant que l'abonnement n'est pas expiré.</p>
+                                </div>
 
-                            <div class="w3-row w3-center w3-padding-16">
-                                <button class="w3-button w3-green">Confirmer</button>
-                                <button class="w3-button w3-red" onclick="document.getElementById('confirm-stop').style.display='none'">Annuler</button>
+                                <div class="w3-row w3-center w3-padding-16">
+                                    <button class="w3-button w3-green">Confirmer</button>
+                                    <button class="w3-button w3-red" onclick="document.getElementById('confirm-stop').style.display='none'">Annuler</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    {% else %}
+                        <p>Cet abonnement est actuellement arrêté.</p>
+                        <button onclick="document.getElementById('confirm-stop').style.display='block'" class="w3-btn w3-white w3-border w3-block w3-border-green">Reprendre</button>
+
+                        <div id="confirm-stop" class="w3-modal">
+                            <div class="w3-modal-content">
+                                <div class="w3-container w3-text-black">
+                                    <span onclick="document.getElementById('confirm-stop').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                    <br>
+                                    <p class="text-justify">En confirmant, vous recevrez de nouveau votre publication jusqu'au {{ subscription.dateEnd|date('d/m/Y') }}.</p>
+                                </div>
+
+                                <div class="w3-row w3-center w3-padding-16">
+                                    <button class="w3-button w3-green">Confirmer</button>
+                                    <button class="w3-button w3-red" onclick="document.getElementById('confirm-stop').style.display='none'">Annuler</button>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

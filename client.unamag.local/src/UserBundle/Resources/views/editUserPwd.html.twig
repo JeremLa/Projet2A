@@ -1,18 +1,20 @@
 {% extends 'layout.html.twig' %}
 {% block content %}
-    <div class="w3-content w3-container w3-padding-64" id="about">
-        <div class="w3-container w3-teal">
-            <h2>{{ 'user.editPassword'|trans }}</h2>
-        </div>
+    <div class="w3-black w3-opacity-min w3-padding-16 min-height-100" id="home">
+        <div class="w3-container">
+            <div class="w3-padding-16 w3-center">
+                <h2>{{ 'user.editPassword'|trans }}</h2>
+            </div>
 
-        {{ form_start(form, {'method': 'POST'}) }}
-            {{ form_errors(form) }}
-            {{ form_row(form.password) }}
-            {{ form_row(form._token) }}
-            <p>
-                <a href="{{ path('user_profil') }}" class="w3-btn w3-red">Annuler</a>
-                <button type="submit" class="w3-btn w3-green">Enregistrer</button>
-            </p>
-        {{ form_end(form, {'render_rest': false}) }}
+            {{ form_start(form, {'method': 'POST'}) }}
+                {{ form_errors(form) }}
+                {{ form_row(form.password) }}
+                {{ form_row(form._token) }}
+                <p>
+                    <a href="{{ path('user_profil') }}" class="w3-btn w3-red">Annuler</a>
+                    <button type="submit" class="w3-btn w3-green">Enregistrer</button>
+                </p>
+            {{ form_end(form, {'render_rest': false}) }}
+        </div>
     </div>
 {% endblock %}

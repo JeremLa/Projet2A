@@ -45,15 +45,20 @@
                             <div>
                                 <img src="data:image/jpeg;base64,{{ subscription.publication.picture }}" alt="Pants" style="width:100%">
                             </div>
-                            {#<div class="w3-display-topleft w3-display-hover w3-large">#}
-                            {#<button type="button" class="w3-white w3-animate-opacity w3-btn w3-margin w3-round" title="Nombre d'abonnés"><i class="fa fa-user w3-text-green"></i> {{ publication.subscription|length }}</button>#}
-                            {#</div>#}
                             <div class="w3-display-bottomleft w3-large">
-                                <button type="button" class="{{ date }} w3-white w3-animate-opacity w3-btn w3-margin w3-round" title="Date de fin"><i class="fa fa-calendar-times-o"></i> {{ subscription.dateEnd|date('d/m/Y') }}</button>
+                                <button type="button" class="{{ date }} w3-white w3-animate-opacity w3-btn w3-margin w3-round disabled" title="Date de fin"><i class="fa fa-calendar-times-o"></i> {{ subscription.dateEnd|date('d/m/Y') }}</button>
                             </div>
+
                             <div class="w3-display-topleft w3-large">
-                                <button type="button" class="w3-white w3-animate-opacity w3-btn w3-margin w3-round" title="Titre">{{ subscription.publication.title }}</button>
+                                <button type="button" class="w3-white w3-animate-opacity w3-btn w3-margin w3-round disabled" title="Titre">{{ subscription.publication.title }}</button>
                             </div>
+
+                            {% if subscription.status == false %}
+                                <div class="w3-display-topright w3-large">
+                                    <button type="button" class="w3-red w3-text-white w3-animate-opacity w3-btn w3-margin w3-round disabled" title="Titre"><i class="fa fa-lock"></i></button>
+                                </div>
+                            {% endif %}
+
                             <div class="w3-display-middle w3-large">
                                 <a href="{{ path('subscription_show', { 'id': subscription.id }) }}" class="w3-button w3-round w3-green w3-animate-opacity w3-btn w3-round">En savoir plus</a>
                             </div>

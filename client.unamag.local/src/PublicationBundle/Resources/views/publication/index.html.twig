@@ -24,13 +24,13 @@
                                 <img src="data:image/jpeg;base64,{{ publication.picture }}" alt="Pants" style="width:100%">
                             </div>
                             <div class="w3-display-topleft w3-display-hover w3-large">
-                                <button type="button" class="w3-white w3-animate-opacity w3-btn w3-margin w3-round" title="Nombre d'abonnés"><i class="fa fa-user w3-text-green"></i> {{ publication.subscription|length }}</button>
+                                <button type="button" class="w3-white w3-animate-opacity w3-btn w3-margin w3-round disabled" title="Nombre d'abonnés"><i class="fa fa-user w3-text-green"></i> {{ publication.subscription|length }}</button>
                             </div>
                             <div class="w3-display-topright w3-display-hover w3-large">
-                                <button type="button" class="w3-white w3-animate-opacity w3-btn w3-margin w3-round" title="S'abonner"><i class="fa fa-shopping-cart w3-text-grey"></i> {{ publication.annualCost }}€</button>
+                                <button type="button" class="w3-white w3-animate-opacity w3-btn w3-margin w3-round disabled" title="S'abonner"><i class="fa fa-shopping-cart w3-text-grey"></i> {{ publication.annualCost }}€</button>
                             </div>
                             <div class="w3-display-bottomleft w3-display-hover w3-large w3-text-white">
-                                <button type="button" class="w3-white w3-animate-opacity w3-btn w3-margin w3-round" title="Titre">{{ publication.title }}</button>
+                                <button type="button" class="w3-white w3-animate-opacity w3-btn w3-margin w3-round disabled" title="Titre">{{ publication.title }}</button>
                             </div>
                             <div class="w3-display-middle w3-display-hover w3-large">
                                 <a href="{{ path('publication_show', { 'id': publication.id }) }}" class="w3-button w3-round w3-green w3-animate-opacity w3-btn w3-round">En savoir plus</a>
