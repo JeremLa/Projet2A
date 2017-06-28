@@ -44,9 +44,9 @@ class UserController extends Controller
     }
 
     /**
- * @Rest\View(serializerGroups={"user"})
- * @Rest\Post("/user/edit")
- */
+     * @Rest\View(serializerGroups={"user"})
+     * @Rest\Post("/user/edit")
+     */
     public function editUserAction(Request  $request)
     {
         /**
@@ -75,6 +75,7 @@ class UserController extends Controller
      */
     public function getUsersAction(Request $request)
     {
+        
         $limit = $request->get('limit');
         $page = $request->get('page');
 
@@ -195,11 +196,11 @@ class UserController extends Controller
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"user"})
      * @Rest\Get("/users/search")
      */
     public function searchAction(Request $request){
-        $limit = $request->get('limit') ? $request->get('limit') : 1;
+        $limit = $request->get('limit') ? $request->get('limit') : 10;
         $page = $request->get('page') ? $request->get('page') : 15;
         $search = $request->get('search');
 

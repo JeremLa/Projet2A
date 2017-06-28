@@ -28,6 +28,8 @@ class AuthController extends Controller
     public function authenticateAction(Request $request)
     {
         /* @var $user User */
+
+
         $user = new User();
         $errors = [];
         $form = $this->createForm(UserType::class, $user);

@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Historicals list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Methode</th>
+                <th>Description</th>
+                <th>Datecreate</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for historical in historicals %}
+            <tr>
+                <td><a href="{{ path('historical_show', { 'id': historical.id }) }}">{{ historical.id }}</a></td>
+                <td>{{ historical.methode }}</td>
+                <td>{{ historical.description }}</td>
+                <td>{% if historical.dateCreate %}{{ historical.dateCreate|date('Y-m-d') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('historical_show', { 'id': historical.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('historical_edit', { 'id': historical.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('historical_new') }}">Create a new historical</a>
+        </li>
+    </ul>
+{% endblock %}

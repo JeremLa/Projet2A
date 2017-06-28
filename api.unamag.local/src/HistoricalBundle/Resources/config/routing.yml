@@ -1,1 +1,3 @@
-
+historical:
+    resource: "@HistoricalBundle/Resources/config/routing/historical.yml"
+    prefix:   /historical

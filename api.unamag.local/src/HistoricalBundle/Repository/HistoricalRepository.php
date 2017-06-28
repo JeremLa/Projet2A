@@ -10,4 +10,30 @@ namespace HistoricalBundle\Repository;
  */
 class HistoricalRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findByUser($userId){
+        $query = $this->createQueryBuilder('h')
+            ->select('h')
+            ->Join('h.users', 'u')
+            ->addSelect('u')
+            ->Where("u.id = :id ")
+            ->setParameter('id', $userId)
+            ->orderBy("h.dateCreate","ASC")
+            ->getQuery()
+            ->getResult();
+
+        return $query;
+    }
+
+    public function findGlobal(){
+        $query = $this->createQueryBuilder('h')
+            ->select('h')
+            ->LeftJoin('h.users', 'u')
+            ->groupBy('h')
+            ->Having('count(u) = 0 ')
+            ->orderBy("h.dateCreate","ASC")
+            ->getQuery()
+            ->getResult();
+
+        return $query;
+    }
 }

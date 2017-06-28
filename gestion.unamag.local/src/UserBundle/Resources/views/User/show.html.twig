@@ -9,6 +9,15 @@
         {#</div>#}
         {#<div class="row">#}
             {#<div class="col-md-offset-4">#}
+        <div>
+            {% for flashErrors in app.session.flashbag.get('errors') %}
+                <p class="alert alert-danger">{{ flashErrors }}</p>
+            {% endfor %}
+
+            {% for flashSuccess in app.session.flashbag.get('success') %}
+                <p class="alert alert-success">{{ flashSuccess }}</p>
+            {% endfor %}
+        </div>
         <div class="errors alert alert-danger hidden"></div>
                 <div class="w3-container">
                     <div class="w3-card">
@@ -26,8 +35,9 @@
                         </div>
                     </div>
                 </div>
-            {#</div>#}
         {#</div>#}
+        {#</div>#}
+
         <div class="row">
             <div class="col-md-offset-4">
                 <a class="btn btn-primary" href="{{ path('user_homepage') }}">{{ 'user.return'|trans }}</a>
@@ -42,8 +52,57 @@
                 <button class="btn{{ class }} user-activation-button" data-id="{{ client.id }}">{{ txt|trans }}</button>
             </div>
         </div>
-        </div>
+
+        <br>
+        <h2>Historiques : </h2><button class="btn btn-success user-historical-button" data-toggle="modal" data-target="#myModal">Créer un historique de contact</button>
+        <table class="table table-striped">
+            <th>{{ 'historical.methode'|trans }}</th>
+            <th>{{ 'historical.description'|trans }}</th>
+            <th>{{ 'historical.createDate'|trans }}</th>
+            <th></th>
+
+        {% for histo in historical %}
+            <tr>
+                <td>{{ histo.methode }}</td>
+                <td>{{ histo.description }}</td>
+                <td>{{ histo.dateCreate|date('d/m/Y') }}</td>
+                {%  if(histo.users) %}
+                <td></td>
+                {% else %}
+                <td><b>G</b></td>
+                {% endif %}
+            </tr>
+
+        {% endfor %}
+        </table>
+    </div>
+
 </div>
+
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Historique de contact</h4>
+                </div>
+                <div class="modal-body">
+                    {{ form_start(form, {'method': 'POST', 'action': path('historical_create')}) }}
+                    <input type="hidden" id="userId" name="userId" value={{ client.id }}>
+                    <input type="hidden" id="from" name="from" value="userPage">
+                    {{ form_row(form.methode) }}
+                    {{ form_row(form.description) }}
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary"></input>
+                </div>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}

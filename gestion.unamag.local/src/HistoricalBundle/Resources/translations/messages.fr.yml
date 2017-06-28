@@ -1,0 +1,6 @@
+historical:
+    methode: Méthode de contact
+    description: Description
+    createDate: Date de création
+    error: L'historique n'a pas pu être enregistré veuillez réessayer
+    success: Nouvel historique enregistré

@@ -1,3 +1,17 @@
+
+HistoricalBundle\Entity\Historical:
+    attributes:
+        id:
+            groups: ['histo', 'user']
+        methode:
+            groups: ['histo', 'user']
+        description:
+            groups: ['histo', 'user']
+        users:
+            groups: ['histo']
+        dateCreate:
+            groups: ['histo', 'user']
+
 SubscriptionBundle\Entity\Subscription:
     attributes:
         id:
@@ -13,16 +27,17 @@ SubscriptionBundle\Entity\Subscription:
         dateEnd:
             groups: ['subscription', 'user', 'publication']
 
+
 AuthenticationBundle\Entity\User:
     attributes:
         id:
-            groups: ['user', 'subscription']
+            groups: ['user', 'subscription','histo']
         firstname:
-            groups: ['user', 'subscription']
+            groups: ['user', 'subscription','histo']
         lastname:
-            groups: ['user', 'subscription']
+            groups: ['user', 'subscription','histo']
         canonicalFullname:
-            groups: []
+            groups: ['user']
         adress:
             groups: ['user']
         city:
@@ -42,6 +57,8 @@ AuthenticationBundle\Entity\User:
         level:
             groups: ['user']
         actif:
+            groups: ['user']
+        historical:
             groups: ['user']
         subscription:
             groups: ['user']
@@ -64,3 +81,4 @@ PublicationBundle\Entity\Publication:
             groups: ['publication']
         subscription:
             groups: ['publication']
+

@@ -1,0 +1,7 @@
+historical_homepage:
+    path:     /
+    defaults: { _controller: HistoricalBundle:Historical:index }
+
+historical_create:
+    path:     /new
+    defaults: { _controller: HistoricalBundle:Historical:createHistorical }

@@ -11,6 +11,8 @@ namespace UserBundle\Controller;
 
 use AuthenticationBundle\Entity\User;
 use Doctrine\DBAL\VersionAwarePlatformDriver;
+use HistoricalBundle\Entity\Historical;
+use HistoricalBundle\Form\HistoricalType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use UserBundle\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -28,8 +30,13 @@ class UserController extends Controller
         $url = $this->getParameter('api')['user']['get_all'];
         $response = APIRequest::get($url, [], ['page' => $page, 'limit' => 10]);
 
+        $historical = new Historical();
+        $form = $this->createForm(HistoricalType::class, $historical);
+
+
         return $this->render('UserBundle:User:index.html.twig', [
-            'response' => $response->body
+            'response' => $response->body,
+            'form' => $form->createView()
         ]);
     }
 
@@ -39,10 +46,14 @@ class UserController extends Controller
         $url = $this->getParameter('api')['user']['get'].$id;
         $response = APIRequest::get($url);
 
-//        VarDumper::dump($response);die;
+        $historical = new Historical();
+        $form = $this->createForm(HistoricalType::class, $historical);
 
-        return $this->render('UserBundle:User:show.html.twig', array('client'=> $response->body));
+        $urlHisto = $this->getParameter('api')['historical']['getAll'].$id;
+        $responseHisto = APIRequest::get($urlHisto);
 
+
+        return $this->render('UserBundle:User:show.html.twig', array('client'=> $response->body, 'historical' => $responseHisto->body,'form' => $form->createView()));
     }
 
     public function editUserAction(User $user ,Request $request)

@@ -2,9 +2,9 @@
 
 namespace AuthenticationBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints\Date;
+use HistoricalBundle\Entity\Historical;
 
 /**
  * User
@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints\Date;
  * @ORM\Table(name="entity_user")
  * @ORM\Entity(repositoryClass="AuthenticationBundle\Repository\UserRepository")
  */
-class User implements UserInterface
+class User
 {
     /**
      * @var int
@@ -36,6 +36,13 @@ class User implements UserInterface
      * @ORM\Column(name="lastname", type="string")
      */
     private $lastname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="canonical_fullname", type="string", nullable=true)
+     */
+    private $canonicalFullname;
 
     /**
      * @var string
@@ -100,13 +107,24 @@ class User implements UserInterface
      */
     private $level;
 
-
     /**
      * @var int
      *
      * @ORM\Column(name="actif", type="integer", options={"default":1})
      */
     private $actif = 1;
+
+
+    /**
+     * @ORM\ManyToMany(targetEntity="HistoricalBundle\Entity\Historical", mappedBy="users")
+     */
+    private $historical;
+
+    function __construct()
+    {
+        $this->historical = new ArrayCollection();
+    }
+
 
     /**
      * Get id
@@ -119,11 +137,10 @@ class User implements UserInterface
     }
 
 
-
-    public function setId($id)
-    {
+    public function  setId( $id){
         $this->id = $id;
     }
+
 
     /**
      * @return string
@@ -136,7 +153,7 @@ class User implements UserInterface
     /**
      * @param string $firstname
      */
-    public function setFirstname($firstname)
+    public function setFirstname( $firstname)
     {
         $this->firstname = $firstname;
     }
@@ -152,9 +169,25 @@ class User implements UserInterface
     /**
      * @param string $lastname
      */
-    public function setLastname($lastname)
+    public function setLastname( $lastname)
     {
         $this->lastname = $lastname;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCanonicalFullname()
+    {
+        return $this->canonicalFullname;
+    }
+
+    /**
+     * @param string $canonicalFullname
+     */
+    public function setCanonicalFullname($canonicalFullname)
+    {
+        $this->canonicalFullname = $canonicalFullname;
     }
 
     /**
@@ -184,7 +217,7 @@ class User implements UserInterface
     /**
      * @param string $city
      */
-    public function setCity($city)
+    public function setCity( $city)
     {
         $this->city = $city;
     }
@@ -286,7 +319,7 @@ class User implements UserInterface
     }
 
     /**
-     * @return int
+     * @return mixed
      */
     public function getLevel()
     {
@@ -294,7 +327,7 @@ class User implements UserInterface
     }
 
     /**
-     * @param int $level
+     * @param mixed $level
      */
     public function setLevel($level)
     {
@@ -317,24 +350,38 @@ class User implements UserInterface
         $this->actif = $actif;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getHistorical()
+    {
+        return $this->historical;
+    }
+
+    /**
+     * @param mixed $historical
+     */
+    public function setHistorical($historical)
+    {
+        $this->historical = $historical;
+    }
+
+    public function addHistorical(Historical $historical)
+    {
+        $this->$historical[] = $historical;
+
+        return $this;
+    }
+
+    public function removeHistorical(Historical $historical)
+    {
+        $this->historical->removeElement($historical);
+    }
+
     public function getRoles()
     {
         return array('ROLE_ADMIN');
     }
 
-    public function getSalt()
-    {
-        return null;
-    }
-
-    public function getUsername()
-    {
-        return $this->firstname;
-    }
-
-    public function eraseCredentials()
-    {
-        // TODO: Implement eraseCredentials() method.
-    }
 }
 

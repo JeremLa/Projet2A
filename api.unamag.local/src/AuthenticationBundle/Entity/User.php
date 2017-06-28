@@ -4,7 +4,7 @@ namespace AuthenticationBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\Date;
+use HistoricalBundle\Entity\Historical;
 
 /**
  * User
@@ -114,6 +114,15 @@ class User
      */
     private $actif = 1;
 
+
+    /**
+     * @ORM\ManyToMany(targetEntity="HistoricalBundle\Entity\Historical", mappedBy="users")
+     */
+    private $historical;
+
+
+
+
     /**
      * @ORM\OneToMany(targetEntity="SubscriptionBundle\Entity\Subscription", mappedBy="user")
      */
@@ -121,6 +130,8 @@ class User
 
     function __construct()
     {
+        $this->historical = new ArrayCollection();
+
         $this->subscription = new ArrayCollection();
     }
 
@@ -351,6 +362,34 @@ class User
     /**
      * @return mixed
      */
+
+    public function getHistorical()
+    {
+        return $this->historical;
+    }
+
+    /**
+     * @param mixed $historical
+     */
+    public function setHistorical($historical)
+    {
+        $this->historical = $historical;
+    }
+
+    public function addHistorical(Historical $historical)
+    {
+        $this->$historical[] = $historical;
+
+        return $this;
+    }
+
+    public function removeHistorical(Historical $historical)
+    {
+        $this->historical->removeElement($historical);
+    }
+
+
+
     public function getSubscription()
     {
         return $this->subscription;
@@ -363,5 +402,6 @@ class User
     {
         $this->subscription = $subscription;
     }
+
 }
 

@@ -1,6 +1,6 @@
 historical:
-    resource: "@HistoricalBundle/Resources/config/routing.yml"
-    prefix:   /
+    type:     rest
+    resource: "@HistoricalBundle/Controller/HistoricalController.php"
 
 subscription:
     type: rest

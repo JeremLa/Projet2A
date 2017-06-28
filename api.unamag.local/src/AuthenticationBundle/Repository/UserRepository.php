@@ -34,7 +34,9 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
         $qb = $this->createQueryBuilder('u');
 
         if($search != null){
-            $qb->where("u.canonicalFullname LIKE '%" .$search. "%'");
+            $qb->where("u.canonicalFullname LIKE '%" .$search. "%' AND u.level = 2");
+        }else{
+            $qb->where("u.level = 2");
         }
 
         $qb->orderBy('u.firstname', 'ASC');
