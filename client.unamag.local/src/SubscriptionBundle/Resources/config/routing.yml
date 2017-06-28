@@ -1,3 +1,11 @@
 subscription_homepage:
     path:     /
     defaults: { _controller: SubscriptionBundle:Subscription:index }
+
+subscription_new:
+    path:     /new
+    defaults: { _controller: SubscriptionBundle:Subscription:new }
+
+subscription_show:
+    path:     /show
+    defaults: { _controller: SubscriptionBundle:Subscription:show }

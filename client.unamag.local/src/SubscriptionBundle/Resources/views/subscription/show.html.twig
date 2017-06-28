@@ -1,0 +1,56 @@
+{% extends '@Subscription/subscriptionLayout.html.twig' %}
+
+{% block content %}
+    <div class="w3-black w3-opacity-min w3-padding-16 min-height-100" id="home">
+        <div class="w3-container">
+
+            <div class="w3-padding-16 w3-center">
+                <h2>{{ subscription.publication.title|capitalize }}</h2>
+            </div>
+
+            <div class="w3-card-4">
+                <div class="w3-center" style="min-height: 285px; max-height:285px; line-height: 285px">
+                    <img src="data:image/jpeg;base64,{{ subscription.publication.picture }}" alt="publication">
+                </div>
+
+                <div class="w3-row w3-center">
+
+                    {% set date = 'w3-text-green' %}
+                    {% if date('+2 months') >= date(subscription.dateEnd) %}
+                        {% set date = 'w3-text-red' %}
+                    {% endif %}
+
+                    <button class="disabled w3-text-green"><i class="fa fa-calendar-o"></i> {{ subscription.dateStart|date('d/m/Y') }}</button>
+                    <button class="disabled {{ date }}"><i class="fa fa-calendar-times-o"></i> {{ subscription.dateEnd|date('d/m/Y') }}</button>
+                </div>
+
+                <div class="w3-row w3-center">
+                    <button>Prolonger</button>
+                </div>
+
+                <div class="w3-row w3-center">
+
+
+
+                    <button onclick="document.getElementById('confirm-stop').style.display='block'" class="w3-btn w3-white w3-border w3-border-green w3-round-xlarge">Arrêter</button>
+
+                    <div id="confirm-stop" class="w3-modal">
+                        <div class="w3-modal-content">
+                            <div class="w3-container w3-text-black">
+                                <span onclick="document.getElementById('confirm-stop').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                <p class="text-justify">En arrêtant votre abonnement, vous ne recevrez plus cette publication. <br>
+                                En consultant les informations de cet abonnement, vous pourrez reprendre les envois tant que l'abonnement n'est pas expiré.</p>
+                            </div>
+
+                            <div class="w3-row w3-center">
+                                <button>Confirmer</button>
+                                <button>Annuler</button>
+                            </div>
+                        </div>
+                    </div>
+                    <button>Arrêter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

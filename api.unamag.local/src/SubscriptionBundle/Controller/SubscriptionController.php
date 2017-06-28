@@ -4,6 +4,7 @@ namespace SubscriptionBundle\Controller;
 
 use SubscriptionBundle\Entity\Subscription;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\VarDumper\VarDumper;
@@ -18,12 +19,11 @@ class SubscriptionController extends Controller
      * @Rest\View(serializerGroups={"subscription"})
      * @Rest\Get("/subscriptions")
      */
-    public function getSubscriptionsAction()
+    public function getSubscriptionsAction(Request $request)
     {
-        $em = $this->getDoctrine()->getManager();
-        $subscriptions = $em->getRepository('SubscriptionBundle:Subscription')->findAll();
+        $user = $this->get('unamag.service.user')->findOneOr404($request->get('id'));
 
-        return $subscriptions;
+        return $user->getSubscription();
     }
 
     /**
@@ -32,24 +32,23 @@ class SubscriptionController extends Controller
      */
     public function newAction(Request $request)
     {
+        $user = $this->get('unamag.service.user')->findOneOr404($request->get('user'));
+        $publication = $this->get('unamag.service.publication')->findOneOr404($request->get('publication'));
+
         $subscription = new Subscription();
-        $form = $this->createForm('SubscriptionBundle\Form\SubscriptionType', $subscription);
-        $form->submit($request->request->all());
+        $subscription->setUser($user);
+        $subscription->setPublication($publication);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($subscription);
-            $em->flush();
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($subscription);
+        $em->flush();
 
-            return $subscription;
-        }
-
-        return $form;
+        return $subscription;
     }
 
     /**
      * @Rest\View(serializerGroups={"subscription"})
-     * @Rest\Post("/subscription/show")
+     * @Rest\Get("/subscription/show")
      */
     public function showAction(Request $request)
     {

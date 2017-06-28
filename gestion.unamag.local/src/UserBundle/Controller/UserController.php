@@ -39,6 +39,8 @@ class UserController extends Controller
         $url = $this->getParameter('api')['user']['get'].$id;
         $response = APIRequest::get($url);
 
+//        VarDumper::dump($response);die;
+
         return $this->render('UserBundle:User:show.html.twig', array('client'=> $response->body));
 
     }
@@ -84,6 +86,8 @@ class UserController extends Controller
             $url = $this->getParameter('api')['user']['activation'];
             $response = APIRequest::post($url, [], ['id' => $request->get('id')]);
 
+            VarDumper::dump($response);die;
+
             return new JsonResponse("",$response->code);
     }
 
@@ -105,7 +109,7 @@ class UserController extends Controller
 
         foreach ($response as $key=>$value){
             if($key === 'users'){
-                $return[$key]['view'] = $this->renderView('@User/User/index-partial/user-list.html.twig', [
+                $return[$key]['view'] = $this->renderView($request->get('view'), [
                     'response' => ['users' => $value]
                 ]);
             }elseif ($key === 'pagination'){

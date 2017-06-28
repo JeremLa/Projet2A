@@ -3,6 +3,11 @@ publication_index:
     defaults: { _controller: "PublicationBundle:Publication:index" }
     methods:  GET
 
+publication_byuser:
+    path:     /for-user
+    defaults: { _controller: "PublicationBundle:Publication:getPublicationsForUser" }
+    methods:  GET
+
 publication_show:
     path:     /show
     defaults: { _controller: "PublicationBundle:Publication:show" }

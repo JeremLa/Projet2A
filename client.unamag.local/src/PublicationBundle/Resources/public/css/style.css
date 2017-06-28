@@ -16,8 +16,3 @@ div[class*='w3-card']:hover a{
 .show-info button{
     width: 90px;
 }
-
-.show-info button.disabled{
-    pointer-events: none;
-    cursor: pointer;
-}

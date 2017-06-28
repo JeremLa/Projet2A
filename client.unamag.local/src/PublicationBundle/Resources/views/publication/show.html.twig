@@ -1,26 +1,50 @@
 {% extends '@Publication/publicationLayout.html.twig' %}
 
 {% block content %}
-
-<div class="w3-content w3-container w3-padding-64">
-    <div class="w3-card-2 w3-display-container w3-margin-bottom" style="transition:0.5s;width:100%">
-        <img src="data:image/jpeg;base64,{{ publication.picture }}" style="min-height: 350px; width: 100%;">
-
+    <div class="w3-black w3-opacity-min w3-padding-16 min-height-100" id="home">
         <div class="w3-container">
-            <div class="w3-row show-info">
-                <div class="w3-col s4">
-                    <button type="button" class="w3-green w3-btn w3-margin w3-round disabled" title="S'abonner"><i class="fa fa-shopping-cart w3-text-white"></i> {{ publication.annualCost }}€</button>
-                </div>
-                <div class="w3-col s4">
-                    <button type="button" class="w3-pink w3-btn w3-margin w3-round disabled" title="Nombre de numéro annuel">{{ publication.countByYear }} <i class="fa fa-book w3-text-white"></i></button>
-                </div>
-                <div class="w3-col s4">
-                    <button type="button" class="w3-light-grey w3-btn w3-margin w3-round disabled" title="Nombre d'abonnés">{{ publication.subscription|length }} <i class="fa fa-user w3-text-red"></i></button>
+
+            <div class="w3-padding-16 w3-center">
+                <h2>{{ publication.title|capitalize }}</h2>
+            </div>
+
+            <div class="w3-card-2 w3-display-container w3-margin-bottom" style="transition:0.5s;width:100%">
+                <img src="data:image/jpeg;base64,{{ publication.picture }}" style="min-height: 350px; width: 100%;">
+
+                <div class="w3-container">
+                    <div class="w3-row show-info">
+                        <div class="w3-col s4">
+                            <button class="w3-green w3-btn w3-margin w3-round" title="S'abonner" onclick="document.getElementById('confirm-subscription').style.display='block'"><i class="fa fa-shopping-cart w3-text-white"></i> {{ publication.annualCost }}€</button>
+                        </div>
+                        <div class="w3-col s4">
+                            <button type="button" class="w3-pink w3-btn w3-margin w3-round disabled" title="Nombre de numéro annuel">{{ publication.countByYear }} <i class="fa fa-book w3-text-white"></i></button>
+                        </div>
+                        <div class="w3-col s4">
+                            <button type="button" class="w3-light-grey w3-btn w3-margin w3-round disabled" title="Nombre d'abonnés">{{ publication.subscription|length }} <i class="fa fa-user w3-text-red"></i></button>
+                        </div>
+                    </div>
+                    <p class="text-justify" style="word-wrap: break-word;">{{ publication.description }}</p>
                 </div>
             </div>
-            <h1>{{ publication.title|capitalize }}</h1>
-            <p class="text-justify" style="word-wrap: break-word;">{{ publication.description }}</p>
         </div>
     </div>
-</div>
+
+    <div id="confirm-subscription" class="w3-modal">
+        <div class="w3-modal-content">
+            <div class="w3-container w3-text-black">
+                <div onclick="document.getElementById('confirm-subscription').style.display='none'" class="w3-button w3-display-topright">&times;</div>
+
+                <br>
+
+                <p class="text-justify">Vous êtes sur le point de vous abonner à <strong>{{ publication.title|capitalize }}.</strong>
+                Sur une période de 12 mois, vous recevrez <strong>{{ publication.countByYear }}</strong> numéros.
+                En confirmant vouloir vous abonner à cette publication, vous vous engagez à régler la sommes de <strong>{{ publication.annualCost }} €.</strong></p>
+
+                <div class="w3-padding w3-center response">
+                    <button id="subscribe-validate" class="w3-button w3-green" data-publication-id="{{ publication.id }}">Confirmer</button>
+                    <button class="w3-button w3-red" onclick="document.getElementById('confirm-subscription').style.display='none'">Annuler</button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

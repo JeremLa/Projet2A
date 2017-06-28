@@ -14,7 +14,7 @@ class WebServiceUser implements UserInterface, EquatableInterface
 
     public function __construct($id, $username, $password, $salt, $roles)
     {
-        $this->getId = $id;
+        $this->id = $id;
         $this->username = $username;
         $this->password = $password;
         $this->salt = $salt;

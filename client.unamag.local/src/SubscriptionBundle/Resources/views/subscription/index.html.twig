@@ -1,0 +1,66 @@
+{% extends '@Subscription/subscriptionLayout.html.twig' %}
+
+{% block content %}
+    <div class="w3-black w3-opacity-min w3-padding-16 min-height-100" id="home">
+        <div class="w3-container">
+
+            <div class="w3-padding-16 w3-center">
+                <h2>{{ 'title.subscription'|trans }}</h2>
+            </div>
+
+            {% if subscriptions|length == 0 %}
+
+                <div class="w3-card-2 w3-display-container w3-margin-bottom" style="transition:0.5s;width:100%">
+
+                    <p>Vous n'avez pas encore d'abonnement à une publication.</p>
+                    <a href="{{ path('publication_index') }}" class="w3-button w3-green">Parcourir les publications</a>
+
+                </div>
+
+            {% else %}
+
+                <span onclick="document.getElementById('legende-modal').style.display='block'" class="w3-btn w3-white w3-border w3-border-green w3-round-xlarge">Légende</span>
+
+                <div id="legende-modal" class="w3-modal">
+                    <div class="w3-modal-content">
+                        <div class="w3-container w3-text-black">
+                            <span onclick="document.getElementById('legende-modal').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                            <p class="w3-leftbar w3-border-green w3-padding-small">Abonnement en cours</p>
+                            <p class="w3-leftbar w3-border-red w3-padding-small">Plus que deux mois avant la fin de l'abonnement</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w3-padding-16">
+                    {% for subscription in subscriptions %}
+
+                        {% set border = 'w3-border-green' %}
+                        {% set date = 'w3-text-green' %}
+                        {% if date('+2 months') >= date(subscription.dateEnd) %}
+                            {% set border = 'w3-border-red' %}
+                            {% set date = 'w3-text-red' %}
+                        {% endif %}
+
+                        <div class="w3-card-2 w3-display-container w3-margin-bottom w3-topbar w3-bottombar w3-leftbar and w3-rightbar {{ border }}" style="transition:0.5s;width:100%">
+                            <div>
+                                <img src="data:image/jpeg;base64,{{ subscription.publication.picture }}" alt="Pants" style="width:100%">
+                            </div>
+                            {#<div class="w3-display-topleft w3-display-hover w3-large">#}
+                            {#<button type="button" class="w3-white w3-animate-opacity w3-btn w3-margin w3-round" title="Nombre d'abonnés"><i class="fa fa-user w3-text-green"></i> {{ publication.subscription|length }}</button>#}
+                            {#</div>#}
+                            <div class="w3-display-bottomleft w3-large">
+                                <button type="button" class="{{ date }} w3-white w3-animate-opacity w3-btn w3-margin w3-round" title="Date de fin"><i class="fa fa-calendar-times-o"></i> {{ subscription.dateEnd|date('d/m/Y') }}</button>
+                            </div>
+                            <div class="w3-display-topleft w3-large">
+                                <button type="button" class="w3-white w3-animate-opacity w3-btn w3-margin w3-round" title="Titre">{{ subscription.publication.title }}</button>
+                            </div>
+                            <div class="w3-display-middle w3-large">
+                                <a href="{{ path('subscription_show', { 'id': subscription.id }) }}" class="w3-button w3-round w3-green w3-animate-opacity w3-btn w3-round">En savoir plus</a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

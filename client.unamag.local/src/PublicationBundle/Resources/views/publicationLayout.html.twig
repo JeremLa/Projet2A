@@ -8,3 +8,8 @@
 {% block content %}
 
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/publication/js/script.js') }}"></script>
+{% endblock %}

@@ -20,7 +20,7 @@ class AuthController extends Controller
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"user"})
      * @Rest\Post("/users/login")
      * @param Request $request
      * @return User
@@ -44,7 +44,7 @@ class AuthController extends Controller
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"user"})
      * @Rest\Post("/activation")
      * @param Request $request
      * @return mixed

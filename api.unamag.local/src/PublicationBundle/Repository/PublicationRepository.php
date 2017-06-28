@@ -1,9 +1,12 @@
 <?php
 
 namespace PublicationBundle\Repository;
+use AuthenticationBundle\Entity\User;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use SubscriptionBundle\Entity\Subscription;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+use Symfony\Component\VarDumper\VarDumper;
 
 /**
  * PublicationRepository
@@ -55,5 +58,29 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
         }
 
         return $paginator;
+    }
+
+    public function getPublicationByUser(User $user, $limit = 5, $offset = 0){
+        $userSubscriptions = $user->getSubscription();
+
+        $skiped = [];
+
+        /** @var  $userSubscription Subscription*/
+        foreach ($userSubscriptions as $userSubscription){
+            $skiped[] = $userSubscription->getPublication()->getId();
+        }
+
+        $query = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('p')
+            ->from('PublicationBundle:Publication', 'p');
+
+        if(count($skiped) > 0){
+            $query->where("p.id NOT IN ( " . implode($skiped, ", ") . " )");
+        }
+
+        $query->orderBy('p.id', 'DESC');
+
+        return $query->getQuery()->getResult();
     }
 }

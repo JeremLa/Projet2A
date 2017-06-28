@@ -2,6 +2,7 @@
 namespace PublicationBundle\Services;
 
 
+use AuthenticationBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
 use PublicationBundle\Entity\Publication;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -27,12 +28,14 @@ class PublicationService
     }
 
     public function countSubscription($id){
-
-        return $publication = $this->findOneOr404($id);
-
-
-        VarDumper::dump($publication);die;
+        $publication = $this->findOneOr404($id);
 
         return count($publication->getSubscription());
+    }
+
+    public function getPublicationByUser(User $user){
+        $publications = $this->em->getRepository('PublicationBundle:Publication')->getPublicationByUser($user);
+
+        return $publications;
     }
 }

@@ -106,6 +106,18 @@ class PublicationController extends Controller
 
     /**
      * @Rest\View(serializerGroups={"publication"})
+     * @Rest\Get("/publication/for-user")
+     */
+    public function getPublicationsForUserAction(Request $request){
+        $user = $this->get('unamag.service.user')->findOneOr404($request->get('id'));
+
+        $publications = $this->get('unamag.service.publication')->getPublicationByUser($user);
+
+        return $publications;
+    }
+
+    /**
+     * @Rest\View(serializerGroups={"publication"})
      * @Rest\Post("/publication/search")
      */
     public function searchAction(Request $request){

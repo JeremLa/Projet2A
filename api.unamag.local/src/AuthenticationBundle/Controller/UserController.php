@@ -24,7 +24,7 @@ class UserController extends Controller
 {
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"user"})
      * @Rest\Get("/user/bymail")
      */
     public function getUserByMailAction(Request $request)
@@ -34,7 +34,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"user"})
      * @Rest\Get("/user/{id}")
      */
     public function getUserAction($id)
@@ -44,7 +44,7 @@ class UserController extends Controller
     }
 
     /**
- * @Rest\View()
+ * @Rest\View(serializerGroups={"user"})
  * @Rest\Post("/user/edit")
  */
     public function editUserAction(Request  $request)
@@ -95,7 +95,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"user"})
      * @Rest\Post("/users/new")
      */
     public function createUserAction(Request $request)
@@ -178,7 +178,7 @@ class UserController extends Controller
     }
 
     /**
-     * @Rest\View()
+     * @Rest\View(serializerGroups={"user"})
      * @Rest\Post("/users/actif")
      */
     public function changeActifStatutAction(Request $request){

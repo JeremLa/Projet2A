@@ -10,7 +10,10 @@ parameters:
         publication:
             get: "%api.url%/publication/show"
             get_all: "%api.url%/publication"
+            get_for_user: "%api.url%/publication/for-user"
         activation: "%api.url%/activation"
         subscription:
+            get: "%api.url%/subscription/show"
             get_all: "%api.url%/subscriptions"
             get_by_user: "%api.url%/subscriptions/user"
+            create: "%api.url%/subscription/new"

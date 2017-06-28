@@ -1,13 +1,15 @@
 // Change style of navbar on scroll
-window.onscroll = function() {myFunction()};
+window.onscroll = function() {navChange()};
 
-function myFunction() {
-  var navbar = document.getElementById("myNavbar");
+function navChange() {
+  // var navbar = document.getElementById("myNavbar");
+  var navbar = $("#myNavbar");
   if(navbar){
     if (document.body.scrollTop > 30 || document.documentElement.scrollTop > 30) {
-      navbar.className = "w3-bar" + " w3-animate-top" + " w3-white";
+      navbar.removeClass().addClass('w3-white w3-bar');
+      navbar.find('')
     } else {
-      navbar.className = navbar.className.replace(" w3-animate-top w3-white", "");
+      navbar.removeClass().addClass('w3-text-white w3-bar');
     }
   }
 }
@@ -21,15 +23,6 @@ function toggleFunction() {
     x.className = x.className.replace(" w3-show", "");
   }
 }
-
-// function dropDownAction() {
-//   var x = document.getElementById("dropDown");
-//   if (x.className.indexOf("w3-show") === -1) {
-//     x.className += " w3-show";
-//   } else {
-//     x.className = x.className.replace(" w3-show", "");
-//   }
-// }
 
 $(document).ready(function(){
   $('#dropDown-button').on('click', function(){

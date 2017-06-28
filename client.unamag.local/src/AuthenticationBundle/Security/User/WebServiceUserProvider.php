@@ -21,6 +21,8 @@ class WebServiceUserProvider implements UserProviderInterface
 
         if ($userData) {
 
+
+
             $id = $userData['id'];
             $password = $userData['password'];
             $salt = null;

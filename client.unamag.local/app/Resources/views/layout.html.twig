@@ -4,44 +4,17 @@
 
     {% set user = app.session.get('User') %}
     {% if(user) %}
-    {#<nav class="navbar navbar-default">#}
-        {#<div class="container">#}
-            {#<!-- Brand and toggle get grouped for better mobile display -->#}
-            {#<div class="navbar-header">#}
-                {#<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">#}
-                    {#<span class="sr-only">Toggle navigation</span>#}
-                    {#<span class="icon-bar"></span>#}
-                    {#<span class="icon-bar"></span>#}
-                    {#<span class="icon-bar"></span>#}
-                {#</button>#}
-                {#<a class="navbar-brand" href="/">Unamag</a>#}
-            {#</div>#}
-            {#<ul class="nav navbar-nav navbar-right">#}
-                {#<li><a>{{ user.firstname|capitalize ~ ' ' ~ user.lastname|capitalize }}</a></li>#}
-                {#<li><a href="{{ path('user_get') }}">{{ 'user.myInfo'|trans }}</a></li>#}
-                {#<li><a href="{{ path('user_password') }}">{{ 'user.password'|trans }}</a></li>#}
-                {#<li><a href="{{ path('authentication_logout') }}">{{ 'auth.disconnect'|trans }}</a></li>#}
-            {#</ul>#}
-        {#</div>#}
-    {#</nav>#}
         <!-- Navbar (sit on top) -->
         <div class="w3-top">
-            <div class="w3-bar" id="myNavbar">
-                <a class="w3-bar-item w3-button w3-hover-white w3-hide-medium w3-hide-large w3-right" href="javascript:void(0);" onclick="toggleFunction()" title="Toggle Navigation Menu">
+            <div class="w3-bar w3-text-white" id="myNavbar">
+                <a class="w3-bar-item w3-button w3-hover-white w3-hide-medium w3-hide-large w3-right nav-icon" href="javascript:void(0);" onclick="toggleFunction()" title="Toggle Navigation Menu">
                     <i class="fa fa-bars"></i>
                 </a>
-                <a href="{{ path('user_homepage') }}" class="w3-bar-item w3-button">UNAMAG</a>
-                {#<a href="#contact" class="w3-bar-item w3-button w3-hide-small"><i class="fa fa-envelope"></i> CONTACT</a>#}
-                {#<a href="#" class="w3-bar-item w3-button w3-hide-small" onclick="toggleFunction()">PUBLICATIONS</a>#}
-                <a href="{{ path('user_profil') }}" class="w3-bar-item w3-button w3-hide-small" onclick="toggleFunction()">PROFIL</a>
-                <a href="{{ path('authentication_logout') }}" class="w3-bar-item w3-button w3-hide-small">Déconnexion</a>
+                <a href="{{ path('user_homepage') }}" class="w3-bar-item w3-button nav-title">UNAMAG</a>
             </div>
 
             <!-- Navbar on small screens -->
             <div id="navDemo" class=" w3-card-2 w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium">
-                {#<a href="#about" class="w3-bar-item w3-button" onclick="toggleFunction()">ABOUT</a>#}
-                {#<a href="#portfolio" class="w3-bar-item w3-button" onclick="toggleFunction()">PORTFOLIO</a>#}
-                {#<a href="{{ path('subscription_homepage') }}" class="w3-bar-item w3-button" onclick="toggleFunction()">MES ABONNEMENTS EN COURS</a>#}
                 <div class="w3-bar-item w3-button">
                     <div id="dropDown-button">
                         MES ABONNEMENTS <i class="fa fa-caret-down"></i>
