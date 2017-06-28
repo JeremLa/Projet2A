@@ -66,7 +66,7 @@ class Subscription
         $this->dateStart->format('yyyy-MM-dd');
         $this->dateEnd = clone $this->dateStart;
         $this->extendOneYear();
-        $this->status = false;
+        $this->status = true;
     }
 
     /**
