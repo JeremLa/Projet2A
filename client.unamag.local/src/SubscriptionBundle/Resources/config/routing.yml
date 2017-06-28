@@ -9,3 +9,7 @@ subscription_new:
 subscription_show:
     path:     /show
     defaults: { _controller: SubscriptionBundle:Subscription:show }
+
+subscription_edit_status:
+    path:     /edit/status
+    defaults: { _controller: SubscriptionBundle:Subscription:editStatus }

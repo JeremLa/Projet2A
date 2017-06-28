@@ -48,6 +48,22 @@ class SubscriptionController extends Controller
 
     /**
      * @Rest\View(serializerGroups={"subscription"})
+     * @Rest\Post("/subscription/edit/status")
+     */
+    public function editStateAction(Request $request)
+    {
+        $subscriptionService = $this->get('unamag.service.subscription');
+
+        /** @var $subscription Subscription */
+        $subscription = $subscriptionService->findOneOr404($request->get('id'));
+        $subscription->setStatus(!$subscription->getStatus());
+        $subscriptionService->persist($subscription, true);
+
+        return $subscription;
+    }
+
+    /**
+     * @Rest\View(serializerGroups={"subscription"})
      * @Rest\Get("/subscription/show")
      */
     public function showAction(Request $request)
@@ -61,7 +77,7 @@ class SubscriptionController extends Controller
      * @Rest\View(serializerGroups={"subscription"})
      * @Rest\Post("/subscription/extend")
      */
-    public function editExtensionAction(Request $request)
+    public function editExtendAction(Request $request)
     {
         $subscription = $this->get('unamag.service.subscription')->findOneOr404($request->get('id'));
 
@@ -76,62 +92,31 @@ class SubscriptionController extends Controller
 
     /**
      * @Rest\View(serializerGroups={"subscription"})
-     * @Rest\Get("/subscriptions/user")
+     * @Rest\Get("/subscriptions/user/expired")
      */
-    public function getUsersSubscriptionAction(Request $request){
+    public function getUserExpiredSubscription(Request $request){
         $id = $request->get('id');
 
         $user = $this->get('unamag.service.user')->findOneOr404($id);
 
-        return $user->getSubscription();
+        $em = $this->getDoctrine()->getManager();
+        $publications = $em->getRepository('SubscriptionBundle:Subscription')->getExpiredUserSubscription($user);
+
+        return $publications;
     }
 
-    public function getUserExpiredSubscription(Request $request){
-
-    }
-
+    /**
+     * @Rest\View(serializerGroups={"subscription"})
+     * @Rest\Get("/subscriptions/user")
+     */
     public function getUserInProgressSubscription(Request $request){
+        $id = $request->get('id');
 
+        $user = $this->get('unamag.service.user')->findOneOr404($id);
+
+        $em = $this->getDoctrine()->getManager();
+        $publications = $em->getRepository('SubscriptionBundle:Subscription')->getInProgressUserSubscription($user);
+
+        return $publications;
     }
-
-//    /**
-//     * @Rest\View()
-//     * @Rest\Post("/subscription/edit")
-//     */
-//    public function editAction(Request $request, Subscription $subscription)
-//    {
-//        $deleteForm = $this->createDeleteForm($subscription);
-//        $editForm = $this->createForm('SubscriptionBundle\Form\SubscriptionType', $subscription);
-//        $editForm->handleRequest($request);
-//
-//        if ($editForm->isSubmitted() && $editForm->isValid()) {
-//            $this->getDoctrine()->getManager()->flush();
-//
-//            return $this->redirectToRoute('subscription_edit', array('id' => $subscription->getId()));
-//        }
-//
-//        return $this->render('subscription/edit.html.twig', array(
-//            'subscription' => $subscription,
-//            'edit_form' => $editForm->createView(),
-//            'delete_form' => $deleteForm->createView(),
-//        ));
-//    }
-
-//    /**
-//     * @Rest\View()
-//     * @Rest\Post("/subscription/delete")
-//     */
-//    public function deleteAction(Request $request, Subscription $subscription)
-//    {
-//        $form = $this->createDeleteForm($subscription);
-//        $form->handleRequest($request);
-//
-//        if ($form->isSubmitted() && $form->isValid()) {
-//            $em = $this->getDoctrine()->getManager();
-//            $em->remove($subscription);
-//            $em->flush();
-//        }
-//
-//        return $this->redirectToRoute('subscription_index');
-//    }
 }

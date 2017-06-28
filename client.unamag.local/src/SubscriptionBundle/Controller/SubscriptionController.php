@@ -40,4 +40,14 @@ class SubscriptionController extends Controller
 
         return $this->redirectToRoute('subscription_show', ['id' => $subscription['id']]);
     }
+
+    public function editStatusAction(Request $request){
+        $data = [];
+        $data['id'] = $request->get('id');
+
+        APIRequest::jsonOpts(true);
+        $subscription = APIRequest::post($this->getParameter('api')['subscription']['edit_state'], [], http_build_query($data))->body;
+
+        return $this->redirectToRoute('subscription_show', ['id' => $subscription['id']]);
+    }
 }

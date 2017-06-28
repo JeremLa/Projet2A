@@ -17,3 +17,4 @@ parameters:
             get_all: "%api.url%/subscriptions"
             get_by_user: "%api.url%/subscriptions/user"
             create: "%api.url%/subscription/new"
+            edit_state: "%api.url%/subscription/edit/status"
