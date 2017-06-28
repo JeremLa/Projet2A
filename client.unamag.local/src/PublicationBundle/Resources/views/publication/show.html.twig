@@ -41,7 +41,7 @@
                 En confirmant vouloir vous abonner à cette publication, vous vous engagez à régler la sommes de <strong>{{ publication.annualCost }} €.</strong></p>
 
                 <div class="w3-padding w3-center response">
-                    <button id="subscribe-validate" class="w3-button w3-green" data-publication-id="{{ publication.id }}">Confirmer</button>
+                    <a href="{{ path('subscription_new', { 'id' : publication.id }) }}" class="w3-button w3-green">Confirmer</a>
                     <button class="w3-button w3-red" onclick="document.getElementById('confirm-subscription').style.display='none'">Annuler</button>
                 </div>
             </div>

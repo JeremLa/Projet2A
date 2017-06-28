@@ -33,7 +33,7 @@ class SubscriptionController extends Controller
     {
         $data = [];
         $data['user'] = $this->getUser()->getId();
-        $data['publication'] = $request->get('publication');
+        $data['publication'] = $request->get('id');
 
         APIRequest::jsonOpts(true);
         $subscription = APIRequest::post($this->getParameter('api')['subscription']['create'], [], http_build_query($data))->body;

@@ -2,8 +2,8 @@
 
 {% block body %}
 
-    {% set user = app.session.get('User') %}
-    {% if(user) %}
+    {#{% set user = app.session.get('User') %}#}
+    {% if(app.user) %}
         <!-- Navbar (sit on top) -->
         <div class="w3-top">
             <div class="w3-bar w3-text-white" id="myNavbar">
