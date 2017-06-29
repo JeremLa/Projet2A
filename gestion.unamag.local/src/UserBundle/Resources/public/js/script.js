@@ -266,5 +266,5 @@ $(document).ready(function () {
 
         reset();
     }
-    pagination(5,'.histo','.paginator',3);
+    pagination(10,'.histo','.paginator',3);
 });

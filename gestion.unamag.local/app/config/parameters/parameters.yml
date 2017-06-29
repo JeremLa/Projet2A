@@ -20,6 +20,6 @@ parameters:
             create: "%api.url%/historical/new"
             getAll: "%api.url%/historical/all?userId="
         subscription:
-            activation: "%api.url%/subscriptions/activation"
+            activation: "%api.url%/subscription/edit/status"
 
 
