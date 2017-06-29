@@ -9,40 +9,44 @@ ul{
 }
 
 #onglets{
-    display: none;
+    display: block;
+    border-bottom: 1px solid #CBCBCB;
+    height: auto;
+
+
 }
 #onglets li{
-    position: relative;
-    float: left;
+    /*float: left;*/
+    display: inline-block;
     list-style: none;
-    padding: 2px 5px 7px;
-    margin-right: 5px;
+    padding: 5px 8px;
+    margin-right: 2px;
     border: 1px solid #CBCBCB;
     cursor: pointer;
-    background-color: #EEEEEE;
     /*color: #0D5995;*/
-    z-index: 1;
-    border-radius: 5px;
+
+    border-radius: 2px 2px 0 0;
+    margin-bottom: -1px;
 }
 #onglets .actif{
-    border-bottom: none;
-    font-weight: bold;
-    z-index: 10;
+    font-weight: 600;
+    border-bottom: 1px solid #FFF;
+
 }
-#contenu{
-    clear: both;
-    position: relative;
-    margin: 0 20px;
-    /*padding: 10px;*/
-    border: 5px solid #EEEEEE;
-    z-index: 5;
-    top: -6px;
-    background-color: #EEEEEE;
-    /*color: #0F67A1;*/
-    /*width: 500px;*/
-    overflow: hidden;
-    border-radius: 15px;
-}
+/*#contenu{*/
+    /*clear: both;*/
+    /*position: relative;*/
+    /*margin: 0 20px;*/
+    /*!*padding: 10px;*!*/
+    /*border: 5px solid #EEEEEE;*/
+    /*z-index: 5;*/
+    /*top: -6px;*/
+    /*background-color: #EEEEEE;*/
+    /*!*color: #0F67A1;*!*/
+    /*!*width: 500px;*!*/
+    /*overflow: hidden;*/
+    /*border-radius: 15px;*/
+/*}*/
 
 .paginator {
     display: inline-block;
@@ -51,7 +55,7 @@ ul{
     padding: 1px 2px 4px 2px;
     /*border-top: 1px solid #AEAEAE;*/
     /*border-bottom: 1px solid #FFFFFF;*/
-    background-color: #EEEEEE;
+    background-color: #FFF;
     /*background-image: -webkit-linear-gradient(top, #DBDBDB, #E2E2E2);*/
     /*background-image:    -moz-linear-gradient(top, #DBDBDB, #E2E2E2);*/
     /*background-image:     -ms-linear-gradient(top, #DBDBDB, #E2E2E2);*/
@@ -92,9 +96,9 @@ ul{
     border-radius: 4px;
     border: 1px solid #E3E3E3;
     cursor: pointer;
-    box-shadow: inset 0 1px 0 0 #FFF, 0 1px 2px #666;
+    box-shadow: inset 0 1px 0 0 #FFF, 0 1px 2px #FFF;
     text-shadow: 0 1px 1px #FFF;
-    background-color: #E6E6E6;
+    background-color: #FFF;
     /*background-image: -webkit-linear-gradient(top, #F3F3F3, #D7D7D7);*/
     /*background-image:    -moz-linear-gradient(top, #F3F3F3, #D7D7D7);*/
     /*background-image:     -ms-linear-gradient(top, #F3F3F3, #D7D7D7);*/
@@ -110,4 +114,14 @@ ul{
     /*background-image: -ms-linear-gradient(top, #D0D0D0, #EBEBEB);*/
     /*background-image: -o-linear-gradient(top, #D0D0D0, #EBEBEB);*/
     /*background-image: linear-gradient(top, #D0D0D0, #EBEBEB);*/
+}
+
+button.margin-top-15,
+a.margin-top-15{
+    margin-top: 15px;
+}
+
+button.margin-top-30,
+a.margin-top-30{
+    margin-top: 30px;
 }

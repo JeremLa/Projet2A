@@ -59,10 +59,10 @@ $(document).ready(function () {
                     if(elem.hasClass("btn-danger")){
                         elem.removeClass('btn-danger').addClass('btn-success');
                         elem.html("Redemarrer l'abonnement");
-                        $(".abo-status-"+elem.attr("data-id")).html("Terminer");
+                        $(".abo-status-"+elem.attr("data-id")).html("Arrêté");
                     }else{
                         elem.removeClass('btn-success').addClass('btn-danger');
-                        elem.html("Arreter l'abonnement");
+                        elem.html("Arrêter l'abonnement");
                         $(".abo-status-"+elem.attr("data-id")).html("En cours");
                     }
                 },
