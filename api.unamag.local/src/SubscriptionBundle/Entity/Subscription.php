@@ -63,9 +63,8 @@ class Subscription
     function __construct()
     {
         $this->dateStart = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
-        $this->dateStart->format('yyyy-MM-dd');
-        $this->dateEnd = clone $this->dateStart;
-        $this->extendOneYear();
+        $this->dateEnd = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
+        date_modify($this->dateEnd, '+1 year');
         $this->status = true;
     }
 
@@ -157,10 +156,6 @@ class Subscription
     public function setDateEnd($dateEnd)
     {
         $this->dateEnd = $dateEnd;
-    }
-
-    public function extendOneYear(){
-        $this->dateEnd->modify('+1year');
     }
 }
 

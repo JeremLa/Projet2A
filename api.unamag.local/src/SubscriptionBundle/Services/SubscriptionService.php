@@ -35,11 +35,15 @@ class SubscriptionService
         $this->em->persist($subscription);
 
         if($flush){
-            $this->flush();
+            $this->em->flush();
         }
     }
 
     public function flush(){
         $this->em->flush();
+    }
+
+    public function extendOneYear(Subscription $subscription){
+        $subscription->setDateEnd(clone $subscription->getDateEnd()->modify('+1year'));
     }
 }

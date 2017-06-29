@@ -78,7 +78,7 @@ PublicationBundle\Entity\Publication:
         description:
             groups: ['publication']
         annualCost:
-            groups: ['publication']
+            groups: ['publication', 'subscription']
         subscription:
             groups: ['publication']
 

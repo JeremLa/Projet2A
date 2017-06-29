@@ -33,7 +33,8 @@ auth:
     password: Mot de passe
 
 title:
-    subscription: Mes Abonnements
+    subscription: Mes abonnements
+    expired: Mes abonnements expiré
     publication: Les publications
 
 welcome: Bienvenu dans l'appli cliente

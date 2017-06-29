@@ -15,6 +15,7 @@ parameters:
         subscription:
             get: "%api.url%/subscription/show"
             get_all: "%api.url%/subscriptions"
-            get_by_user: "%api.url%/subscriptions/user"
+            get_all_expired: "%api.url%/subscriptions/expired"
             create: "%api.url%/subscription/new"
             edit_state: "%api.url%/subscription/edit/status"
+            edit_extend: "%api.url%/subscription/edit/extend"

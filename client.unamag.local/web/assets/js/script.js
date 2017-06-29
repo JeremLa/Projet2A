@@ -27,7 +27,7 @@ function toggleFunction() {
 $(document).ready(function(){
   $('#dropDown-button').on('click', function(){
 
-    var $dropDown = $('#blabla');
+    var $dropDown = $('#dropDown-content');
 
     if ($dropDown.hasClass('hidden')){
       $dropDown.removeClass('hidden')
@@ -35,4 +35,24 @@ $(document).ready(function(){
       $dropDown.addClass('hidden');
     }
   });
+
+  $(".modal-opener").each(function(){
+    $(this).on('click', function(){
+      var modalId = $(this).attr('data-modal-id');
+
+      $('#'+modalId).addClass('show');
+
+    });
+  }).children().click(function(e) {
+    return false;
+  });
+
+  $(".modal-closer").each(function(){
+    $(this).on('click', function(e){
+      if(e.target === $(this)[0]){
+        var modalId = $(this).attr('data-modal-id');
+        $('#'+modalId).removeClass('show');
+      }
+    });
+  })
 })

@@ -19,6 +19,15 @@ class SubscriptionController extends Controller
         ]);
     }
 
+    public function expiredAction()
+    {
+        $subscriptions = APIRequest::get($this->getParameter('api')['subscription']['get_all_expired'], [], ['id' => $this->getUser()->getId() ])->body;
+
+        return $this->render('SubscriptionBundle:subscription:expired.html.twig', [
+            'subscriptions' => $subscriptions
+        ]);
+    }
+
     public function showAction(Request $request){
         $subscription = $request->get('id');
 
@@ -47,6 +56,16 @@ class SubscriptionController extends Controller
 
         APIRequest::jsonOpts(true);
         $subscription = APIRequest::post($this->getParameter('api')['subscription']['edit_state'], [], http_build_query($data))->body;
+
+        return $this->redirectToRoute('subscription_show', ['id' => $subscription['id']]);
+    }
+
+    public function editExtendAction(Request $request){
+        $data = [];
+        $data['id'] = $request->get('id');
+
+        APIRequest::jsonOpts(true);
+        $subscription = APIRequest::post($this->getParameter('api')['subscription']['edit_extend'], [], http_build_query($data))->body;
 
         return $this->redirectToRoute('subscription_show', ['id' => $subscription['id']]);
     }

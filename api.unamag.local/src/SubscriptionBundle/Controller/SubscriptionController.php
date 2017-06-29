@@ -2,6 +2,7 @@
 
 namespace SubscriptionBundle\Controller;
 
+use PublicationBundle\Entity\Publication;
 use SubscriptionBundle\Entity\Subscription;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -21,9 +22,41 @@ class SubscriptionController extends Controller
      */
     public function getSubscriptionsAction(Request $request)
     {
-        $user = $this->get('unamag.service.user')->findOneOr404($request->get('id'));
+        $id = $request->get('id');
 
-        return $user->getSubscription();
+        $user = $this->get('unamag.service.user')->findOneOr404($id);
+
+        $em = $this->getDoctrine()->getManager();
+        $subscriptions = $em->getRepository('SubscriptionBundle:Subscription')->getInProgressUserSubscription($user);
+
+        return $subscriptions;
+    }
+
+    /**
+     * @Rest\View(serializerGroups={"subscription"})
+     * @Rest\Get("/subscriptions/expired")
+     */
+    public function getUserExpiredSubscriptionAction(Request $request){
+        $id = $request->get('id');
+
+        $user = $this->get('unamag.service.user')->findOneOr404($id);
+
+        $em = $this->getDoctrine()->getManager();
+        $subscriptions = $em->getRepository('SubscriptionBundle:Subscription')->getExpiredUserSubscription($user);
+
+        $subscriptionService = $this->get('unamag.service.subscription');
+        /** @var $subscription Subscription */
+        foreach ($subscriptions as $subscription)
+        {
+            if($subscription->getStatus()){
+                $subscription->setStatus(false);
+                $subscriptionService->persist($subscription);
+            }
+        }
+
+        $subscriptionService->flush();
+
+        return $subscriptions;
     }
 
     /**
@@ -75,48 +108,19 @@ class SubscriptionController extends Controller
 
     /**
      * @Rest\View(serializerGroups={"subscription"})
-     * @Rest\Post("/subscription/extend")
+     * @Rest\Post("/subscription/edit/extend")
      */
     public function editExtendAction(Request $request)
     {
-        $subscription = $this->get('unamag.service.subscription')->findOneOr404($request->get('id'));
+        $subscriptionService = $this->get('unamag.service.subscription');
+        $subscription = $subscriptionService->findOneOr404($request->get('id'));
 
-        $subscription->extendOneYear();
+        $subscriptionService->extendOneYear($subscription);
 
         $this->get('unamag.service.subscription')->persist($subscription, true);
 
         //TODO add payment when subscription is extended
 
         return $subscription;
-    }
-
-    /**
-     * @Rest\View(serializerGroups={"subscription"})
-     * @Rest\Get("/subscriptions/user/expired")
-     */
-    public function getUserExpiredSubscription(Request $request){
-        $id = $request->get('id');
-
-        $user = $this->get('unamag.service.user')->findOneOr404($id);
-
-        $em = $this->getDoctrine()->getManager();
-        $publications = $em->getRepository('SubscriptionBundle:Subscription')->getExpiredUserSubscription($user);
-
-        return $publications;
-    }
-
-    /**
-     * @Rest\View(serializerGroups={"subscription"})
-     * @Rest\Get("/subscriptions/user")
-     */
-    public function getUserInProgressSubscription(Request $request){
-        $id = $request->get('id');
-
-        $user = $this->get('unamag.service.user')->findOneOr404($id);
-
-        $em = $this->getDoctrine()->getManager();
-        $publications = $em->getRepository('SubscriptionBundle:Subscription')->getInProgressUserSubscription($user);
-
-        return $publications;
     }
 }

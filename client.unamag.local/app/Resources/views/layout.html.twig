@@ -15,13 +15,13 @@
 
             <!-- Navbar on small screens -->
             <div id="navDemo" class=" w3-card-2 w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium">
-                <div class="w3-bar-item w3-button">
+                <div class="w3-bar-item">
                     <div id="dropDown-button">
                         MES ABONNEMENTS <i class="fa fa-caret-down"></i>
                     </div>
-                    <div id="blabla" class="side-padding-30 w3-animate-opacity hidden">
-                        <a href="{{ path('subscription_homepage') }}" class="w3-bar-item w3-button">EN COURS</a>
-                        <a href="#" class="w3-bar-item w3-button">TERMINÉ</a>
+                    <div id="dropDown-content" class="w3-animate-opacity hidden">
+                        <a href="{{ path('subscription_homepage') }}" class="side-padding-30 w3-bar-item w3-button">EN COURS</a>
+                        <a href="{{ path('subscription_expired') }}" class="side-padding-30 w3-bar-item w3-button">TERMINÉ</a>
                     </div>
                 </div>
                 <a href="{{ path('publication_index') }}" class="w3-bar-item w3-button" onclick="toggleFunction()">S'ABONNER</a>

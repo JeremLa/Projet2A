@@ -2,6 +2,10 @@ subscription_homepage:
     path:     /
     defaults: { _controller: SubscriptionBundle:Subscription:index }
 
+subscription_expired:
+    path:     /user/expired
+    defaults: { _controller: SubscriptionBundle:Subscription:expired }
+
 subscription_new:
     path:     /new
     defaults: { _controller: SubscriptionBundle:Subscription:new }
@@ -13,3 +17,7 @@ subscription_show:
 subscription_edit_status:
     path:     /edit/status
     defaults: { _controller: SubscriptionBundle:Subscription:editStatus }
+
+subscription_edit_extend:
+    path:     /edit/extend
+    defaults: { _controller: SubscriptionBundle:Subscription:editExtend }

@@ -14,36 +14,51 @@
                 </div>
 
                 <div class="w3-row w3-center">
-
                     {% set date = 'w3-text-green' %}
                     {% if date('+2 months') >= date(subscription.dateEnd) %}
                         {% set date = 'w3-text-red' %}
                     {% endif %}
 
-                    <button class="disabled"><i class="fa fa-calendar-o"></i> {{ subscription.dateStart|date('d/m/Y') }}</button>
-                    <button class="disabled {{ date }}"><i class="fa fa-calendar-times-o"></i> {{ subscription.dateEnd|date('d/m/Y') }}</button>
+                    <button class="w3-button w3-white disabled"><i class="fa fa-calendar-o"></i> <strong>{{ subscription.dateStart|date('d/m/Y') }}</strong></button>
+                    <button class="w3-button w3-white disabled {{ date }}"><i class="fa fa-calendar-times-o"></i> <strong>{{ subscription.dateEnd|date('d/m/Y') }}</strong></button>
                 </div>
 
-                <br>
+                <hr>
 
-                <div class="w3-row w3-center">
-                    <button class="w3-btn w3-green w3-block w3-border-green">Prolonger</button>
-                </div>
+                {% if date() >= date(subscription.dateEnd) %}
+                    <p>Cet abonnement est terminé, vous pouvez en créer un nouveau en consultant la fiche de la publication.</p>
+                    <a href="{{ path('publication_show', { 'id' : subscription.publication.id }) }}" class="w3-button w3-green w3-bar">Consulter la publication</a>
+                {% else %}
+                    <div class="w3-row w3-center">
+                        <button class="w3-btn w3-green w3-block w3-border-green modal-opener" data-modal-id="confirm-extend">Prolonger</button>
+                    </div>
 
+                    <div id="confirm-extend" class="w3-modal modal-closer modal-closer" data-modal-id="confirm-extend">
+                        <div class="w3-modal-content">
+                            <div class="w3-container w3-text-black">
+                                <span data-modal-id="confirm-extend" class="w3-button w3-display-topright modal-closer">&times;</span>
+                                <br>
+                                <p class="text-justify">En confirmant, vous prolongerez votre abonnement d'un an et vous vous engagez à régler le montant de l'abonnement annuel de <strong>{{ subscription.publication.annualCost }}€</strong>.</p>
+                            </div>
 
-                <div class="w3-row w3-center">
-                    {% if date() >= date(subscription.dateEnd) %}
-                        <p>Cet abonnement est terminé, vous pouvez en créer un nouveau en consultant la fiche de la publication.</p>
-                        <a href="{{ path('publication_show', { 'id' : subscription.publication.id }) }}" class="w3-button w3-green">Consulter la publication</a>
-                    {% else %}
+                            <div class="w3-row w3-center w3-padding-16">
+                                <a href="{{ path('subscription_edit_extend', { 'id' : subscription.id }) }}" class="w3-button w3-green">Confirmer</a>
+                                <button class="w3-button w3-red modal-closer" data-modal-id="confirm-extend">Annuler</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="w3-row w3-center">
                         {% if subscription.status %}
                             <p>Cet abonnement est actuellement actif et vous recevez les publications.</p>
-                            <button onclick="document.getElementById('confirm-stop').style.display='block'" class="w3-btn w3-red w3-block w3-border-green">Arrêter</button>
+                            <button class="w3-btn w3-red w3-block w3-border-green modal-opener" data-modal-id="confirm-stop">Arrêter</button>
 
-                            <div id="confirm-stop" class="w3-modal">
+                            <div id="confirm-stop" class="w3-modal modal-closer" data-modal-id="confirm-stop">
                                 <div class="w3-modal-content">
                                     <div class="w3-container w3-text-black">
-                                        <span onclick="document.getElementById('confirm-stop').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                        <span class="w3-button w3-display-topright modal-closer" data-modal-id="confirm-stop">&times;</span>
                                         <br>
                                         <p class="text-justify">En arrêtant votre abonnement, vous ne recevrez plus cette publication. <br>
                                             En consultant les informations de cet abonnement, vous pourrez reprendre les envois tant que l'abonnement n'est pas expiré.</p>
@@ -51,31 +66,31 @@
 
                                     <div class="w3-row w3-center w3-padding-16">
                                         <a href="{{ path('subscription_edit_status', { 'id' : subscription.id }) }}" class="w3-button w3-green">Confirmer</a>
-                                        <button class="w3-button w3-red" onclick="document.getElementById('confirm-stop').style.display='none'">Annuler</button>
+                                        <button class="w3-button w3-red modal-closer" data-modal-id="confirm-stop">Annuler</button>
                                     </div>
                                 </div>
                             </div>
                         {% else %}
                             <p>Cet abonnement est actuellement arrêté.</p>
-                            <button onclick="document.getElementById('confirm-stop').style.display='block'" class="w3-btn w3-green w3-block w3-border-green">Reprendre</button>
+                            <button class="w3-btn w3-green w3-block w3-border-green modal-opener" data-modal-id="confirm-stop">Reprendre</button>
 
-                            <div id="confirm-stop" class="w3-modal">
+                            <div id="confirm-stop" class="w3-modal modal-closer" data-modal-id="confirm-stop">
                                 <div class="w3-modal-content">
                                     <div class="w3-container w3-text-black">
-                                        <span onclick="document.getElementById('confirm-stop').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                                        <span class="w3-button w3-display-topright modal-closer" data-modal-id="confirm-stop">&times;</span>
                                         <br>
                                         <p class="text-justify">En confirmant, vous recevrez de nouveau votre publication jusqu'au {{ subscription.dateEnd|date('d/m/Y') }}.</p>
                                     </div>
 
                                     <div class="w3-row w3-center w3-padding-16">
                                         <a href="{{ path('subscription_edit_status', { 'id': subscription.id }) }}" class="w3-button w3-green">Confirmer</a>
-                                        <button class="w3-button w3-red" onclick="document.getElementById('confirm-stop').style.display='none'">Annuler</button>
+                                        <button class="w3-button w3-red modal-closer" data-modal-id="confirm-stop">Annuler</button>
                                     </div>
                                 </div>
                             </div>
                         {% endif %}
-                    {% endif %}
-                </div>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

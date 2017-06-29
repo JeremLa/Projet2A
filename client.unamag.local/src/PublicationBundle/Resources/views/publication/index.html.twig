@@ -23,8 +23,16 @@
                             <div class="w3-hover-green w3-hover-opacity">
                                 <img src="data:image/jpeg;base64,{{ publication.picture }}" alt="Pants" style="width:100%">
                             </div>
+
+                            {% set countSubscriber = 0 %}
+                            {% for subscription in publication.subscription %}
+                                {% if subscription.dateEnd|date() < date() %}
+                                    {% set countSubscriber = countSubscriber + 1 %}
+                                {% endif %}
+                            {% endfor %}
+
                             <div class="w3-display-topleft w3-display-hover w3-large">
-                                <button type="button" class="w3-white w3-animate-opacity w3-btn w3-margin w3-round disabled" title="Nombre d'abonnés"><i class="fa fa-user w3-text-green"></i> {{ publication.subscription|length }}</button>
+                                <button type="button" class="w3-white w3-animate-opacity w3-btn w3-margin w3-round disabled" title="Nombre d'abonnés"><i class="fa fa-user w3-text-green"></i> {{ countSubscriber }}</button>
                             </div>
                             <div class="w3-display-topright w3-display-hover w3-large">
                                 <button type="button" class="w3-white w3-animate-opacity w3-btn w3-margin w3-round disabled" title="S'abonner"><i class="fa fa-shopping-cart w3-text-grey"></i> {{ publication.annualCost }}€</button>

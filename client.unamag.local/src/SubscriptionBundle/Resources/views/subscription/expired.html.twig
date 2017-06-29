@@ -5,36 +5,21 @@
         <div class="w3-container">
 
             <div class="w3-padding-16 w3-center">
-                <h2>{{ 'title.subscription'|trans }}</h2>
+                <h2>{{ 'title.expired'|trans }}</h2>
             </div>
 
             {% if subscriptions|length == 0 %}
 
                 <div class="w3-card-2 w3-display-container w3-margin-bottom" style="transition:0.5s;width:100%">
 
-                    <p>Vous n'avez pas encore d'abonnement à une publication.</p>
-                    <a href="{{ path('publication_index') }}" class="w3-button w3-green">Parcourir les publications</a>
+                    <p>Vous n'avez aucun abonnements expiré.</p>
+                    <a href="{{ path('subscription_homepage') }}" class="w3-button w3-green w3-bar">Consulter vos abonnements</a>
+
+                    <a href="{{ path('publication_index') }}" class="w3-button w3-green w3-bar w3-margin-top">Parcourir les publications</a>
 
                 </div>
 
             {% else %}
-
-                <span class="w3-btn w3-white w3-border w3-border-green w3-round-xlarge modal-opener" data-modal-id="legende-modal">Légende</span>
-
-                <div id="legende-modal" class="w3-modal modal-closer" data-modal-id="legende-modal">
-                    <div class="w3-modal-content">
-                        <div class="w3-container w3-text-black">
-                            <span class="w3-button w3-display-topright modal-closer" data-modal-id="legende-modal">&times;</span>
-                            <p class="w3-leftbar w3-border-green w3-padding-small">Abonnement en cours</p>
-                            <p class="w3-leftbar w3-border-red w3-padding-small">Plus que deux mois avant la fin de l'abonnement</p>
-                            <p class="w3-padding-small">
-                                <button type="button" class="w3-red w3-text-white w3-btn w3-round disabled" title="Titre"><i class="fa fa-lock"></i></button>
-                                Cet abonnement est arrêté
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
                 <div class="w3-padding-16">
                     {% for subscription in subscriptions %}
 
