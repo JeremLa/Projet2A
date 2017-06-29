@@ -83,7 +83,6 @@ class PublicationController extends Controller
     {
         $url = $this->getParameter('api')[PubliConst::KEYPUBLICATION]['get'];
         $publication = APIRequest::get($url, [], ['publicationId' => $id]);
-
         return $this->render('PublicationBundle:publication:show.html.twig', array(
             'publication' => $publication->body,
         ));
@@ -155,5 +154,18 @@ class PublicationController extends Controller
         }
 
         return new JsonResponse($return);
+    }
+
+
+    public function deleteAction(Request $request){
+        $url = $this->getParameter('api')['publication']['delete'];
+        $response = APIRequest::delete($url, [], http_build_query(['publicationId' => $request->get('publicationId')]));
+        if($response->code != 200){
+            $error = $this->get('translator')->trans('publication.error.delete');
+            $this->get('session')->getFlashBag()->add('errors', $error);
+
+            return $this->redirectToRoute('publication_show', ['id' => $request->get('publicationId')]);
+        }
+        return $this->redirectToRoute('publication_list');
     }
 }

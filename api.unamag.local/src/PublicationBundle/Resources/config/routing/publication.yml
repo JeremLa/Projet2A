@@ -24,7 +24,7 @@ publication_edit:
     methods:  [POST, PUT]
 
 publication_delete:
-    path:     /{id}/delete
+    path:     /delete
     defaults: { _controller: "PublicationBundle:Publication:delete" }
     methods:  DELETE
 

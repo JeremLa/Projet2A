@@ -21,3 +21,8 @@ publication_list:
     path:     /
     defaults: { _controller: "PublicationBundle:Publication:index" }
     methods:  GET
+
+publication_delete:
+    path:     /delete
+    defaults: { _controller: "PublicationBundle:Publication:delete" }
+    methods:  POST
