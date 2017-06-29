@@ -78,7 +78,7 @@
 
             <div class="paginator">
 
-        </div>
+            </div>
             <table class="table table-striped">
             <th>{{ 'historical.methode'|trans }}</th>
             <th>{{ 'historical.description'|trans }}</th>
@@ -101,6 +101,7 @@
         </table>
         </div>
         <div class="item">
+            <div class="abopaginator"></div>
         <table class="table table-striped">
             <th>Titre</th>
             <th>Coût annuel</th>
@@ -109,7 +110,7 @@
             <th>Statut</th>
             <th></th>
         {% for abo in client.subscription %}
-            <tr>
+            <tr class="abolist">
             <td>{{ abo.publication.title }}</td>
             <td>{{ abo.publication.annualCost }}</td>
             <td>{{ abo.dateStart|date('d/m/Y') }}</td>
