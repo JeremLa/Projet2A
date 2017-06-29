@@ -34,7 +34,7 @@ class HistoricalController extends Controller
              if ($a->getDateCreate() == $b->getDateCreate()) {
                  return 0;
              }
-             return ($a->getDateCreate() < $b->getDateCreate()) ? -1 : 1;
+             return ($a->getDateCreate() > $b->getDateCreate()) ? -1 : 1;
          });
         return $final;
     }

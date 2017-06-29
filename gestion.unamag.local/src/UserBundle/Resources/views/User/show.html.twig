@@ -1,9 +1,14 @@
 {% extends 'layout.html.twig' %}
-
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/user/css/style.css') }}">
+{% endblock %}
 {% block content %}
 <div class="row">
     <div class="col-md-12"></div>
-    <div class="jumbotron row">
+
+    <div id="contenu">
+    <div>
         {#<div class="row">#}
             {#<div class="text-center"><h2> {{ 'user.detail'|trans }}</h2></div>#}
         {#</div>#}
@@ -18,12 +23,41 @@
                 <p class="alert alert-success">{{ flashSuccess }}</p>
             {% endfor %}
         </div>
+        <div class="col-md-3" style="padding: 5px;">
+                <h2 class="text-center">{{ client.firstname|capitalize }} {{ client.lastname|capitalize }}</h2>
+            <div class="row">
+                <div class="text-center">
+                    <a class="btn btn-warning col-md-11 margin-top-15" href="{{ path('user_edit', { 'id': client.id }) }}">{{ 'user.edit'|trans }}</a>
+                    <br>
+                    <button class="btn btn-success user-historical-button col-md-11 margin-top-15" data-toggle="modal" data-target="#myModal">Créer un historique de contact</button>
+                    <br>
+                    {%  if(client.actif) %}
+                        {% set class = " btn-danger" %}
+                        {% set txt = 'user.activation.true' %}
+                    {%  else %}
+                        {% set class = " btn-success" %}
+                        {% set txt = 'user.activation.false' %}
+                    {%  endif %}
+                    <button class="btn{{ class }} user-activation-button col-md-11 margin-top-15" data-id="{{ client.id }}">{{ txt|trans }}</button>
+                    <br><br><br>
+                    <a class="btn btn-primary col-md-11 margin-top-30" href="{{ path('user_homepage') }}">{{ 'user.return'|trans }}</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9" style="border-left: 1px solid #CBCBCB; min-height: 500px;">
+
+            <div>
+                <ul id="onglets">
+                    <li class="actif">Clients</li>
+                    <li>Historiques</li>
+                    <li>Abonnements</li>
+                </ul>
+            </div>
+        <div class="item">
         <div class="errors alert alert-danger hidden"></div>
                 <div class="w3-container">
                     <div class="w3-card">
-                        <header class="w3-container w3-blue">
-                            <h1>{{ client.firstname|capitalize }} {{ client.lastname|capitalize }}</h1>
-                        </header>
+
                         <div class="w3-container col-md-offset-2">
                             <p>{{ 'user.adress.label'|trans }}: {{ client.adress }}</p>
                             <p>{{ 'user.city.label'|trans }}: {{ client.city|capitalize }}</p>
@@ -38,31 +72,21 @@
         {#</div>#}
         {#</div>#}
 
-        <div class="row">
-            <div class="col-md-offset-4">
-                <a class="btn btn-primary" href="{{ path('user_homepage') }}">{{ 'user.return'|trans }}</a>
-                <a class="btn btn-warning" href="{{ path('user_edit', { 'id': client.id }) }}">{{ 'user.edit'|trans }}</a>
-                {%  if(client.actif) %}
-                    {% set class = " btn-danger" %}
-                    {% set txt = 'user.activation.true' %}
-                {%  else %}
-                    {% set class = " btn-success" %}
-                    {% set txt = 'user.activation.false' %}
-                {%  endif %}
-                <button class="btn{{ class }} user-activation-button" data-id="{{ client.id }}">{{ txt|trans }}</button>
-            </div>
-        </div>
 
-        <br>
-        <h2>Historiques : </h2><button class="btn btn-success user-historical-button" data-toggle="modal" data-target="#myModal">Créer un historique de contact</button>
-        <table class="table table-striped">
+        </div>
+        <div class="item">
+
+            <div class="paginator">
+
+        </div>
+            <table class="table table-striped">
             <th>{{ 'historical.methode'|trans }}</th>
             <th>{{ 'historical.description'|trans }}</th>
             <th>{{ 'historical.createDate'|trans }}</th>
             <th></th>
 
         {% for histo in historical %}
-            <tr>
+            <tr class="histo">
                 <td>{{ histo.methode }}</td>
                 <td>{{ histo.description }}</td>
                 <td>{{ histo.dateCreate|date('d/m/Y') }}</td>
@@ -75,6 +99,41 @@
 
         {% endfor %}
         </table>
+        </div>
+        <div class="item">
+        <table class="table table-striped">
+            <th>Titre</th>
+            <th>Coût annuel</th>
+            <th>Date de début</th>
+            <th>Date de fin</th>
+            <th>Statut</th>
+            <th></th>
+        {% for abo in client.subscription %}
+            <tr>
+            <td>{{ abo.publication.title }}</td>
+            <td>{{ abo.publication.annualCost }}</td>
+            <td>{{ abo.dateStart|date('d/m/Y') }}</td>
+            <td>{{ abo.dateEnd|date('d/m/Y') }}</td>
+                {% if(abo.status) %}
+                    {% set class = " btn-danger" %}
+                    {% set txt = 'Arrêter l\'abonnement' %}
+                    <td class="abo-status-{{ abo.id }}">En cours</td>
+
+                {% else %}
+                    {% set class = " btn-success" %}
+                    {% set txt = 'Redemarrer l\'abonnement' %}
+                    <td class="abo-status-{{ abo.id }}">Arrêté</td>
+
+                {% endif %}
+                <td>
+                    <button class="btn {{ class }} abo-activation-button" data-id="{{ abo.id }}">{{ txt }}</button>
+                </td>
+
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+    </div>
     </div>
 
 </div>

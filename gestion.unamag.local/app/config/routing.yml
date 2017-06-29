@@ -1,3 +1,7 @@
+subscription:
+    resource: "@SubscriptionBundle/Resources/config/routing.yml"
+    prefix:   /abonnement
+
 historical:
     resource: "@HistoricalBundle/Resources/config/routing.yml"
     prefix:   /historical

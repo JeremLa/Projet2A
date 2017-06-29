@@ -68,7 +68,7 @@ PublicationBundle\Entity\Publication:
         id:
             groups: ['publication', 'subscription']
         title:
-            groups: ['publication', 'subscription']
+            groups: ['publication', 'subscription', 'user']
         canonicalTitle:
             groups: []
         countByYear:
@@ -78,7 +78,8 @@ PublicationBundle\Entity\Publication:
         description:
             groups: ['publication']
         annualCost:
-            groups: ['publication', 'subscription']
+            groups: ['publication', 'subscription', 'user']
+
         subscription:
             groups: ['publication']
 
