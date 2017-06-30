@@ -35,3 +35,25 @@ form .help-block{
 form textarea{
     resize: none;
 }
+
+.pagination{
+    margin: 0; !important;
+}
+
+#publication-list .panel-image{
+    height: 265px;
+}
+
+#publication-list .panel-image img{
+    height: 100%;
+    width: 195px;
+}
+
+#publication-list .panel-body{
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.margin-right-10{
+    margin-right: 10px;
+}
