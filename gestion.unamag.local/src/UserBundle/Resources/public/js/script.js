@@ -267,4 +267,5 @@ $(document).ready(function () {
         reset();
     }
     pagination(10,'.histo','.paginator',3);
+    pagination(10,'.abolist','.abopaginator',3);
 });

@@ -16,6 +16,7 @@ parameters:
             create: "%api.url%/publication/new"
             update: "%api.url%/publication/update"
             search: "%api.url%/publication/search"
+            delete: "%api.url%/publication/delete"
         historical:
             create: "%api.url%/historical/new"
             getAll: "%api.url%/historical/all?userId="

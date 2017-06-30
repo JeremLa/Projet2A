@@ -26,6 +26,12 @@
                 <div class="col-md-12 text-center">
                     <a href="{{ path('publication_index') }}" class="btn btn-primary">Liste des publications</a>
                     <a href="{{ path('publication_edit', {'id':publication.id}) }}" class="btn btn-warning">Editer la publication</a>
+                    {% if(publication.subscription|length == 0) %}
+                        <form method="post" action="{{ path('publication_delete') }}">
+                            <input type="hidden" name="publicationId" value="{{ publication.id }}">
+                            <input type="submit" class="btn btn-danger" value="Supprimer la publication"></input>
+                        </form>
+                    {% endif %}
                 </div>
             </div>
         </div>

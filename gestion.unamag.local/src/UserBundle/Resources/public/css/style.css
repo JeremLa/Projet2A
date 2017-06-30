@@ -48,7 +48,8 @@ ul{
     /*border-radius: 15px;*/
 /*}*/
 
-.paginator {
+.paginator,
+.abopaginator{
     display: inline-block;
     vertical-align: middle;
     border-radius: 4px;
@@ -63,7 +64,8 @@ ul{
     /*background-image:         linear-gradient(top, #DBDBDB, #E2E2E2);*/
 
 }
-.paginator ul{
+.paginator ul,
+.abopaginator ul{
     display: inline-block;
     vertical-align: middle;
     text-align: center;
@@ -78,6 +80,7 @@ ul{
 }
 
 .paginator ul li ,
+.abopaginator ul li,
 .precedent,
 .suivant{
     display: inline-block;
@@ -105,7 +108,8 @@ ul{
     /*background-image:      -o-linear-gradient(top, #F3F3F3, #D7D7D7);*/
     /*background-image:         linear-gradient(top, #F3F3F3, #D7D7D7);*/
 }
-.paginator ul li.selected {
+.paginator ul li.selected,
+.abopaginator ul li.selected {
     border: 1px solid #E9E9E9;
     box-shadow: 0 1px 1px #999;
     background-color: #DFDFDF;
