@@ -128,12 +128,28 @@
                 {% endif %}
                 <td>
                     <button class="btn {{ class }} abo-activation-button" data-id="{{ abo.id }}">{{ txt }}</button>
+                    <a href="{{ path('subscription_extend', {'sub_id': abo.id, 'user_id': client.id}) }}" class="btn btn-success">Prolonger</a>
                 </td>
 
             </tr>
+            {% for payment in abo.payment %}
+                <tr>
+                    <td>{{ payment.id }}</td>
+                    <td>{{ payment.amount }}</td>
+                    <td>{{ payment.dateDeb|date('d/m/Y') }}</td>
+                    <td>{{ payment.dateFin|date('d/m/Y') }}</td>
+                    {% if payment.datePayment %}
+                    <td>{{ payment.datePayment|date('d/m/Y') }}</td>
+                    {% else %}
+                        <td>not payed</td>
+                    {% endif %}
+                    <td>{{ payment.refund }}</td>
+                </tr>
+                {% endfor %}
         {% endfor %}
         </table>
     </div>
+
     </div>
     </div>
 

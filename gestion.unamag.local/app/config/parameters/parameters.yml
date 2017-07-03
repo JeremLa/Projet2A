@@ -22,5 +22,7 @@ parameters:
             getAll: "%api.url%/historical/all?userId="
         subscription:
             activation: "%api.url%/subscription/edit/status"
+            extend: "%api.url%/subscription/edit/extend"
+
 
 

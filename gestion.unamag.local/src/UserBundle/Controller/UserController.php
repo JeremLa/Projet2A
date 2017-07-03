@@ -52,7 +52,6 @@ class UserController extends Controller
         $urlHisto = $this->getParameter('api')['historical']['getAll'].$id;
         $responseHisto = APIRequest::get($urlHisto);
 
-//VarDumper::dump($response->body);die;
         return $this->render('UserBundle:User:show.html.twig', array('client'=> $response->body, 'historical' => $responseHisto->body,'form' => $form->createView()));
     }
 
