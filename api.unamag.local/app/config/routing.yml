@@ -1,9 +1,13 @@
+payment:
+    type:     rest
+    resource: "@PaymentBundle/Controller/PaymentController.php"
+
 historical:
     type:     rest
     resource: "@HistoricalBundle/Controller/HistoricalController.php"
 
 subscription:
-    type: rest
+    type:     rest
     resource: "@SubscriptionBundle/Controller/SubscriptionController.php"
 
 user:
@@ -14,4 +18,4 @@ authentication:
     resource: "@AuthenticationBundle/Controller/AuthController.php"
 publication:
     type:     rest
-    resource: "@PublicationBundle/Resources/config/routing.yml"
+    resource: "@PublicationBundle/Controller/PublicationController.php"
