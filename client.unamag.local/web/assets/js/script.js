@@ -1,36 +1,36 @@
-// Change style of navbar on scroll
-window.onscroll = function() {navChange()};
-
-function navChange() {
-  // var navbar = document.getElementById("myNavbar");
-  var navbar = $("#myNavbar");
-  if(navbar){
-    if (document.body.scrollTop > 30 || document.documentElement.scrollTop > 30) {
-      navbar.removeClass().addClass('w3-white w3-bar');
-      navbar.find('')
-    } else {
-      navbar.removeClass().addClass('w3-text-white w3-bar');
-    }
-  }
-
-  if($(window).scrollTop() + $(window).height() === $(document).height()) {
-    if(typeof $('.next-button') !== typeof undefined){
-      $('.next-button').click();
-    }
-  }
-}
-
-// Used to toggle the menu on small screens when clicking on the menu button
-function toggleFunction() {
-  var x = document.getElementById("navDemo");
-  if (x.className.indexOf("w3-show") === -1) {
-    x.className += " w3-show";
-  } else {
-    x.className = x.className.replace(" w3-show", "");
-  }
-}
-
 $(document).ready(function(){
+  // Change style of navbar on scroll
+  window.onscroll = function() {navChange()};
+
+  function navChange() {
+    // var navbar = document.getElementById("myNavbar");
+    var navbar = $("#myNavbar");
+    if(navbar){
+      if (document.body.scrollTop > 30 || document.documentElement.scrollTop > 30) {
+        navbar.removeClass().addClass('w3-white w3-bar');
+        navbar.find('')
+      } else {
+        navbar.removeClass().addClass('w3-text-white w3-bar');
+      }
+    }
+
+    if($(window).scrollTop() + $(window).height() === $(document).height()) {
+      if(typeof $('.next-button') !== typeof undefined && $('.next-button').length){
+        nextPubli();
+      }
+    }
+  }
+
+  // Used to toggle the menu on small screens when clicking on the menu button
+  function toggleFunction() {
+    var x = document.getElementById("navDemo");
+    if (x.className.indexOf("w3-show") === -1) {
+      x.className += " w3-show";
+    } else {
+      x.className = x.className.replace(" w3-show", "");
+    }
+  }
+
   $('#dropDown-button').on('click', function(){
 
     var $dropDown = $('#dropDown-content');
@@ -63,7 +63,11 @@ $(document).ready(function(){
   });
 
   $('.next-button').on('click', function(){
-    var elem = $(this);
+    nextPubli();
+  });
+
+  function nextPubli() {
+    var elem = $('.next-button');
 
     if(elem.find('i').hasClass('fa-spinner')){
       return;
@@ -77,11 +81,9 @@ $(document).ready(function(){
         offset: $('.publication-elem').length
       },
       success: function(data){
-        console.log(data);
-
         elem.remove();
         $('.publication-wrapper').append(data);
       }
     });
-  });
+  }
 })
