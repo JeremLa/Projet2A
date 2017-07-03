@@ -2,35 +2,57 @@
 
 {% block body %}
 
-        <nav class="navbar navbar-default">
-            <div class="container">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="/">Unamag</a>
-                </div>
+        {#<nav class="navbar navbar-default">#}
+            {#<div class="container">#}
+                {#<!-- Brand and toggle get grouped for better mobile display -->#}
+                {#<div class="navbar-header">#}
+                    {#<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">#}
+                        {#<span class="sr-only">Toggle navigation</span>#}
+                        {#<span class="icon-bar"></span>#}
+                        {#<span class="icon-bar"></span>#}
+                        {#<span class="icon-bar"></span>#}
+                    {#</button>#}
+                    {#<a class="navbar-brand" href="/">Unamag</a>#}
+                {#</div>#}
     {% set user = app.session.get('User') %}
     {% if(user) %}
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href={{ path('publication_index') }}>Publications</a></li>
-                    <li><a href={{ path('user_homepage') }}>Client</a></li>
-                    <li><a>{{ user.firstname|capitalize ~ ' ' ~ user.lastname|capitalize }}</a></li>
-                    <li><a href={{ path('authentication_logout') }}>{{ 'auth.disconnect'|trans }}</a></li>
-                </ul>
-    {% else %}
 
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href={{ path('authentication_login') }}>{{ 'auth.connect'|trans }}</a></li>
-                </ul>
-    {% endif %}
+
+        <nav class="navbar navbar-default navbar-static" id="navbar-example">
+            <div class="container">
+                <div class="navbar-header">
+                    <a href="/" class="navbar-brand">UNAMAG</a>
+                </div>
+                <div class="collapse navbar-collapse bs-example-js-navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="dropdown">
+                            <a href="{{ path('publication_index') }}" role="button">
+                                Publications
+                            </a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="{{ path('user_homepage') }}" role="button">
+                                Utilisateurs
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li id="fat-menu" class="dropdown">
+                            <a href="#" class="dropdown-toggle" id="drop3" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                {{ user.mail }}
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="drop3">
+                                <li>
+                                    <a href="{{ path('authentication_logout') }}">Se déconnecter</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
-
+    {% endif %}
 
     <div class="container">
 

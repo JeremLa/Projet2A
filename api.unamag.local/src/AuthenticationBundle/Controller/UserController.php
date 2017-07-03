@@ -80,7 +80,7 @@ class UserController extends Controller
         $page = $request->get('page');
 
         $em = $this->getDoctrine()->getManager();
-        $publications = $em->getRepository('AuthenticationBundle:User')->findAllPagineEtTrie($page, $limit);
+        $publications = $em->getRepository('AuthenticationBundle:User')->search($page, $limit);
 
         $pagination = array(
             'page' => $page,

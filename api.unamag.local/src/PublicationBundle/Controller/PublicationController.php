@@ -26,7 +26,7 @@ class PublicationController extends Controller
         $page = $request->get('page') ? $request->get('page') : 1;
 
         $em = $this->getDoctrine()->getManager();
-        $publications = $em->getRepository('PublicationBundle:Publication')->findAllPagineEtTrie($page, $limit);
+        $publications = $em->getRepository('PublicationBundle:Publication')->search($page, $limit);
 
         $pagination = array(
             'page' => $page,
@@ -113,34 +113,43 @@ class PublicationController extends Controller
      */
     public function getPublicationsForUserAction(Request $request){
         $user = $this->get('unamag.service.user')->findOneOr404($request->get('id'));
+        $limit = $request->get('limit');
+        $offset = $request->get('offset');
 
-        $publications = $this->get('unamag.service.publication')->getPublicationByUser($user);
+//        return $offset;
 
-        return $publications;
+        $publications = $this->get('unamag.service.publication')->getPublicationByUser($user, $limit, $offset);
+        $next = $this->get('unamag.service.publication')->getPublicationByUser($user, 1, $offset+$limit+1);
+
+        $return = [];
+        $return['publications']= $publications;
+        $return['next'] = $next ? true : false;
+
+        return $return;
     }
 
-    /**
-     * @Rest\View(serializerGroups={"publication"})
-     * @Rest\Post("/publication/search")
-     */
-    public function searchAction(Request $request){
-        $limit = $request->get('limit') ? $request->get('limit') : 15;
-        $page = $request->get('page') ? $request->get('page') : 1;
-        $search = $request->get('search');
-
-        $em = $this->getDoctrine()->getManager();
-        $publications = $em->getRepository('PublicationBundle:Publication')->findAllPagineEtTrie($page, $limit, $this->get('unamag.tools.service.string')->canonicolize($search));
-
-        $pagination = array(
-            'page' => $page,
-            'nbPages' => ceil(count($publications) / $limit),
-            'nomRoute' => 'publication_list',
-            'paramsRoute' => array()
-        );
-
-        return array(
-            'publications' => $publications,
-            'pagination' => $pagination
-        );
-    }
+//    /**
+//     * @Rest\View(serializerGroups={"publication"})
+//     * @Rest\Post("/publication/search")
+//     */
+//    public function searchAction(Request $request){
+//        $limit = $request->get('limit') ? $request->get('limit') : 15;
+//        $page = $request->get('page') ? $request->get('page') : 1;
+//        $search = $request->get('search');
+//
+//        $em = $this->getDoctrine()->getManager();
+//        $publications = $em->getRepository('PublicationBundle:Publication')->search($page, $limit, $this->get('unamag.tools.service.string')->canonicolize($search));
+//
+//        $pagination = array(
+//            'page' => $page,
+//            'nbPages' => ceil(count($publications) / $limit),
+//            'nomRoute' => 'publication_list',
+//            'paramsRoute' => array()
+//        );
+//
+//        return array(
+//            'publications' => $publications,
+//            'pagination' => $pagination
+//        );
+//    }
 }

@@ -29,7 +29,7 @@
                     {% if(publication.subscription|length == 0) %}
                         <form method="post" action="{{ path('publication_delete') }}">
                             <input type="hidden" name="publicationId" value="{{ publication.id }}">
-                            <input type="submit" class="btn btn-danger" value="Supprimer la publication"></input>
+                            <input type="submit" class="btn btn-danger" value="Supprimer la publication">
                         </form>
                     {% endif %}
                 </div>

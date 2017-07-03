@@ -21,15 +21,29 @@ class PublicationController extends Controller
      * Lists all publication entities.
      *
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
+        $limit = $request->get('limit') ? $request->get('limit') : 3;
+        $offset = $request->get('offset') ? $request->get('offset') : 0;
         $url = $this->getParameter('api')[PubliConst::KEYPUBLICATION]['get_for_user'];
 
-        $response = APIRequest::get($url, [], ['id' => $this->getUser()->getId()]);
 
-        return $this->render('PublicationBundle:publication:index.html.twig', array(
-            'publications' => $response->body,
-        ));
+
+        APIRequest::jsonOpts(true);
+        $response = APIRequest::get($url, [], ['id' => $this->getUser()->getId(), 'limit' => $limit, 'offset' => $offset])->body;
+
+//        VarDumper::dump($response);die;
+
+        $args = [
+            'publications' => $response['publications'],
+            'next'         => $response['next']
+        ];
+
+        if($offset > 0){
+            return $this->render('@Publication/publication/partial/publication.html.twig', $args);
+        }
+
+        return $this->render('PublicationBundle:publication:index.html.twig', $args);
     }
 
 

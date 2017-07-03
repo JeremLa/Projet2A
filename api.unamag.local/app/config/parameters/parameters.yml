@@ -1,2 +1,5 @@
 parameters:
     database_pgsql: pdo_pgsql
+
+    search:
+        limit: 10
