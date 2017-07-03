@@ -12,6 +12,12 @@ function navChange() {
       navbar.removeClass().addClass('w3-text-white w3-bar');
     }
   }
+
+  if($(window).scrollTop() + $(window).height() === $(document).height()) {
+    if(typeof $('.next-button') !== typeof undefined){
+      $('.next-button').click();
+    }
+  }
 }
 
 // Used to toggle the menu on small screens when clicking on the menu button
@@ -54,5 +60,28 @@ $(document).ready(function(){
         $('#'+modalId).removeClass('show');
       }
     });
-  })
+  });
+
+  $('.next-button').on('click', function(){
+    var elem = $(this);
+
+    if(elem.find('i').hasClass('fa-spinner')){
+      return;
+    }
+
+    elem.find('i').attr('class', 'fa fa-spinner fa-pulse')
+
+    $.ajax({
+      url: 'http://client.unamag.local/publication',
+      data: {
+        offset: $('.publication-elem').length
+      },
+      success: function(data){
+        console.log(data);
+
+        elem.remove();
+        $('.publication-wrapper').append(data);
+      }
+    });
+  });
 })

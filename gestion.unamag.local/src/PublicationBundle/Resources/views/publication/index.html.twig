@@ -8,10 +8,20 @@
         </div>
     </div>
 
+    <div>
+        {% for flashErrors in app.session.flashbag.get('errors') %}
+            <p class="alert alert-danger">{{ flashErrors }}</p>
+        {% endfor %}
+
+        {% for flashSuccess in app.session.flashbag.get('success') %}
+            <p class="alert alert-success">{{ flashSuccess }}</p>
+        {% endfor %}
+    </div>
+
     <div class="col-md-12" style="margin:15px 0;">
         <div class="left col-md-6">
             <div class="col-md-6">
-                <input type="text" class="form-control search-input" placeholder="Rechercher...">
+                <input type="text" class="form-control search-input" placeholder="Rechercher..." data-class-search="publication">
             </div>
             <div class="col-md-6">
                 <a href="{{ path('publication_new') }}" class="btn btn-success">Créer une nouvelle publication</a>
@@ -19,33 +29,18 @@
         </div>
 
         <div class="right col-md-6">
-            <div class="pagination-wrapper">
-                {% include '@User/User/index-partial/pagination.html.twig' %}
+            <div class="pagination-wrapper pull-right">
+                {% include '@Tools/pagination.html.twig' %}
             </div>
         </div>
     </div>
 
     <div class="row">
         <div id="publication-list" class="col-md-12">
-            <div class="row form-group">
-                {% for publication in response.publications %}
-                    <div class="col-xs-12 col-md-3">
-                        <div class="panel panel-default">
-                            <div class="panel-image hide-panel-body" align="center">
-                                <img src="data:image/jpeg;base64,{{ publication.picture }}" >
-                            </div>
-                            <div class="panel-body">
-                                <h4>{{ publication.title }}</h4>
-                            </div>
-                            <div class="panel-footer text-center">
-                                <a href="{{ path('publication_show', {'id':publication.id}) }}" title="consulter"><span class="glyphicon glyphicon-eye-open margin-right-10"></span></a>
-                                <a href="{{ path('publication_edit', {'id':publication.id}) }}" title="éditer"><span class="glyphicon glyphicon-pencil text-warning margin-right-10"></span></a>
-                                <span href="#share" title="abonnés"><span class="glyphicon glyphicon-user"></span></span>
-                            </div>
-                        </div>
-                    </div>
-                {% endfor %}
+            <div class="row form-group data-list">
+                {% include '@Publication/publication/index-partial/publication-list.html.twig' %}
             </div>
         </div>
     </div>
+
 {% endblock %}

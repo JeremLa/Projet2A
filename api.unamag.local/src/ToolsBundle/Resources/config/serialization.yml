@@ -15,7 +15,7 @@ HistoricalBundle\Entity\Historical:
 SubscriptionBundle\Entity\Subscription:
     attributes:
         id:
-            groups: ['subscription', 'user', 'publication', 'payment']
+            groups: ['subscription', 'user', 'publication', 'payment', 'search']
         user:
             groups: ['subscription', 'publication']
         publication:
@@ -25,19 +25,20 @@ SubscriptionBundle\Entity\Subscription:
         dateStart:
             groups: ['subscription', 'user', 'publication']
         dateEnd:
-            groups: ['subscription', 'user', 'publication']
+            groups: ['subscription', 'user', 'publication', 'search']
         payment:
-            groups: ['subscription', 'user']
+            groups: ['subscription', 'user', 'publication']
+
 
 
 AuthenticationBundle\Entity\User:
     attributes:
         id:
-            groups: ['user', 'subscription','histo']
+            groups: ['user', 'subscription','histo', 'search']
         firstname:
-            groups: ['user', 'subscription','histo']
+            groups: ['user', 'subscription','histo', 'search']
         lastname:
-            groups: ['user', 'subscription','histo']
+            groups: ['user', 'subscription','histo', 'search']
         canonicalFullname:
             groups: ['user']
         adress:
@@ -47,15 +48,15 @@ AuthenticationBundle\Entity\User:
         zipCode:
             groups: ['user']
         tel:
-            groups: ['user']
+            groups: ['user', 'search']
         mail:
-            groups: ['user']
+            groups: ['user', 'search']
         password:
             groups: ['user']
         birthCity:
-            groups: ['user']
+            groups: ['user', 'search']
         birthDate:
-            groups: ['user']
+            groups: ['user', 'search']
         level:
             groups: ['user']
         actif:
@@ -68,22 +69,22 @@ AuthenticationBundle\Entity\User:
 PublicationBundle\Entity\Publication:
     attributes:
         id:
-            groups: ['publication', 'subscription']
+            groups: ['publication', 'subscription', 'search']
         title:
-            groups: ['publication', 'subscription', 'user']
+            groups: ['publication', 'subscription', 'user', 'search']
         canonicalTitle:
             groups: []
         countByYear:
             groups: ['publication']
         picture:
-            groups: ['publication', 'subscription']
+            groups: ['publication', 'subscription', 'search']
         description:
             groups: ['publication']
         annualCost:
             groups: ['publication', 'subscription', 'user']
 
         subscription:
-            groups: ['publication']
+            groups: ['publication', 'search']
 
 PaymentBundle\Entity\Payment:
     attributes:

@@ -10,11 +10,14 @@ user:
     resource: "@UserBundle/Resources/config/routing.yml"
     prefix:   /users
 
-publication:
-    resource: "@PublicationBundle/Resources/config/routing.yml"
-    prefix:   /
-
 authentication:
     resource: "@AuthenticationBundle/Resources/config/routing.yml"
     prefix:   /auth
 
+tools:
+    resource: "@ToolsBundle/Resources/config/routing.yml"
+    prefix:   /tools
+
+publication:
+    resource: "@PublicationBundle/Resources/config/routing.yml"
+    prefix:   /

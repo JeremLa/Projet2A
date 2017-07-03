@@ -2,3 +2,6 @@ parameters:
     database_pgsql: pdo_pgsql
     mailer_port: 587
     mailer_encryption: tls
+    search:
+        limit: 10
+

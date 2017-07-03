@@ -21,7 +21,7 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
         return $this->findBy([], ['id' => 'DESC']);
     }
 
-    public function findAllPagineEtTrie($page, $nbMaxParPage, $search = null)
+    public function search($page, $nbMaxParPage, $search = null)
     {
         if (!is_numeric($page)) {
             throw new BadCredentialsException(
@@ -79,6 +79,8 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             $query->where("p.id NOT IN ( " . implode($skiped, ", ") . " )");
         }
 
+        $query->setFirstResult($offset);
+        $query->setMaxResults($limit);
         $query->orderBy('p.id', 'DESC');
 
         return $query->getQuery()->getResult();

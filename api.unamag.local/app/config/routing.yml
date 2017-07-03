@@ -13,9 +13,16 @@ subscription:
 user:
     type:     rest
     resource: "@AuthenticationBundle/Controller/UserController.php"
+
 authentication:
     type:     rest
     resource: "@AuthenticationBundle/Controller/AuthController.php"
+
 publication:
     type:     rest
     resource: "@PublicationBundle/Controller/PublicationController.php"
+
+tools:
+    type:     rest
+    resource: "@ToolsBundle/Controller/ToolsController.php"
+

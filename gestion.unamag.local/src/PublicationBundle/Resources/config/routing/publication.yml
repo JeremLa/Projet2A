@@ -25,4 +25,4 @@ publication_list:
 publication_delete:
     path:     /delete
     defaults: { _controller: "PublicationBundle:Publication:delete" }
-    methods:  POST
+    methods:  [POST, GET]

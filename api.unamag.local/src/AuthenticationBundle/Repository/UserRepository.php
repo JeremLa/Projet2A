@@ -5,6 +5,7 @@ namespace AuthenticationBundle\Repository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\BadCredentialsException;
+use Symfony\Component\VarDumper\VarDumper;
 
 class UserRepository extends \Doctrine\ORM\EntityRepository
 {
@@ -13,8 +14,9 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
         return $this->findBy(['level'=>2],['firstname'=> 'ASC' ]);
     }
 
-    public function findAllPagineEtTrie($page, $nbMaxParPage, $search = null)
+    public function search($page, $nbMaxParPage, $search = null)
     {
+
         if (!is_numeric($page)) {
             throw new BadCredentialsException(
                 'La valeur de l\'argument $page est incorrecte (valeur : ' . $page . ').'
@@ -34,12 +36,10 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
         $qb = $this->createQueryBuilder('u');
 
         if($search != null){
-            $qb->where("u.canonicalFullname LIKE '%" .$search. "%' AND u.level = 2");
-        }else{
-            $qb->where("u.level = 2");
+            $qb->where("u.canonicalFullname LIKE '%" .$search. "%'");
         }
 
-        $qb->orderBy('u.firstname', 'ASC');
+        $qb->orderBy('u.id', 'ASC');
 
         $query = $qb->getQuery();
 

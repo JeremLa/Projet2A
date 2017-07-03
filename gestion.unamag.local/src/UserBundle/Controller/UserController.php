@@ -30,9 +30,10 @@ class UserController extends Controller
         $url = $this->getParameter('api')['user']['get_all'];
         $response = APIRequest::get($url, [], ['page' => $page, 'limit' => 10]);
 
+//        VarDumper::dump($response->body);die;
+
         $historical = new Historical();
         $form = $this->createForm(HistoricalType::class, $historical);
-
 
         return $this->render('UserBundle:User:index.html.twig', [
             'response' => $response->body,

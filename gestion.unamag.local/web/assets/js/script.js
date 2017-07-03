@@ -5,37 +5,57 @@ $(document).ready(function() {
     //setup before functions
     var typingTimer;                //timer identifier
     var doneTypingInterval = 1000;  //time in ms (5 seconds)
+    var data = {
+      search: '',
+      page: 1,
+      searchClass: '',
+      limit: 15
+    }
 
     //on keyup, start the countdown
     $elem.keyup(function () {
       clearTimeout(typingTimer);
-      // if ($elem.val()) {
-        typingTimer = setTimeout(doneTyping, doneTypingInterval);
-      // }else{
-      //   $.ajax({
-      //     url:''
-      //   })
-      // }
+      typingTimer = setTimeout(doneTyping, doneTypingInterval);
     });
 
     //user is "finished typing," do something
     function doneTyping () {
+
+      data.searchClass = $elem.attr('data-class-search');
+      data.search = $elem.val();
+
+      if(data.searchClass === 'pagination'){
+        data.limit = 8;
+      }
+
+      if(data.searchClass === 'user'){
+        data.limit = 15;
+      }
+
+      var url = 'http://gestion.unamag.local/tools/search';
+
+      getSearchAjax(url)
+
+    }
+
+    function getSearchAjax(url){
       $.ajax({
-        url: 'http://gestion.unamag.local/users/search',
-        data: {
-          search: $elem.val(),
-          page: 1,
-          view: '@User/User/index-partial/user-list.html.twig'
-        },
-        success: function(data){
-          $('.pagination-wrapper').empty().append(data.pagination.view);
-          $('.user-list').empty().append(data.users.view);
-        },
-        complete: function(){
+        url: url,
+        data: data,
+        success: function(datas){
+          $('.pagination-wrapper').empty().append(datas.paginationView);
+          $('.data-list').empty().append(datas.datasView);
 
-        },
-        error: function(){
+          $('.search-link').each(function(){
+            $(this).off().on('click', function(e){
+              e.preventDefault();
 
+              var url = 'http://gestion.unamag.local' + $(this).attr('href');
+              data.page = $(this).attr('data-page');
+
+              getSearchAjax(url);
+            })
+          })
         }
       });
     }

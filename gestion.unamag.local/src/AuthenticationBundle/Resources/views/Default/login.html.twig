@@ -1,23 +1,69 @@
 {% extends 'layout.html.twig' %}
 {% block title %} Connexion {% endblock %}
 {% block content %}
-    <div class="row">
-        <div class="jumbotron col-md-12">
-            <span class="text-center"><h2>{{ 'auth.connect'|trans }}</h2></span>
-            {% if errors is defined %}
-                {% for error in errors %}
-                    <span class="alert alert-danger col-md-offset-3 col-md-6">
-                    {{ error|trans }}
-                        </span>
-                {% endfor %}
-            {% endif %}
-            <div>
+    {#<div class="row">#}
+        {#<div class="jumbotron col-md-12">#}
+            {#<span class="text-center"><h2>{{ 'auth.connect'|trans }}</h2></span>#}
+            {#{% if errors is defined %}#}
+                {#{% for error in errors %}#}
+                    {#<span class="alert alert-danger col-md-offset-3 col-md-6">#}
+                    {#{{ error|trans }}#}
+                        {#</span>#}
+                {#{% endfor %}#}
+            {#{% endif %}#}
+            {#<div>#}
 
-    {{ form_start(form, { 'attr': {'class': 'col-md-offset-3 col-md-6'} }) }}
-    {{ form_widget(form) }}
-    {{ form_end(form) }}
+    {#{{ form_start(form, { 'attr': {'class': 'col-md-offset-3 col-md-6'} }) }}#}
+    {#{{ form_widget(form) }}#}
+    {#{{ form_end(form) }}#}
+            {#</div>#}
+    {#</div>#}
+    {#</div>#}
+
+    <div class="container" style="margin-top:40px">
+        <div class="row">
+            <div class="col-sm-6 col-md-4 col-md-offset-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h2> UNAMAG <small>gestion</small></h2>
+                    </div>
+                    <div class="panel-body">
+                        {{ form_start(form) }}
+                        {#<form role="form" action="#" method="POST">#}
+                            <fieldset>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-10  col-md-offset-1 ">
+                                        <div class="form-group">
+                                            <div class="input-group">
+												<span class="input-group-addon">
+													<i class="glyphicon glyphicon-user"></i>
+												</span>
+                                                {{ form_widget(form.mail, { 'attr' : {'class' : 'form-control'}}) }}
+                                                {#<input class="form-control" placeholder="Username" name="loginname" type="text" autofocus>#}
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+												<span class="input-group-addon">
+													<i class="glyphicon glyphicon-lock"></i>
+												</span>
+                                                {{ form_widget(form.password, { 'attr' : {'class' : 'form-control'}}) }}
+                                                {#<input class="form-control" placeholder="Password" name="password" type="password" value="">#}
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            {{ form_widget(form.save, { 'attr' : {'class' : 'btn btn-lg btn-primary btn-block'}}) }}
+                                            {#<input type="submit" class="btn btn-lg btn-primary btn-block" value="Sign in">#}
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        {{ form_end(form) }}
+                        {#</form>#}
+                    </div>
+                </div>
             </div>
-    </div>
+        </div>
     </div>
 
 {% endblock %}

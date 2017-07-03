@@ -23,6 +23,6 @@ parameters:
         subscription:
             activation: "%api.url%/subscription/edit/status"
             extend: "%api.url%/subscription/edit/extend"
-
+        search: "%api.url%/search"
 
 

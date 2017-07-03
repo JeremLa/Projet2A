@@ -5,101 +5,129 @@
 {% endblock %}
 {% block content %}
 <div class="row">
-    <div class="col-md-12"></div>
-
     <div id="contenu">
-    <div>
-        {#<div class="row">#}
-            {#<div class="text-center"><h2> {{ 'user.detail'|trans }}</h2></div>#}
-        {#</div>#}
-        {#<div class="row">#}
-            {#<div class="col-md-offset-4">#}
         <div>
-            {% for flashErrors in app.session.flashbag.get('errors') %}
-                <p class="alert alert-danger">{{ flashErrors }}</p>
-            {% endfor %}
+            <div>
+                {% for flashErrors in app.session.flashbag.get('errors') %}
+                    <p class="alert alert-danger">{{ flashErrors }}</p>
+                {% endfor %}
 
-            {% for flashSuccess in app.session.flashbag.get('success') %}
-                <p class="alert alert-success">{{ flashSuccess }}</p>
-            {% endfor %}
-        </div>
-        <div class="col-md-3" style="padding: 5px;">
+                {% for flashSuccess in app.session.flashbag.get('success') %}
+                    <p class="alert alert-success">{{ flashSuccess }}</p>
+                {% endfor %}
+            </div>
+
+            <div class="col-md-3" style="padding: 5px;">
                 <h2 class="text-center">{{ client.firstname|capitalize }} {{ client.lastname|capitalize }}</h2>
-            <div class="row">
-                <div class="text-center">
-                    <a class="btn btn-warning col-md-11 margin-top-15" href="{{ path('user_edit', { 'id': client.id }) }}">{{ 'user.edit'|trans }}</a>
-                    <br>
-                    <button class="btn btn-success user-historical-button col-md-11 margin-top-15" data-toggle="modal" data-target="#myModal">Créer un historique de contact</button>
-                    <br>
-                    {%  if(client.actif) %}
-                        {% set class = " btn-danger" %}
-                        {% set txt = 'user.activation.true' %}
-                    {%  else %}
-                        {% set class = " btn-success" %}
-                        {% set txt = 'user.activation.false' %}
-                    {%  endif %}
-                    <button class="btn{{ class }} user-activation-button col-md-11 margin-top-15" data-id="{{ client.id }}">{{ txt|trans }}</button>
-                    <br><br><br>
-                    <a class="btn btn-primary col-md-11 margin-top-30" href="{{ path('user_homepage') }}">{{ 'user.return'|trans }}</a>
+                <div class="row">
+                    <div class="text-center">
+                        <a class="btn btn-warning col-md-11 margin-top-15" href="{{ path('user_edit', { 'id': client.id }) }}">{{ 'user.edit'|trans }}</a>
+                        <br>
+                        <button class="btn btn-success user-historical-button col-md-11 margin-top-15" data-toggle="modal" data-target="#myModal">Créer un historique de contact</button>
+                        <br>
+                        {%  if(client.actif) %}
+                            {% set class = " btn-danger" %}
+                            {% set txt = 'user.activation.true' %}
+                        {%  else %}
+                            {% set class = " btn-success" %}
+                            {% set txt = 'user.activation.false' %}
+                        {%  endif %}
+                        <button class="btn{{ class }} user-activation-button col-md-11 margin-top-15" data-id="{{ client.id }}">{{ txt|trans }}</button>
+                        <br><br><br>
+                        <a class="btn btn-primary col-md-11 margin-top-30" href="{{ path('user_homepage') }}">{{ 'user.return'|trans }}</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-9" style="border-left: 1px solid #CBCBCB; min-height: 500px;">
 
-            <div>
-                <ul id="onglets">
-                    <li class="actif">Clients</li>
-                    <li>Historiques</li>
-                    <li>Abonnements</li>
-                </ul>
-            </div>
-        <div class="item">
-        <div class="errors alert alert-danger hidden"></div>
-                <div class="w3-container">
-                    <div class="w3-card">
+            <div class="col-md-9" style="border-left: 1px solid #CBCBCB; min-height: 500px;">
 
-                        <div class="w3-container col-md-offset-2">
-                            <p>{{ 'user.adress.label'|trans }}: {{ client.adress }}</p>
-                            <p>{{ 'user.city.label'|trans }}: {{ client.city|capitalize }}</p>
-                            <p>{{ 'user.zipcode.label'|trans }}: {{ client.zipCode }}</p>
-                            <p>{{ 'user.tel.label'|trans }}: {{ client.tel }}</p>
-                            <p>{{ 'user.mail.label'|trans }}: {{ client.mail }}</p>
-                            <p>{{ 'user.birthDate.label'|trans }}: {{ client.birthDate }}</p>
-                            <p>{{ 'user.birthCity.label'|trans }}: {{ client.birthCity }}</p>
+                <div>
+                    <ul id="onglets">
+                        <li class="actif">Clients</li>
+                        <li>Historiques</li>
+                        <li>Abonnements</li>
+                    </ul>
+                </div>
+
+                <div class="item">
+                    <div class="errors alert alert-danger hidden">
+                    </div>
+                    <div class="w3-container">
+                        <div class="w3-card">
+                            <div class="w3-container col-md-offset-2">
+                                <p>{{ 'user.adress.label'|trans }}: {{ client.adress }}</p>
+                                <p>{{ 'user.city.label'|trans }}: {{ client.city|capitalize }}</p>
+                                <p>{{ 'user.zipcode.label'|trans }}: {{ client.zipCode }}</p>
+                                <p>{{ 'user.tel.label'|trans }}: {{ client.tel }}</p>
+                                <p>{{ 'user.mail.label'|trans }}: {{ client.mail }}</p>
+                                <p>{{ 'user.birthDate.label'|trans }}: {{ client.birthDate }}</p>
+                                <p>{{ 'user.birthCity.label'|trans }}: {{ client.birthCity }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-        {#</div>#}
-        {#</div>#}
 
+                <div class="item">
+                    <div class="paginator">
+                    </div>
+                    <table class="table table-striped">
+                        <th>{{ 'historical.methode'|trans }}</th>
+                        <th>{{ 'historical.description'|trans }}</th>
+                        <th>{{ 'historical.createDate'|trans }}</th>
+                        <th></th>
 
-        </div>
-        <div class="item">
+                        {% for histo in historical %}
+                            <tr class="histo">
+                                <td>{{ histo.methode }}</td>
+                                <td>{{ histo.description }}</td>
+                                <td>{{ histo.dateCreate|date('d/m/Y') }}</td>
+                                {%  if(histo.users) %}
+                                    <td></td>
+                                {% else %}
+                                    <td title="Historique Global" style="cursor: default"><b>G</b></td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
 
-            <div class="paginator">
+                <div class="item">
+                    <div class="abopaginator"></div>
+                    <table class="table table-striped">
+                        <th>Titre</th>
+                        <th>Coût annuel</th>
+                        <th>Date de début</th>
+                        <th>Date de fin</th>
+                        <th>Statut</th>
+                        <th></th>
+                        {% for abo in client.subscription %}
+                            <tr class="abolist">
+                            <td>{{ abo.publication.title }}</td>
+                            <td>{{ abo.publication.annualCost }}</td>
+                            <td>{{ abo.dateStart|date('d/m/Y') }}</td>
+                            <td>{{ abo.dateEnd|date('d/m/Y') }}</td>
+                                {% if(abo.status) %}
+                                    {% set class = " btn-danger" %}
+                                    {% set txt = 'Arrêter l\'abonnement' %}
+                                    <td class="abo-status-{{ abo.id }}">En cours</td>
 
+                                {% else %}
+                                    {% set class = " btn-success" %}
+                                    {% set txt = 'Redemarrer l\'abonnement' %}
+                                    <td class="abo-status-{{ abo.id }}">Arrêté</td>
+
+                                {% endif %}
+                                <td>
+                                    <button class="btn {{ class }} abo-activation-button" data-id="{{ abo.id }}">{{ txt }}</button>
+                                </td>
+
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </div>
             </div>
-            <table class="table table-striped">
-            <th>{{ 'historical.methode'|trans }}</th>
-            <th>{{ 'historical.description'|trans }}</th>
-            <th>{{ 'historical.createDate'|trans }}</th>
-            <th></th>
-
-        {% for histo in historical %}
-            <tr class="histo">
-                <td>{{ histo.methode }}</td>
-                <td>{{ histo.description }}</td>
-                <td>{{ histo.dateCreate|date('d/m/Y') }}</td>
-                {%  if(histo.users) %}
-                <td></td>
-                {% else %}
-                <td title="Historique Global" style="cursor: default"><b>G</b></td>
-                {% endif %}
-            </tr>
-
-        {% endfor %}
-        </table>
         </div>
+
         <div class="item">
             <div class="abopaginator"></div>
         <table class="table table-striped">
@@ -151,37 +179,36 @@
     </div>
 
     </div>
-    </div>
 
+    </div>
 </div>
 
 
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Historique de contact</h4>
-                </div>
-                <div class="modal-body">
-                    {{ form_start(form, {'method': 'POST', 'action': path('historical_create')}) }}
-                    <input type="hidden" id="userId" name="userId" value={{ client.id }}>
-                    <input type="hidden" id="from" name="from" value="userPage">
-                    {{ form_row(form.methode) }}
-                    {{ form_row(form.description) }}
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary"></input>
-                </div>
-                {{ form_end(form) }}
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Historique de contact</h4>
             </div>
+            <div class="modal-body">
+                {{ form_start(form, {'method': 'POST', 'action': path('historical_create')}) }}
+                <input type="hidden" id="userId" name="userId" value={{ client.id }}>
+                <input type="hidden" id="from" name="from" value="userPage">
+                {{ form_row(form.methode) }}
+                {{ form_row(form.description) }}
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <input type="submit" class="btn btn-primary">
+            </div>
+            {{ form_end(form) }}
         </div>
     </div>
+</div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
     <script src = "{{ asset('bundles/user/js/script.js') }}"></script>
-
 {% endblock %}

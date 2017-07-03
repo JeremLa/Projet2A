@@ -6,13 +6,13 @@
     <ul class="pagination">
         {% if response.pagination.page > 1 %}
             <li>
-                <a href="{{ path(response.pagination.nomRoute, response.pagination.paramsRoute|merge({'page': 1})) }}" class="{{ linkClass }}">
+                <a href="{{ path(response.pagination.nomRoute, response.pagination.paramsRoute|merge({'page': 1})) }}" data-page="1" class="{{ linkClass }}">
                     <<
                 </a>
             </li>
             <li>
                 <a href="{{ path(response.pagination.nomRoute,
-                response.pagination.paramsRoute|merge({'page': response.pagination.page-1})) }}" class="{{ linkClass }}">
+                response.pagination.paramsRoute|merge({'page': response.pagination.page-1})) }}" data-page="{{ response.pagination.page-1 }}" class="{{ linkClass }}">
                     <
                 </a>
             </li>
@@ -21,7 +21,7 @@
         {# Affichage de toutes les pages entre p-4 et p+4 sauf si < 1 ou > nbPages #}
         {% for p in range(max(response.pagination.page-4, 1), min(response.pagination.page+4, response.pagination.nbPages)) %}
             <li {% if p == response.pagination.page %}class="active"{% endif %}>
-                <a href="{{ path(response.pagination.nomRoute, response.pagination.paramsRoute|merge({'page': p})) }}" class="{{ linkClass }}">
+                <a href="{{ path(response.pagination.nomRoute, response.pagination.paramsRoute|merge({'page': p})) }}" data-page="{{ p }}" class="{{ linkClass }}">
                     {{ p }}
                 </a>
             </li>
@@ -30,13 +30,13 @@
         {% if response.pagination.page < response.pagination.nbPages %}
             <li>
                 <a href="{{ path(response.pagination.nomRoute,
-                response.pagination.paramsRoute|merge({'page': response.pagination.page+1})) }}" class="{{ linkClass }}">
+                response.pagination.paramsRoute|merge({'page': response.pagination.page+1})) }}" data-page="{{ response.pagination.page+1 }}" class="{{ linkClass }}">
                     >
                 </a>
             </li>
             <li>
                 <a href="{{ path(response.pagination.nomRoute,
-                response.pagination.paramsRoute|merge({'page': response.pagination.nbPages})) }}" class="{{ linkClass }}">
+                response.pagination.paramsRoute|merge({'page': response.pagination.nbPages})) }}" data-page="{{ response.pagination.nbPages }}" class="{{ linkClass }}">
                     >>
                 </a>
             </li>

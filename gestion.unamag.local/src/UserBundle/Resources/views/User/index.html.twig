@@ -12,17 +12,33 @@
         {% for flashSuccess in app.session.flashbag.get('success') %}
             <p class="alert alert-success">{{ flashSuccess }}</p>
         {% endfor %}
-    </div>
-    <div class="col-md-12">
-        <div class="col-md-3 pagination-wrapper">
-            {% include '@User/User/index-partial/pagination.html.twig' %}
+    {#</div>#}
+    {#<div class="col-md-12">#}
+        {#<div class="col-md-3 pagination-wrapper">#}
+            {#{% include '@Tools/pagination.html.twig' %}#}
+        {#</div>#}
+
+        {#<div class="col-md-offset-6 col-md-3" style="margin-top:20px; margin-bottom:20px">#}
+            {#<input type="text" class="form-control search-input" placeholder="Rechercher..." data-class-search="user">#}
+        {#</div>#}
+    {#</div>#}
+
+    <div class="col-md-12" style="margin:15px 0;">
+        <div class="left col-md-6">
+            <div class="col-md-6">
+                <input type="text" class="form-control search-input" placeholder="Rechercher..." data-class-search="publication">
+            </div>
+            <div class="col-md-6">
+                <button class="btn btn-success user-historical-button" data-toggle="modal" data-target="#myModal">Créer un historique de contact</button>
+            </div>
         </div>
 
-        <div class="col-md-offset-6 col-md-3" style="margin-top:20px; margin-bottom:20px">
-            <input type="text" class="form-control search-input" placeholder="Rechercher...">
+        <div class="right col-md-6">
+            <div class="pagination-wrapper pull-right">
+                {% include '@Tools/pagination.html.twig' %}
+            </div>
         </div>
     </div>
-
 
     <table class="table table-striped">
         <thead>
@@ -34,10 +50,10 @@
             <th>{{ "user.tel.label"|trans }}</th>
             <th>{{ 'user.birthDate.label'|trans }}</th>
             <th>{{ 'user.birthCity.label'|trans }}</th>
-            <th><button class="btn btn-success user-historical-button" data-toggle="modal" data-target="#myModal">Créer un historique de contact</button></th>
+            <th></th>
         </tr>
         </thead>
-        <tbody class="user-list">
+        <tbody class="data-list">
             {% include '@User/User/index-partial/user-list.html.twig' %}
         </tbody>
     </table>
@@ -65,7 +81,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <input type="submit" class="btn btn-primary"></input>
+                    <input type="submit" class="btn btn-primary">
                 </div>
                 {{ form_end(form) }}
             </div>
