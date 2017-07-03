@@ -38,7 +38,7 @@ $(document).ready(function(){
 
   $(".modal-opener").each(function(){
     $(this).on('click', function(){
-      var modalId = $(this).attr('data-modal-id');
+      var modalId = $(this).attr('data-modal-open-id');
 
       $('#'+modalId).addClass('show');
 
@@ -50,7 +50,7 @@ $(document).ready(function(){
   $(".modal-closer").each(function(){
     $(this).on('click', function(e){
       if(e.target === $(this)[0]){
-        var modalId = $(this).attr('data-modal-id');
+        var modalId = $(this).attr('data-modal-close-id');
         $('#'+modalId).removeClass('show');
       }
     });
