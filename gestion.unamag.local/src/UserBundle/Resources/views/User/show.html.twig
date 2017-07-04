@@ -46,6 +46,7 @@
                         <li class="actif">Clients</li>
                         <li>Historiques</li>
                         <li>Abonnements</li>
+                        <li>Paiements</li>
                     </ul>
                 </div>
 
@@ -93,7 +94,7 @@
 
                 <div class="item">
                     <div class="abopaginator"></div>
-                    <table class="table table-striped">
+                    <table class="table">
                         <th>Titre</th>
                         <th>Coût annuel</th>
                         <th>Date de début</th>
@@ -101,82 +102,93 @@
                         <th>Statut</th>
                         <th></th>
                         {% for abo in client.subscription %}
+
                             <tr class="abolist">
-                            <td>{{ abo.publication.title }}</td>
-                            <td>{{ abo.publication.annualCost }}</td>
-                            <td>{{ abo.dateStart|date('d/m/Y') }}</td>
-                            <td>{{ abo.dateEnd|date('d/m/Y') }}</td>
+                                <td>{{ abo.publication.title }}</td>
+                                <td>{{ abo.publication.annualCost }}</td>
+                                <td>{{ abo.dateStart|date('d/m/Y') }}</td>
+                                <td>{{ abo.dateEnd|date('d/m/Y') }}</td>
                                 {% if(abo.status) %}
                                     {% set class = " btn-danger" %}
-                                    {% set txt = 'Arrêter l\'abonnement' %}
+                                    {% set txt = 'Arrêter' %}
                                     <td class="abo-status-{{ abo.id }}">En cours</td>
 
                                 {% else %}
                                     {% set class = " btn-success" %}
-                                    {% set txt = 'Redemarrer l\'abonnement' %}
+                                    {% set txt = 'Redemarrer' %}
                                     <td class="abo-status-{{ abo.id }}">Arrêté</td>
 
                                 {% endif %}
                                 <td>
+                                    <a href="{{ path('subscription_extend', {'sub_id': abo.id, 'user_id': client.id}) }}" class="btn btn-success">Prolonger</a>
                                     <button class="btn {{ class }} abo-activation-button" data-id="{{ abo.id }}">{{ txt }}</button>
                                 </td>
 
                             </tr>
+
+
                         {% endfor %}
                     </table>
+
+
+
+                </div>
+
+                <div class="item">
+                    <div class="paymentpaginator"></div>
+                    <table class="table table-striped">
+                        <th>Magazine</th>
+                        <th>Montant (€)</th>
+                        <th>Du</th>
+                        <th>Au</th>
+                        <th>Statut</th>
+                        <th>Remboursement</th>
+                        {% set magazine = null %}
+                        {% set first = true %}
+                        {% set count = 0 %}
+                        {% for abo in client.subscription %}
+                        {% if magazine !=  abo.publication.title %}
+                            {% set magazine = abo.publication.title %}
+                            {% set first = true %}
+                        {% endif %}
+
+                        {% for payment in abo.payment %}
+                            <tr class="paylist">
+                                {% if first == true or count%10 == 0 %}
+                                    {% set first = false %}
+                                    <td><strong>{{ magazine }}</strong></td>
+                                    {% else %}
+                                    <td></td>
+                                {% endif %}
+                                <td class="text-center">{{ payment.amount }}</td>
+                                <td>{{ payment.dateDeb|date('d/m/Y') }}</td>
+                                <td>{{ payment.dateFin|date('d/m/Y') }}</td>
+                                {% if payment.datePayment %}
+                                    <td>{{ payment.datePayment|date('d/m/Y') }}</td>
+                                    <td>{% if payment.realAmount == 0 %}
+                                            <div class="glyphicon glyphicon-ok"></div>
+                                        {% else %}
+                                            <button class="btn btn-danger user-payment-button" data-toggle="modal" data-target="#refundModal" data-amount="{{ payment.amount }}" data-price="{{ payment.realAmount }}" data-id="{{ payment.transaction_id }}">Remboursement</button>
+                                        {% endif %}</td>
+                                {% else %}
+                                    <td>not payed</td>
+                                    <td></td>
+                                {% endif %}
+
+                            </tr>
+                            {% set count = count+1 %}
+                        {% endfor %}
+                        {% endfor %}
+                    </table>
+
+
+
                 </div>
             </div>
         </div>
 
-        <div class="item">
-            <div class="abopaginator"></div>
-        <table class="table table-striped">
-            <th>Titre</th>
-            <th>Coût annuel</th>
-            <th>Date de début</th>
-            <th>Date de fin</th>
-            <th>Statut</th>
-            <th></th>
-        {% for abo in client.subscription %}
-            <tr class="abolist">
-            <td>{{ abo.publication.title }}</td>
-            <td>{{ abo.publication.annualCost }}</td>
-            <td>{{ abo.dateStart|date('d/m/Y') }}</td>
-            <td>{{ abo.dateEnd|date('d/m/Y') }}</td>
-                {% if(abo.status) %}
-                    {% set class = " btn-danger" %}
-                    {% set txt = 'Arrêter l\'abonnement' %}
-                    <td class="abo-status-{{ abo.id }}">En cours</td>
 
-                {% else %}
-                    {% set class = " btn-success" %}
-                    {% set txt = 'Redemarrer l\'abonnement' %}
-                    <td class="abo-status-{{ abo.id }}">Arrêté</td>
 
-                {% endif %}
-                <td>
-                    <button class="btn {{ class }} abo-activation-button" data-id="{{ abo.id }}">{{ txt }}</button>
-                    <a href="{{ path('subscription_extend', {'sub_id': abo.id, 'user_id': client.id}) }}" class="btn btn-success">Prolonger</a>
-                </td>
-
-            </tr>
-            {% for payment in abo.payment %}
-                <tr>
-                    <td>{{ payment.id }}</td>
-                    <td>{{ payment.amount }}</td>
-                    <td>{{ payment.dateDeb|date('d/m/Y') }}</td>
-                    <td>{{ payment.dateFin|date('d/m/Y') }}</td>
-                    {% if payment.datePayment %}
-                    <td>{{ payment.datePayment|date('d/m/Y') }}</td>
-                    {% else %}
-                        <td>not payed</td>
-                    {% endif %}
-                    <td>{{ payment.refund }}</td>
-                </tr>
-                {% endfor %}
-        {% endfor %}
-        </table>
-    </div>
 
     </div>
 
@@ -207,6 +219,31 @@
         </div>
     </div>
 </div>
+
+    <div class="modal fade" id="refundModal" tabindex="-1" role="dialog" aria-labelledby="refundModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="refundModalLabel">Remboursement</h4>
+                </div>
+                <form method="POST" action="{{ path('payment_refund') }}" >
+                <div class="modal-body">
+                    <div id="modalMaxRefund"></div>
+                    <input type="hidden" id="transaction_Id" name="transaction_Id" >
+                    <input type="hidden" id="userId" name="userId" value="{{ client.id }}">
+                    <input type="number" step="0.01" id="amount" name="amount" min="0">
+                    <a  class="btn btn-primary btn-xs" id="max" name="max" >Max</a>
+                </div>
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                    <input type="submit" class="btn btn-success"  value="Valider">
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}

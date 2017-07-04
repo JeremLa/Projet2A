@@ -43,6 +43,27 @@ $(document).ready(function () {
         })
     });
 
+    $(".user-payment-button").each(function () {
+        var elem = $(this);
+        elem.on("click", function () {
+
+                $("#modalMaxRefund").html('Prix total de l\'abonnement : ' + $(this).attr('data-amount') +' €<br>Remboursement effectué : '
+                    + ($(this).attr('data-amount') - $(this).attr('data-price')) +' €<br>Remboursement possible : '
+                    + $(this).attr('data-price') + ' €');
+
+
+            $("#amount").attr('max',$(this).attr('data-price'));
+            $("#amount").val(0);
+            $("#transaction_Id").val($(this).attr('data-id'));
+            $("#max").off().on("click",function () {
+                $("#amount").val(elem.attr('data-price'));
+            });
+        });
+
+    });
+
+
+
     $(".abo-activation-button").each(function () {
         $(".abo-activation-button").on("click", function () {
             if(activationAjax){
@@ -268,4 +289,6 @@ $(document).ready(function () {
     }
     pagination(10,'.histo','.paginator',3);
     pagination(10,'.abolist','.abopaginator',3);
+    pagination(10,'.paylist','.paymentpaginator',3);
+
 });
