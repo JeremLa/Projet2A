@@ -1,5 +1,10 @@
 {% extends 'layout.html.twig' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/user/css/style.css') }}">
+{% endblock %}
+
 {% block content %}
 
     <h1>{{ 'user.list'|trans }}</h1>
@@ -71,13 +76,13 @@
                     {{ form_widget(form) }}
                     <div>
                         <label class="required" for="recherche">Recherche d'utilisateur</label>
-                      <input class="form-control" type="text" id="recherche" />
-                    <table class="user-list-modal">
-
-                    </table>
+                        <input class="form-control" type="text" id="recherche" autocomplete="off"/>
                     </div>
                     <input type="hidden" class="send-user-list" name="send-user-list">
-                    <div class="user-list-final"></div>
+                    <div class="row user-list-wrapper">
+                        <div class="col-md-6 user-list-modal"></div>
+                        <div class="col-md-6 user-list-final"></div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

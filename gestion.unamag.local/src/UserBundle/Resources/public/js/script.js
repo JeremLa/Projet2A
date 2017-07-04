@@ -136,50 +136,73 @@ $(document).ready(function () {
                 $('.user-list-modal').empty().append(data.users.view);
 
                 $('.add-historical').each(function () {
-                    if($('.remove-'+$(this).attr('data-user-id')).length){
-
-                        $(this).addClass("hidden");
-                    }
+                    // if($('.remove-'+$(this).attr('data-user-id')).length){
+                    //     $(this).addClass("hidden");
+                    // }
 
                     $(this).on('click', function () {
-                        if($('.send-user-list').val() == ""){
+
+
+                        // $('.user-list-final').append('<div class="btn glyphicon glyphicon-minus remove-historical remove-'+ $(this).attr('data-user-id') +'" data-user-id="'+$(this).attr('data-user-id')+'">'+$(this).attr('data-user-name')+'</div>');
+
+                        if($(this).parent().hasClass('user-list-modal')){
+                          $(this).prependTo('.user-list-final');
+                          $(this).find('i').attr('class', 'glyphicon glyphicon-minus');
+
+                          if($('.send-user-list').val() == ""){
                             $('.send-user-list').val($(this).attr('data-user-id'));
-                        }else {
+                          }else {
                             $('.send-user-list').val($('.send-user-list').val() + ',' + $(this).attr('data-user-id'));
+                          }
                         }
-                        $('.user-list-final').append('<div class="btn glyphicon glyphicon-minus remove-historical remove-'+ $(this).attr('data-user-id') +'" data-user-id="'+$(this).attr('data-user-id')+'">'+$(this).attr('data-user-name')+'</div>');
-                        $('.remove-historical').each(function () {
-                            $(this).on('click', function () {
-                                $('.add-'+$(this).attr('data-user-id')).removeClass('hidden');
-                                var tab = $('.send-user-list').val().split(',');
-                                var first = true;
-                                for(var i in tab){
-                                    if(tab[i] != $(this).attr('data-user-id')){
-                                        if(first){
-                                            $('.send-user-list').val(tab[i]);
-                                            first = false;
-                                        }else{
-                                            $('.send-user-list').val($('.send-user-list').val() +','+tab[i]);
-                                        }
-                                    }else{
-                                        if(tab.length == 1){
-                                            $('.send-user-list').val('');
-                                        }
-                                    }
-                                }
-                                $(this).remove();
-                            })
-                        });
+                        else if($(this).parent().hasClass('user-list-final')){
+                          $(this).appendTo('.user-list-modal');
+                          $(this).find('i').attr('class', 'glyphicon glyphicon-plus');
+
+                          var tab = $('.send-user-list').val().split(',');
+                          var first = true;
+                          for(var i in tab){
+                            if(tab[i] != $(this).attr('data-user-id')){
+                              if(first){
+                                $('.send-user-list').val(tab[i]);
+                                first = false;
+                              }else{
+                                $('.send-user-list').val($('.send-user-list').val() +','+tab[i]);
+                              }
+                            }else{
+                              if(tab.length == 1){
+                                $('.send-user-list').val('');
+                              }
+                            }
+                          }
+                        }
+
+                        // $('.remove-historical').each(function () {
+                        //     $(this).on('click', function () {
+                        //         $('.add-'+$(this).attr('data-user-id')).removeClass('hidden');
+                        //         var tab = $('.send-user-list').val().split(',');
+                        //         var first = true;
+                        //         for(var i in tab){
+                        //             if(tab[i] != $(this).attr('data-user-id')){
+                        //                 if(first){
+                        //                     $('.send-user-list').val(tab[i]);
+                        //                     first = false;
+                        //                 }else{
+                        //                     $('.send-user-list').val($('.send-user-list').val() +','+tab[i]);
+                        //                 }
+                        //             }else{
+                        //                 if(tab.length == 1){
+                        //                     $('.send-user-list').val('');
+                        //                 }
+                        //             }
+                        //         }
+                        //         $(this).remove();
+                        //     })
+                        // });
                       $(this).addClass("hidden");
                     });
 
                 })
-            },
-            complete: function(){
-
-            },
-            error: function(){
-                alert('error');
             }
         });
     }

@@ -27,7 +27,11 @@
 {% endfor %}
 
 {% if next == true %}
-    <div class="w3-row w3-center">
-        <p class="next-button"><i class="fa fa-arrow-down"></i></p>
+    {% set searchClass = '' %}
+    {% if search is defined and search == true %}
+        {% set searchClass = 'search' %}
+    {% endif %}
+    <div class="w3-row w3-center next-wrapper">
+        <p class="next-button {{ searchClass }}"><i class="fa fa-arrow-down"></i></p>
     </div>
 {% endif %}

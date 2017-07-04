@@ -60,7 +60,7 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
         return $paginator;
     }
 
-    public function getPublicationByUser(User $user, $limit = 5, $offset = 0){
+    public function getPublicationByUser(User $user, $limit = 5, $offset = 0, $search = null){
         $userSubscriptions = $user->getSubscription();
 
         $skiped = [];
@@ -75,8 +75,19 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             ->select('p')
             ->from('PublicationBundle:Publication', 'p');
 
+        $searched = false;
+        if($search && strlen($search) > 0){
+            $searched = true;
+            $query->where("p.canonicalTitle LIKE '%" .$search. "%'");
+        }
+
         if(count($skiped) > 0){
-            $query->where("p.id NOT IN ( " . implode($skiped, ", ") . " )");
+            $stringQuery = "p.id NOT IN ( " . implode($skiped, ", ") . " )";
+            if($searched){
+                $query->andWhere($stringQuery);
+            }else{
+                $query->where($stringQuery);
+            }
         }
 
         $query->setFirstResult($offset);

@@ -78,11 +78,82 @@ $(document).ready(function(){
     $.ajax({
       url: 'http://client.unamag.local/publication',
       data: {
-        offset: $('.publication-elem').length
+        offset: $('.publication-elem').length,
+        full: false
       },
       success: function(data){
-        elem.remove();
+        $('.next-wrapper').remove();
         $('.publication-wrapper').append(data);
+      }
+    });
+  }
+
+  var scrollTrigger = 100, // px
+    backToTop = function () {
+      var scrollTop = $(window).scrollTop();
+      if (scrollTop > scrollTrigger) {
+        $('#back-to-top').addClass('show');
+      } else {
+        $('#back-to-top').removeClass('show');
+      }
+    };
+  backToTop();
+  $(window).on('scroll', function () {
+    backToTop();
+  });
+  $('#back-to-top').on('click', function (e) {
+    e.preventDefault();
+    $('html,body').animate({
+      scrollTop: 0
+    }, 700);
+  });
+
+  var $elem = $('.search-input');
+
+  //setup before functions
+  var typingTimer;                //timer identifier
+  var doneTypingInterval = 1000;  //time in ms (5 seconds)
+  var data = {
+    search: '',
+    limit: 3,
+    offset: 0,
+    full: false
+  }
+
+  //on keyup, start the countdown
+  $elem.keyup(function () {
+    clearTimeout(typingTimer);
+    typingTimer = setTimeout(doneTyping, doneTypingInterval);
+  });
+
+  //user is "finished typing," do something
+  function doneTyping () {
+    data.search = $elem.val();
+
+    var url = 'http://client.unamag.local/publication';
+
+    getSearchAjax(url)
+
+  }
+
+  function getSearchAjax(url){
+    $.ajax({
+      url: url,
+      data: data,
+      success: function(datas){
+        $('.next-wrapper').remove();
+        $('.publication-wrapper').empty().append(datas);
+
+        // $('.search-link').each(function(){
+        //   $(this).off().on('click', function(e){
+        //     e.preventDefault();
+        //
+        //     var url = 'http://gestion.unamag.local' + $(this).attr('href');
+        //     data.page = $(this).attr('data-page');
+        //
+        //     getSearchAjax(url);
+        //   })
+        // })
       }
     });
   }

@@ -199,13 +199,13 @@ class UserController extends Controller
      * @Rest\View(serializerGroups={"user"})
      * @Rest\Get("/users/search")
      */
-    public function searchAction(Request $request){
+    public function getSearchAction(Request $request){
         $limit = $request->get('limit') ? $request->get('limit') : 10;
         $page = $request->get('page') ? $request->get('page') : 15;
         $search = $request->get('search');
 
         $em = $this->getDoctrine()->getManager();
-        $users = $em->getRepository('AuthenticationBundle:User')->findAllPagineEtTrie($page, $limit, $this->get('unamag.tools.service.string')->canonicolize($search));
+        $users = $em->getRepository('AuthenticationBundle:User')->search($page, $limit, $this->get('unamag.tools.service.string')->canonicolize($search));
 
         $pagination = array(
             'page' => $page,

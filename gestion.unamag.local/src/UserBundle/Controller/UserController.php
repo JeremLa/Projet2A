@@ -115,19 +115,13 @@ class UserController extends Controller
             'search' => $search
         ])->body;
 
+//        return new JsonResponse($response['users']);
+
         $return = [];
 
-        foreach ($response as $key=>$value){
-            if($key === 'users'){
-                $return[$key]['view'] = $this->renderView($request->get('view'), [
-                    'response' => ['users' => $value]
-                ]);
-            }elseif ($key === 'pagination'){
-                $return[$key]['view'] = $this->renderView('@User/User/index-partial/pagination.html.twig', [
-                    'response' => ['pagination' => $value]
-                ]);
-            }
-        }
+        $return['users']['view'] = $this->renderView('@User/User/historical-partial/search-user-list.html.twig', [
+            'response' => ['users' => $response['users']]
+        ]);
 
         return new JsonResponse($return);
     }

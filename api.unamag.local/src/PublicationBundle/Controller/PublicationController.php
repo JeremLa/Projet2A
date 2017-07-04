@@ -85,6 +85,8 @@ class PublicationController extends Controller
         $editForm->submit($request->request->all());
 
         if ($editForm->isValid()) {
+            $publication->setCanonicalTitle($this->get('unamag.tools.service.string')->canonicolize($publication->getTitle()));
+
             $this->getDoctrine()->getManager()->flush();
 
             return $publication;
@@ -115,11 +117,11 @@ class PublicationController extends Controller
         $user = $this->get('unamag.service.user')->findOneOr404($request->get('id'));
         $limit = $request->get('limit');
         $offset = $request->get('offset');
+        $search = $request->get('search');
 
-//        return $offset;
+        $publications = $this->get('unamag.service.publication')->getPublicationByUser($user, $limit, $offset, $search);
 
-        $publications = $this->get('unamag.service.publication')->getPublicationByUser($user, $limit, $offset);
-        $next = $this->get('unamag.service.publication')->getPublicationByUser($user, 1, $offset+$limit+1);
+        $next = $this->get('unamag.service.publication')->getPublicationByUser($user, 1, $offset+$limit+1, $search);
 
         $return = [];
         $return['publications']= $publications;
@@ -127,29 +129,4 @@ class PublicationController extends Controller
 
         return $return;
     }
-
-//    /**
-//     * @Rest\View(serializerGroups={"publication"})
-//     * @Rest\Post("/publication/search")
-//     */
-//    public function searchAction(Request $request){
-//        $limit = $request->get('limit') ? $request->get('limit') : 15;
-//        $page = $request->get('page') ? $request->get('page') : 1;
-//        $search = $request->get('search');
-//
-//        $em = $this->getDoctrine()->getManager();
-//        $publications = $em->getRepository('PublicationBundle:Publication')->search($page, $limit, $this->get('unamag.tools.service.string')->canonicolize($search));
-//
-//        $pagination = array(
-//            'page' => $page,
-//            'nbPages' => ceil(count($publications) / $limit),
-//            'nomRoute' => 'publication_list',
-//            'paramsRoute' => array()
-//        );
-//
-//        return array(
-//            'publications' => $publications,
-//            'pagination' => $pagination
-//        );
-//    }
 }

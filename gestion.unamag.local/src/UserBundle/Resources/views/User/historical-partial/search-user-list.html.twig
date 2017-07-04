@@ -2,9 +2,13 @@
     <p>Aucun résultat.</p>
 {% else %}
     {% for user in response.users %}
-        <tr>
-            <td><div class="btn glyphicon glyphicon-plus add-historical add-{{ user.id }}" data-user-id="{{ user.id }}" data-user-name="{{ user.firstname|capitalize~' '~user.lastname|capitalize }}">{{ user.firstname|capitalize }} {{ user.lastname|capitalize }}</div></td>
-
-        </tr>
+        <div class="user-wrapper add-historical add-{{ user.id }}" data-user-id="{{ user.id }}" data-user-name="{{ user.firstname|capitalize~' '~user.lastname|capitalize }}">
+            <span class="icon-wrapper">
+                <i class="glyphicon glyphicon-plus"></i>
+            </span>
+            <span class="info-wrapper">
+                {{ user.firstname|capitalize }} {{ user.lastname|capitalize }}
+            </span>
+        </div>
     {% endfor %}
 {% endif %}

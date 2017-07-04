@@ -35,3 +35,24 @@ button.disabled{
     height: 60px;
     width: 60px;
 }
+
+#back-to-top{
+    font-size: 25px;
+    line-height: 25px;
+    padding: 5px;
+    text-align: center;
+    position: fixed;
+    right: 10px;
+    bottom: 50px;
+    color: #fff;
+    background-color: #5eb5e0;
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    transition: opacity 0.2s ease-out;
+    opacity: 0;
+}
+
+#back-to-top.show {
+    opacity: 0.8;
+}
