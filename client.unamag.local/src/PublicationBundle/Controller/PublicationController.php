@@ -30,9 +30,8 @@ class PublicationController extends Controller
 
 
         APIRequest::jsonOpts(true);
-        $response = APIRequest::get($url, [], ['id' => $this->getUser()->getId(), 'limit' => $limit, 'offset' => $offset])->body;
+        $response = APIRequest::get($url, [], ['id' => $this->get('session')->get('User')->getId(), 'limit' => $limit, 'offset' => $offset])->body;
 
-//        VarDumper::dump($response);die;
 
         $args = [
             'publications' => $response['publications'],
