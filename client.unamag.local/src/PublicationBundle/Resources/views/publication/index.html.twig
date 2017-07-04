@@ -6,15 +6,14 @@
 
             <div class="w3-padding-16 w3-center">
                 <h2>{{ 'title.publication'|trans }}</h2>
+                <input class="w3-input w3-border search-input" type="text" placeholder="Rechercher...">
             </div>
 
             {% if publications|length == 0 %}
 
                 <div class="w3-card-2 w3-display-container w3-margin-bottom" style="transition:0.5s;width:100%">
-
                     <p>Vous avez actuellement un abonnement avec l'ensemble des publication UNAMAG.</p>
                     <a href="{{ path('subscription_homepage') }}" class="w3-button w3-green">Parcourir vos abonnements</a>
-
                 </div>
 
             {% else %}
@@ -22,6 +21,8 @@
                     {% include '@Publication/publication/partial/publication.html.twig' %}
                 </div>
             {% endif %}
+
+            <a href="#" id="back-to-top" title="Back to top"><i class="fa fa-arrow-up"></i></a>
         </div>
     </div>
 

@@ -33,8 +33,8 @@ class PublicationService
         return count($publication->getSubscription());
     }
 
-    public function getPublicationByUser(User $user, $limit, $offset){
-        $publications = $this->em->getRepository('PublicationBundle:Publication')->getPublicationByUser($user, $limit, $offset);
+    public function getPublicationByUser(User $user, $limit, $offset, $search){
+        $publications = $this->em->getRepository('PublicationBundle:Publication')->getPublicationByUser($user, $limit, $offset, $search);
 
         return $publications;
     }

@@ -115,11 +115,11 @@ class PublicationController extends Controller
         $user = $this->get('unamag.service.user')->findOneOr404($request->get('id'));
         $limit = $request->get('limit');
         $offset = $request->get('offset');
+        $search = $request->get('search');
 
-//        return $offset;
+        $publications = $this->get('unamag.service.publication')->getPublicationByUser($user, $limit, $offset, $search);
 
-        $publications = $this->get('unamag.service.publication')->getPublicationByUser($user, $limit, $offset);
-        $next = $this->get('unamag.service.publication')->getPublicationByUser($user, 1, $offset+$limit+1);
+        $next = $this->get('unamag.service.publication')->getPublicationByUser($user, 1, $offset+$limit+1, $search);
 
         $return = [];
         $return['publications']= $publications;

@@ -25,21 +25,24 @@ class PublicationController extends Controller
     {
         $limit = $request->get('limit') ? $request->get('limit') : 3;
         $offset = $request->get('offset') ? $request->get('offset') : 0;
+        $search = $request->get('search');
+        $full = $request->get('full') == null ? true : false;
+
         $url = $this->getParameter('api')[PubliConst::KEYPUBLICATION]['get_for_user'];
 
-
-
         APIRequest::jsonOpts(true);
-        $response = APIRequest::get($url, [], ['id' => $this->getUser()->getId(), 'limit' => $limit, 'offset' => $offset])->body;
-
-//        VarDumper::dump($response);die;
+        $response = APIRequest::get($url, [], ['id' => $this->getUser()->getId(), 'limit' => $limit, 'offset' => $offset, 'search' => $search])->body;
 
         $args = [
             'publications' => $response['publications'],
             'next'         => $response['next']
         ];
 
-        if($offset > 0){
+        if($search && strlen($search) > 0){
+            $args['search'] = true;
+        }
+
+        if(!$full){
             return $this->render('@Publication/publication/partial/publication.html.twig', $args);
         }
 
