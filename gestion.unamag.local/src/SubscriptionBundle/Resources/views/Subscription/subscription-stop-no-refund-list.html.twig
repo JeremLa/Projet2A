@@ -1,0 +1,88 @@
+{% extends 'layout.html.twig' %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/user/css/style.css') }}">
+{% endblock %}
+{% block content %}
+    <div class="subpaginator"></div>
+    {% for sub in subscriptions %}
+
+        <table class="table table-striped sublist">
+            <th>
+                <a href="{{ path('user_show', {'id': sub.user.id}) }}">{{ sub.user.firstname|capitalize }} {{ sub.user.lastname|capitalize }}</a>
+            </th>
+            <th class="text-center">
+                {{ sub.publication.title }}
+            </th>
+            <th class="text-center">
+                {% if(sub.status) %}
+                {% set class = " btn-danger" %}
+                {% set txt = 'Arrêter' %}
+
+
+            {% else %}
+                {% set class = " btn-success" %}
+                {% set txt = 'Redemarrer' %}
+
+
+            {% endif %}
+                <button class="btn {{ class }} abo-activation-button" data-id="{{ sub.id }}">{{ txt }}</button>
+            </th>
+            {% for pay in sub.payment|reverse %}
+            <tr>
+                <td class="text-center">
+                    {{ pay.dateDeb|date('d/m/Y') }}
+                </td>
+                <td class="text-center">
+                    {{ pay.dateFin|date('d/m/Y') }}
+                </td>
+                {% if pay.datePayment %}
+
+                    <td class="text-center">
+                        {% if pay.realAmount == 0 %}
+                            <div class="glyphicon glyphicon-ok text-success"></div>
+                        {% else %}
+                            <button class="btn btn-warning user-payment-button" data-toggle="modal" data-target="#refundModal" data-amount="{{ pay.amount }}" data-price="{{ pay.realAmount }}" data-id="{{ pay.transaction_id }}">Remboursement</button>
+                        {% endif %}</td>
+                {% else %}
+                    <td class="text-center"> <button class="btn btn-info user-payment-mail" data-id="{{ pay.id }}" title="Envoi d'un mail de relance pour impayé">Relance</button> </td>
+
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+        {% endfor %}
+
+    <div class="modal fade" id="refundModal" tabindex="-1" role="dialog" aria-labelledby="refundModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="refundModalLabel">Remboursement</h4>
+                </div>
+                <form method="POST" action="{{ path('payment_refund') }}" >
+                    <div class="modal-body">
+                        <div id="modalMaxRefund"></div>
+                        <input type="hidden" id="transaction_Id" name="transaction_Id" >
+                        <input type="hidden" id="userId" name="userId" value="other">
+                        <input type="number" step="0.01" id="amount" name="amount" min="0">
+                        <a  class="btn btn-primary btn-xs" id="max" name="max" >Max</a>
+                    </div>
+                    <div class="modal-footer">
+
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                        <input type="submit" class="btn btn-success"  value="Valider">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src = "{{ asset('bundles/user/js/script.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,5 @@
+services:
+    unamag.service.payment:
+        class: PaymentBundle\Services\PaymentService
+        arguments:
+            - "@doctrine.orm.default_entity_manager"

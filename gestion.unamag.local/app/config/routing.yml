@@ -1,3 +1,7 @@
+payment:
+    resource: "@PaymentBundle/Resources/config/routing.yml"
+    prefix:   /remboursement
+
 subscription:
     resource: "@SubscriptionBundle/Resources/config/routing.yml"
     prefix:   /abonnement

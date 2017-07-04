@@ -1,0 +1,17 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}
+    Paiement
+{% endblock %}
+
+{% block content %}
+    {{ form_start(form, { 'attr': {'class': 'w3-container'} }) }}
+    {{ form_widget(form) }}
+    <div class="w3-row w3-padding-16">
+        <button type="submit" class="w3-btn w3-small w3-left w3-green w3-col s5">Payer</button>
+        <a href="{{ path('user_homepage') }}" type="submit" class="w3-btn w3-small w3-right w3-red w3-col s5">Annuler</a>
+    </div>
+
+    {{ form_end(form) }}
+
+{% endblock %}

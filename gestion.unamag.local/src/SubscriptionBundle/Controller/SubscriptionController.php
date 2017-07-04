@@ -21,4 +21,20 @@ class SubscriptionController extends Controller
 
         return new JsonResponse("",$response->code);
     }
+
+    public function extendAction(Request $request)
+    {
+        $url = $this->getParameter('api')['subscription']['extend'];
+        $response = APIRequest::post($url, [], ['id' => $request->get('sub_id')]);
+
+        return $this->redirectToRoute('user_show', ['id' => $request->get('user_id')]);
+    }
+
+    public function getStoppedSubscriptionWithoutRefundAction(){
+        $url = $this->getParameter('api')['subscription']['stopped']['noRefund'];
+        $response = APIRequest::get($url, [], [])->body;
+
+        return $this->render('SubscriptionBundle:Subscription:subscription-stop-no-refund-list.html.twig', ['subscriptions' => $response]);
+    }
+
 }

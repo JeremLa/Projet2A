@@ -2,6 +2,7 @@
 
 namespace SubscriptionBundle\Controller;
 
+use PaymentBundle\Entity\Payment;
 use PublicationBundle\Entity\Publication;
 use SubscriptionBundle\Entity\Subscription;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -63,7 +64,7 @@ class SubscriptionController extends Controller
      * @Rest\View(serializerGroups={"subscription"})
      * @Rest\Post("/subscription/new")
      */
-    public function newAction(Request $request)
+    public function newSubscriptionAction(Request $request)
     {
         $user = $this->get('unamag.service.user')->findOneOr404($request->get('user'));
         $publication = $this->get('unamag.service.publication')->findOneOr404($request->get('publication'));
@@ -71,9 +72,10 @@ class SubscriptionController extends Controller
         $subscription = new Subscription();
         $subscription->setUser($user);
         $subscription->setPublication($publication);
-
+        $this->get('unamag.service.payment')->createPayment($subscription->getDateStart(),$subscription->getDateEnd(), $subscription);
         $em = $this->getDoctrine()->getManager();
         $em->persist($subscription);
+
         $em->flush();
 
         return $subscription;
@@ -99,10 +101,9 @@ class SubscriptionController extends Controller
      * @Rest\View(serializerGroups={"subscription"})
      * @Rest\Get("/subscription/show")
      */
-    public function showAction(Request $request)
+    public function showSubscriptionAction(Request $request)
     {
         $subscription = $this->get('unamag.service.subscription')->findOneOr404($request->get('id'));
-
         return $subscription;
     }
 
@@ -113,13 +114,16 @@ class SubscriptionController extends Controller
     public function editExtendAction(Request $request)
     {
         $subscriptionService = $this->get('unamag.service.subscription');
+        /** @var  $subscription Subscription */
         $subscription = $subscriptionService->findOneOr404($request->get('id'));
+        $dateStart  =  clone $subscription->getDateEnd();
 
         $subscriptionService->extendOneYear($subscription);
-
+        $dateEnd =  clone $subscription->getDateEnd();
+        $this->get('unamag.service.payment')->createPayment($dateStart,$dateEnd, $subscription);
         $this->get('unamag.service.subscription')->persist($subscription, true);
 
-        //TODO add payment when subscription is extended
+
 
         return $subscription;
     }
@@ -137,5 +141,15 @@ class SubscriptionController extends Controller
         $this->get('unamag.service.subscription')->persist($subscription, true);
 
         return $subscription;
+    }
+
+    /**
+     * @Rest\View(serializerGroups={"subscription"})
+     * @Rest\Get("/subscription/stopped/noRefund")
+     */
+    public function getStoppedWithoutRefundAction(){
+
+        $subscriptions = $this->get('unamag.service.subscription')->findStoppedWithoutRefund();
+        return $subscriptions;
     }
 }

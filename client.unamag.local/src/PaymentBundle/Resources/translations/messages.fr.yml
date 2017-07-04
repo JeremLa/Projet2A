@@ -1,0 +1,4 @@
+payment:
+    cardNumber: Numéro de carte banquaire
+    expMonth: Mois d'éxpiration
+    expYear: Année d'éxpiration

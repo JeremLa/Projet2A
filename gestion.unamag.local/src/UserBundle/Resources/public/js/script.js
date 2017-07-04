@@ -62,7 +62,54 @@ $(document).ready(function () {
 
     });
 
+    $('.user-payment-mail').each(function () {
+        var elem = $(this);
+        elem.on('click', function () {
+            if(activationAjax){
+                return;
+            }
+            var element = $(this);
+            activationAjax = $.ajax({
+                url: "http://gestion.unamag.local/remboursement/mail",
+                method: "POST",
+                data: {
+                    id: elem.attr("data-id")
+                },
+                success: function (data) {
+                    var succes = "Le mail a bien été envoyé";
+                    var $success = $(".success");
 
+                    $success.html(succes);
+                    $success.removeClass('hidden');
+                    $success.show();
+
+                    setTimeout(function () {
+                        $success.fadeOut(1000);
+                        setTimeout(function () {
+                            $success.empty();
+                        },1000);
+                        },3000);
+
+                },
+                complete: function (data) {
+                    activationAjax = null;
+                },
+                error: function (data) {
+                    var error = "Une erreur est survenu, merci de re essayer";
+                    var $errors = $(".errors");
+                    $errors.html(error);
+                    $errors.removeClass('hidden');
+                    setTimeout(function () {
+                        $errors.fadeOut(1000);
+                        setTimeout(function () {
+                            $errors.empty();
+                        },1000);
+                    },3000);
+                }
+
+            })
+        })
+    });
 
     $(".abo-activation-button").each(function () {
         $(".abo-activation-button").on("click", function () {
@@ -79,12 +126,16 @@ $(document).ready(function () {
                 success: function (data) {
                     if(elem.hasClass("btn-danger")){
                         elem.removeClass('btn-danger').addClass('btn-success');
-                        elem.html("Redemarrer l'abonnement");
-                        $(".abo-status-"+elem.attr("data-id")).html("Arrêté");
+                        elem.html("Redemarrer");
+                        if($(".abo-status-"+elem.attr("data-id")).length) {
+                            $(".abo-status-" + elem.attr("data-id")).html("Arrêté");
+                        }
                     }else{
                         elem.removeClass('btn-success').addClass('btn-danger');
-                        elem.html("Arrêter l'abonnement");
-                        $(".abo-status-"+elem.attr("data-id")).html("En cours");
+                        elem.html("Arrêter");
+                        if($(".abo-status-"+elem.attr("data-id")).length){
+                            $(".abo-status-"+elem.attr("data-id")).html("En cours");
+                        }
                     }
                 },
                 complete: function (data) {
@@ -312,6 +363,7 @@ $(document).ready(function () {
     }
     pagination(10,'.histo','.paginator',3);
     pagination(10,'.abolist','.abopaginator',3);
+    pagination(2,'.sublist','.subpaginator',3);
     pagination(10,'.paylist','.paymentpaginator',3);
 
 });

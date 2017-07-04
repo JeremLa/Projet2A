@@ -1,0 +1,23 @@
+<h3>Bonjour {{ name }} !</h3>
+<br>
+<p>Ceci est un mail de rappel pour un abonnement impayé d'un montant de {{ pay.realAmount }} €.</p>
+<br>
+<p>Vous avez un abonnement pour le magazine {{ pay.abonnement.publication.title }} pour la période du {{ pay.dateDeb|date('d/m/Y') }} au {{ pay.dateFin|date('d/m/Y') }} </p>
+<br>
+<p>Pour payer, rendez vous sur votre compte, mes abonnements en <a href="http://client.unamag.local/abonnement">cliquant ici</a></p>
+<br>
+<p>N'hésitez pas à contacter le service client qui est disponible pour vous, via courrier, téléphone et email.</p>
+<br>
+<p>Cordialement,<br>
+    L'équipe d'Unamag<br>
+    <br>
+    Technopôle de Château-Gombert<br>
+    Europarc bâtiment B<br>
+    22 rue John Maynard Keynes<br>
+    13013 MARSEILLE<br>
+    <br>
+    06 51 57 91 73<br>
+    04 91 95 50 00<br>
+    <br>
+    projet@esimed.fr
+</p>

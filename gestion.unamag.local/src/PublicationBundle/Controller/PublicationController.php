@@ -28,7 +28,6 @@ class PublicationController extends Controller
         $url = $this->getParameter('api')[PubliConst::KEYPUBLICATION]['get_all'];
 
         $response = APIRequest::get($url, [], ['page' => $page, 'limit', 'limit' => 8]);
-
         return $this->render('PublicationBundle:publication:index.html.twig', array(
             'response' => $response->body,
         ));

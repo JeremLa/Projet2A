@@ -6,3 +6,11 @@ subscription_homepage:
 subscription_show:
     path:   /changeActif
     defaults: { _controller: SubscriptionBundle:Subscription:changeActif }
+
+subscription_extend:
+    path:   /extend
+    defaults: { _controller: SubscriptionBundle:Subscription:extend }
+
+subscription_stopNoRefund:
+    path:   /stoppedWithoutRefund
+    defaults: { _controller: SubscriptionBundle:Subscription:getStoppedSubscriptionWithoutRefund }

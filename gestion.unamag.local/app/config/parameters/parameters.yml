@@ -23,6 +23,11 @@ parameters:
         subscription:
             activation: "%api.url%/subscription/edit/status"
             extend: "%api.url%/subscription/edit/extend"
+            stopped:
+                noRefund: "%api.url%/subscription/stopped/noRefund"
         search: "%api.url%/search"
+        payment:
+            refund: "%api.url%/payment/refund"
+            mail: "%api.url%/payment/mail"
 
 

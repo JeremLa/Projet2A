@@ -95,7 +95,7 @@ PaymentBundle\Entity\Payment:
         amount:
             groups: ['payment', 'subscription', 'user']
         transaction_id:
-            groups: ['payment', 'user']
+            groups: ['payment', 'user', 'subscription']
         abonnement:
             groups: ['payment']
         dateDeb:
@@ -105,4 +105,6 @@ PaymentBundle\Entity\Payment:
         datePayment:
             groups: ['payment', 'subscription', 'user']
         refund:
+            groups: ['payment', 'subscription', 'user']
+        realAmount:
             groups: ['payment', 'subscription', 'user']

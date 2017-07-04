@@ -147,7 +147,8 @@ class UserController extends Controller
             ->setTo($user->getMail())
 //                ->setTo(['hermesalexis@gmail.com'])
         ->setBody(
-            $this->renderView('@Authentication/Emails/registration.html.twig', array('name'=> $user->getFirstname().' '.$user->getLastname(),'hash' => $activation->getHash())),
+            $this->renderView('@Authentication/Emails/registration.html.twig', array('name'=> $user->getFirstname().' '.$user->getLastname(),
+                'hash' => $activation->getHash())),
             'text/html'
         );
         $this->get('mailer')->send($message);

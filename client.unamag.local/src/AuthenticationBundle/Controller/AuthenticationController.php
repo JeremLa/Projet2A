@@ -44,8 +44,6 @@ class AuthenticationController extends Controller
 
 
     public function loginAction(Request $request){
-
-
         if($request->get('key')){
             $url = $this->getParameter('api')['activation'];
             $response = APIRequest::post($url, [], ['key'=>$request->get('key')]);
@@ -66,7 +64,6 @@ class AuthenticationController extends Controller
         if($form->isSubmitted() && $form->isValid()){
             $url = $this->getParameter('api')['user']['login'];
             $response = APIRequest::post($url, [], http_build_query($request->get('login')));
-
             if($response->code != 200){
 
                 $error = $this->get('translator')->trans('auth.error');
@@ -92,6 +89,7 @@ class AuthenticationController extends Controller
             $request->getSession()->set('_security_main', serialize($unauthenticatedToken));
             $event = new InteractiveLoginEvent($request, $unauthenticatedToken);
             $this->get("event_dispatcher")->dispatch("security.interactive_login", $event);
+
 
             $this->connectUser($user);
             return $this->redirectToRoute('subscription_homepage');
