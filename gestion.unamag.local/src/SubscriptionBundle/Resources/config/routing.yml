@@ -14,3 +14,7 @@ subscription_extend:
 subscription_stopNoRefund:
     path:   /stoppedWithoutRefund
     defaults: { _controller: SubscriptionBundle:Subscription:getStoppedSubscriptionWithoutRefund }
+
+subscription_notPaid:
+    path:   /notPaid
+    defaults: { _controller: SubscriptionBundle:Subscription:notPaid }

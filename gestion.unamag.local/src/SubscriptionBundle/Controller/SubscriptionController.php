@@ -37,4 +37,9 @@ class SubscriptionController extends Controller
         return $this->render('SubscriptionBundle:Subscription:subscription-stop-no-refund-list.html.twig', ['subscriptions' => $response]);
     }
 
+    public function notPaidAction(){
+        $url = $this->getParameter('api')['subscription']['notPaid'];
+        $response = APIRequest::get($url, [], [])->body;
+        return $this->render('SubscriptionBundle:Subscription:subscription-not-paid-list.html.twig', ['subscriptions' => $response]);
+    }
 }

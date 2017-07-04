@@ -25,6 +25,7 @@ parameters:
             extend: "%api.url%/subscription/edit/extend"
             stopped:
                 noRefund: "%api.url%/subscription/stopped/noRefund"
+            notPaid: "%api.url%/subscription/notPaid"
         search: "%api.url%/search"
         payment:
             refund: "%api.url%/payment/refund"

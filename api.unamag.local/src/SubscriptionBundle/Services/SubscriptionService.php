@@ -68,4 +68,25 @@ class SubscriptionService
         }
         return $arr;
     }
+
+    public function findNotPaid(){
+        $subscriptions = $this->em->getRepository('SubscriptionBundle:Subscription')->findAll();
+        $arr = [];
+        $found = false;
+        /** @var  $sub Subscription */
+        foreach ($subscriptions as $sub){
+            /** @var  $pay Payment */
+            foreach ($sub->getPayment() as $pay){
+                if($pay->getTransactionId() == null){
+                    $found = true;
+                    break;
+                }
+            }
+            if($found){
+                $arr[] = $sub;
+            }
+            $found = false;
+        }
+        return $arr;
+    }
 }

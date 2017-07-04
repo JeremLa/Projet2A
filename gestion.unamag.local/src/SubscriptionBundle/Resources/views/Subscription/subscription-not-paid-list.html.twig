@@ -6,7 +6,9 @@
     <link rel="stylesheet" href="{{ asset('bundles/user/css/style.css') }}">
 {% endblock %}
 {% block content %}
-    <h1>Liste des abonnements arreté et non remboursé</h1>
+    <h1>Liste des abonnements non payé</h1>
+    <div class="errors alert alert-danger hidden"></div>
+    <div class="success alert alert-success hidden"></div>
     <div class="subpaginator"></div>
     {% for sub in subscriptions %}
 
@@ -18,20 +20,9 @@
                 {{ sub.publication.title }}
             </th>
             <th class="text-center col-md-4">
-                {% if(sub.status) %}
-                {% set class = " btn-danger" %}
-                {% set txt = 'Arrêter' %}
-
-
-            {% else %}
-                {% set class = " btn-success" %}
-                {% set txt = 'Redemarrer' %}
-
-
-            {% endif %}
-                <button class="btn {{ class }} abo-activation-button" data-id="{{ sub.id }}">{{ txt }}</button>
             </th>
             {% for pay in sub.payment|reverse %}
+                {% if(pay.transaction_id == null) %}
             <tr>
                 <td class="text-center">
                     {{ pay.dateDeb|date('d/m/Y') }}
@@ -52,6 +43,7 @@
 
                 {% endif %}
             </tr>
+            {% endif %}
             {% endfor %}
         </table>
         {% endfor %}

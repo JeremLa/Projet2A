@@ -152,4 +152,14 @@ class SubscriptionController extends Controller
         $subscriptions = $this->get('unamag.service.subscription')->findStoppedWithoutRefund();
         return $subscriptions;
     }
+
+    /**
+     * @Rest\View(serializerGroups={"subscription"})
+     * @Rest\Get("/subscription/notPaid")
+     */
+    public function getNotPaidAction(){
+
+        $subscriptions = $this->get('unamag.service.subscription')->findNotPaid();
+        return $subscriptions;
+    }
 }
