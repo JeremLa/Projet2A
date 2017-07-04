@@ -18,7 +18,7 @@ class PublicationController extends Controller
 {
     /**
      * @Rest\View(serializerGroups={"publication"})
-     * @Rest\Post("/publication")
+     * @Rest\Get("/publication")
      */
     public function indexAction(Request $request)
     {
