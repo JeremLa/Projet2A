@@ -35,11 +35,11 @@ SubscriptionBundle\Entity\Subscription:
 AuthenticationBundle\Entity\User:
     attributes:
         id:
-            groups: ['user', 'subscription','histo', 'search']
+            groups: ['user', 'subscription','histo', 'search', 'publication']
         firstname:
-            groups: ['user', 'subscription','histo', 'search']
+            groups: ['user', 'subscription','histo', 'search', 'publication']
         lastname:
-            groups: ['user', 'subscription','histo', 'search']
+            groups: ['user', 'subscription','histo', 'search', 'publication']
         canonicalFullname:
             groups: ['user']
         adress:
@@ -47,7 +47,7 @@ AuthenticationBundle\Entity\User:
         city:
             groups: ['user']
         zipCode:
-            groups: ['user']
+            groups: ['user', 'publication']
         tel:
             groups: ['user', 'search']
         mail:
@@ -57,7 +57,7 @@ AuthenticationBundle\Entity\User:
         birthCity:
             groups: ['user', 'search']
         birthDate:
-            groups: ['user', 'search']
+            groups: ['user', 'search', 'publication']
         level:
             groups: ['user']
         actif:
@@ -83,7 +83,6 @@ PublicationBundle\Entity\Publication:
             groups: ['publication']
         annualCost:
             groups: ['publication', 'subscription', 'user']
-
         subscription:
             groups: ['publication', 'search']
 

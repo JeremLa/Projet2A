@@ -63,4 +63,17 @@ class UserService
         return new Serializer($normalizers, $encoders);
     }
 
+    public function calculAge($date)
+    {
+
+        $age = date('Y') - date('Y', strtotime($date));
+        if (date('dm') < date('dm', strtotime($date))) {
+            return $age - 1;
+        }
+        return $age;
+    }
+
+
+
+
 }

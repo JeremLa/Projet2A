@@ -70,7 +70,8 @@ class PublicationController extends Controller
      */
     public function showAction(Request $request)
     {
-        return $this->get('unamag.service.publication')->findOneOr404($request->get('publicationId'));
+        $publication = $this->get('unamag.service.publication')->findOneOr404($request->get('publicationId'));
+        return $publication;
     }
 
     /**
