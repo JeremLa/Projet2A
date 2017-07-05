@@ -74,6 +74,8 @@
                                 <span data-modal-close-id="pay-extend" class="w3-button w3-display-topright modal-closer">&times;</span>
                                 <br>
                                 <p class="text-justify">{{ form_start(form, {'name': 'payment','method': 'POST', 'action': path('payment_pay') }) }}</p>
+                                <p class="text-justify"><label class="w3-text-teal required" for="card_cardNumber">Numéro de carte banquaire</label>
+                                <input type="tel" maxlength="10" id="card_cardNumber" name="card[cardNumber]" required="required" class="w3-input w3-border w3-light-grey cardNumber"></p>
                                 <p class="text-justify">{{ form_widget(form) }}</p>
 
 

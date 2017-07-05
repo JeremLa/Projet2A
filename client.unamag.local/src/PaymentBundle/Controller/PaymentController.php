@@ -19,6 +19,7 @@ class PaymentController extends Controller
         $form->handleRequest($request);
         if($form->isSubmitted()  && $form->isValid())
         {
+
             $cardNumber = $request->get('card')['cardNumber'];
             if(strlen($cardNumber) != 10){
                 $this->get('session')->getFlashBag()->add('errors', 'Les données de votre carte ne sont pas correcte, merci d\'essayer avec une autre carte');
@@ -36,7 +37,7 @@ class PaymentController extends Controller
             $url = 'http://10.0.0.6:6543/cardpay/'.$uuid.'/'.$request->get('pay_id').'/'.$cardNumber.'/'.$request->get('card')['expMonth'].'/'.$request->get('card')['expYear'].'/'.$request->get('amount');
             $response = APIRequest::get($url, [], []);
 
-            VarDumper::dump($response->body);die;
+
 
             if($response->code != 200){
                   $this->get('session')->getFlashBag()->add('errors', 'Une erreur est survenue lors du réglement de votre abonnement, réessayez plus tard ou contactez le service client.');

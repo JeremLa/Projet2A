@@ -159,11 +159,9 @@ $(document).ready(function () {
 
     var $elem = $('#recherche');
 
-    //setup before functions
     var typingTimer;                //timer identifier
     var doneTypingInterval = 1000;  //time in ms (5 seconds)
 
-    //on keyup, start the countdown
     $elem.keyup(function () {
         clearTimeout(typingTimer);
 
@@ -175,7 +173,6 @@ $(document).ready(function () {
         typingTimer = setTimeout(doneTyping, doneTypingInterval);
     });
 
-    //user is "finished typing," do something
     function doneTyping () {
         $.ajax({
             url: 'http://gestion.unamag.local/users/search',
@@ -186,19 +183,10 @@ $(document).ready(function () {
             },
             success: function(data){
 
-                // $('.pagination-wrapper').empty().append(data.pagination.view);
-
                 $('.user-list-modal').empty().append(data.users.view);
 
                 $('.add-historical').each(function () {
-                    // if($('.remove-'+$(this).attr('data-user-id')).length){
-                    //     $(this).addClass("hidden");
-                    // }
-
                     $(this).on('click', function () {
-
-
-                        // $('.user-list-final').append('<div class="btn glyphicon glyphicon-minus remove-historical remove-'+ $(this).attr('data-user-id') +'" data-user-id="'+$(this).attr('data-user-id')+'">'+$(this).attr('data-user-name')+'</div>');
 
                         if($(this).parent().hasClass('user-list-modal')){
                           $(this).prependTo('.user-list-final');
@@ -232,28 +220,6 @@ $(document).ready(function () {
                           }
                         }
 
-                        // $('.remove-historical').each(function () {
-                        //     $(this).on('click', function () {
-                        //         $('.add-'+$(this).attr('data-user-id')).removeClass('hidden');
-                        //         var tab = $('.send-user-list').val().split(',');
-                        //         var first = true;
-                        //         for(var i in tab){
-                        //             if(tab[i] != $(this).attr('data-user-id')){
-                        //                 if(first){
-                        //                     $('.send-user-list').val(tab[i]);
-                        //                     first = false;
-                        //                 }else{
-                        //                     $('.send-user-list').val($('.send-user-list').val() +','+tab[i]);
-                        //                 }
-                        //             }else{
-                        //                 if(tab.length == 1){
-                        //                     $('.send-user-list').val('');
-                        //                 }
-                        //             }
-                        //         }
-                        //         $(this).remove();
-                        //     })
-                        // });
                       $(this).addClass("hidden");
                     });
 
@@ -266,7 +232,6 @@ $(document).ready(function () {
     $('#onglets').click(function(event) {
         var actuel = event.target;
         if (!/li/i.test(actuel.nodeName) || actuel.className.indexOf('actif') > -1) {
-            // alert(actuel.nodeName)
             return;
         }
         $(actuel).addClass('actif').siblings().removeClass('actif');

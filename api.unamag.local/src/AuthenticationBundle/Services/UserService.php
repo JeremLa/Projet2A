@@ -12,6 +12,7 @@ use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\VarDumper\VarDumper;
 
 class UserService
 {
@@ -99,8 +100,11 @@ class UserService
                 /** @var  $subscription Subscription*/
                 foreach ($user->getSubscription() as $subscription){
                     if($subscription->getPublication()->getId() == $publicationId){
-                        $add = false;
-                        break;
+                        if($subscription->getDateEnd() > new \DateTime('now')){
+                            $add = false;
+                            break;
+                        }
+
                     }
                 }
 
