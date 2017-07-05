@@ -106,25 +106,33 @@
                         <th></th>
                         {% for abo in client.subscription %}
 
-                            <tr class="abolist">
+                            {% set disabledClass = '' %}
+                            {% if abo.dateEnd|date('d/m/Y') > date()|date('d/m/Y') %}
+                                {% set disabledClass = 'disabled' %}
+                            {% endif %}
+
+                            <tr class="abolist {{ disabledClass }}">
                                 <td>{{ abo.publication.title }}</td>
                                 <td>{{ abo.publication.annualCost }}</td>
                                 <td>{{ abo.dateStart|date('d/m/Y') }}</td>
                                 <td>{{ abo.dateEnd|date('d/m/Y') }}</td>
-                                {% if(abo.status) %}
+                                {% if abo.dateEnd|date('d/m/Y') < date()|date('d/m/Y') %}
+                                    <td class="abo-status-{{ abo.id }}">Expiré</td>
+                                {% elseif(abo.status) %}
                                     {% set class = " btn-danger" %}
                                     {% set txt = 'Arrêter' %}
                                     <td class="abo-status-{{ abo.id }}">En cours</td>
-
                                 {% else %}
                                     {% set class = " btn-success" %}
                                     {% set txt = 'Redemarrer' %}
                                     <td class="abo-status-{{ abo.id }}">Arrêté</td>
-
                                 {% endif %}
+
                                 <td>
+                                    {% if abo.dateEnd|date('d/m/Y') > date()|date('d/m/Y') %}
                                     <a href="{{ path('subscription_extend', {'sub_id': abo.id, 'user_id': client.id}) }}" class="btn btn-success">Prolonger</a>
                                     <button class="btn {{ class }} abo-activation-button" data-id="{{ abo.id }}">{{ txt }}</button>
+                                    {% endif %}
                                 </td>
 
                             </tr>

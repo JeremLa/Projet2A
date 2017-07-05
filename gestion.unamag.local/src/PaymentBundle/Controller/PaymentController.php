@@ -16,8 +16,10 @@ class PaymentController extends Controller
             return $this->redirectToRoute('user_show', ['id' => $request->get('userId')]);
         }
 
+
         $url = $this->getParameter('api')['payment']['refund'];
         $response = APIRequest::post($url, [], $request->request->all());
+
 
         if($response->code != 200){
             $this->get('session')->getFlashBag()->add('errors', "Un problème est survenu lors du remboursement, veuillez réessayer");
