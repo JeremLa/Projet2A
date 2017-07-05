@@ -18,9 +18,9 @@ class PaymentController extends Controller
 
         $url = $this->getParameter('api')['payment']['refund'];
         $response = APIRequest::post($url, [], $request->request->all());
-
+VarDumper::dump($response->body);die;
         if($response->code != 200){
-            $this->get('session')->getFlashBag()->add('errors', "Un problème est survenu lors du remboursement, veuillez réessayer");
+            $this->get('session')->getFlashBag()->add('errors', "Un problème est survenu lors du remboursement, veuillez réessayer ou contacter le service technique");
         }else{
             $this->get('session')->getFlashBag()->add('success', "Le remboursement de ".$request->get('amount')." € a été éffectué avec succès");
         }

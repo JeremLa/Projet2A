@@ -36,7 +36,6 @@ class PaymentController extends Controller
         $uuid = '48aeef1a-11b9-8262-be97-2cfb5a7f9b25';
         $url = 'http://10.0.0.6:6543/cardpay/'.$uuid.'/'.$data['pay_id'].'/'.$card['cardNumber'].'/'.$card['expMonth'].'/'.$card['expYear'].'/'.$data['amount'];
         $response = APIRequest::get($url, [], []);
-var_dump($response);die;
         return $response->code;
 
     }
@@ -77,6 +76,7 @@ var_dump($response);die;
      */
     public function refundAction(Request $request)
     {
+
         $data = $request->request->all();
         $uuid = '48aeef1a-11b9-8262-be97-2cfb5a7f9b25';
         $em = $this->getDoctrine()->getManager();
@@ -85,7 +85,6 @@ var_dump($response);die;
         if($data['amount'] < 0 ){
             return $this->json('Montant incorrect',400);
         }
-
         /** @var  $payment Payment */
         $payment = $em->getRepository('PaymentBundle:Payment')->findBy(['transaction_id' => $data['transaction_Id']])[0];
 
@@ -102,6 +101,7 @@ var_dump($response);die;
             $response = APIRequest::get($url, [], []);
 
             if($response->code == 200) {
+
                 if ($partial) {
                     $payment->setRealAmount($payment->getRealAmount() - $data['amount']);
                 } else {
