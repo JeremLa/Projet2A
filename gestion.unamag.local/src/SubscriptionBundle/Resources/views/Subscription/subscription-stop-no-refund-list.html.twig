@@ -32,7 +32,7 @@
 
 
             {% endif %}
-                <button class="btn {{ class }} abo-activation-button" data-id="{{ sub.id }}">{{ txt }}</button>
+                <button class="btn {{ class }} abo-activation-button btn-xs" data-id="{{ sub.id }}" style="min-width: 100px">{{ txt }}</button>
             </th>
             {% for pay in sub.payment|reverse %}
                 {% if pay.transaction_id != null and pay.realAmount == pay.amount %}
@@ -49,10 +49,10 @@
                         {% if pay.realAmount == 0 %}
                             <div class="glyphicon glyphicon-ok text-success"></div>
                         {% else %}
-                            <button class="btn btn-warning user-payment-button" data-toggle="modal" data-target="#refundModal" data-amount="{{ pay.amount }}" data-price="{{ pay.realAmount }}" data-id="{{ pay.transaction_id }}">Remboursement</button>
+                            <button class="btn btn-warning user-payment-button btn-xs" data-toggle="modal" data-target="#refundModal" data-amount="{{ pay.amount }}" data-price="{{ pay.realAmount }}" data-id="{{ pay.transaction_id }}">Remboursement</button>
                         {% endif %}</td>
                 {% else %}
-                    <td class="text-center"> <button class="btn btn-info user-payment-mail" data-id="{{ pay.id }}" title="Envoi d'un mail de relance pour impayé">Relancer</button> </td>
+                    <td class="text-center"> <button class="btn btn-info user-payment-mail btn-xs" data-id="{{ pay.id }}" title="Envoi d'un mail de relance pour impayé">Relancer</button> </td>
 
                 {% endif %}
             </tr>

@@ -98,21 +98,22 @@
                 <div class="item">
                     <div class="abopaginator"></div>
                     <table class="table">
-                        <th>Titre</th>
-                        <th>Coût annuel</th>
-                        <th>Date de début</th>
-                        <th>Date de fin</th>
-                        <th>Statut</th>
-                        <th></th>
-                        {% for abo in client.subscription %}
-
-                            {% set disabledClass = '' %}
-                            {% if abo.dateEnd|date('d/m/Y') > date()|date('d/m/Y') %}
-                                {% set disabledClass = 'disabled' %}
+                        <th class="text-left">Titre</th>
+                        <th class="text-center">Coût annuel(€)</th>
+                        <th class="text-center">Date de début</th>
+                        <th class="text-center">Date de fin</th>
+                        <th class="text-center">Statut</th>
+                        <th class="text-center"></th>
+                        {% for abo in client.subscription|reverse %}
+                            {% set expiredClass = '' %}
+                            {% if abo.dateEnd|date('d/m/Y') < date()|date('d/m/Y') %}
+                                {% set expiredClass = 'expired' %}
+                            {% elseif abo.dateEnd|date_modify("-2 month") < date() %}
+                                {% set expiredClass = 'expired-soon' %}
                             {% endif %}
 
-                            <tr class="abolist {{ disabledClass }}">
-                                <td>{{ abo.publication.title }}</td>
+                            <tr class="abolist {{ expiredClass }} text-center">
+                                <td class="text-left">{{ abo.publication.title }}</td>
                                 <td>{{ abo.publication.annualCost }}</td>
                                 <td>{{ abo.dateStart|date('d/m/Y') }}</td>
                                 <td>{{ abo.dateEnd|date('d/m/Y') }}</td>
@@ -130,8 +131,8 @@
 
                                 <td>
                                     {% if abo.dateEnd|date('d/m/Y') > date()|date('d/m/Y') %}
-                                    <a href="{{ path('subscription_extend', {'sub_id': abo.id, 'user_id': client.id}) }}" class="btn btn-success">Prolonger</a>
-                                    <button class="btn {{ class }} abo-activation-button" data-id="{{ abo.id }}">{{ txt }}</button>
+                                    <a href="{{ path('subscription_extend', {'sub_id': abo.id, 'user_id': client.id}) }}" class="btn btn-success btn-xs">Prolonger</a>
+                                    <button class="btn {{ class }} abo-activation-button btn-xs" data-id="{{ abo.id }}">{{ txt }}</button>
                                     {% endif %}
                                 </td>
 
@@ -158,44 +159,47 @@
                         {% set magazine = null %}
                         {% set first = true %}
                         {% set count = 0 %}
-                        {% for abo in client.subscription %}
-                        {% if magazine !=  abo.publication.title %}
-                            {% set magazine = abo.publication.title %}
-                            {% set first = true %}
-                        {% endif %}
+                        {% for abo in client.subscription|reverse %}
+                            {% if magazine !=  abo.publication.title %}
+                                {% set magazine = abo.publication.title %}
+                                {% set first = true %}
+                            {% endif %}
 
-                        {% for payment in abo.payment %}
-                            <tr class="paylist">
-                                {% if first == true or count%10 == 0 %}
-                                    {% set first = false %}
-                                    <td><strong>{{ magazine }}</strong></td>
-                                    {% else %}
-                                    <td></td>
+                            {% for payment in abo.payment %}
+
+                                {% set unpayedClass = '' %}
+
+                                {% if payment.datePayment == null %}
+                                    {% set unpayedClass = 'unpayed' %}
                                 {% endif %}
-                                <td class="text-center">{{ payment.amount }}</td>
-                                <td class="text-center">{{ payment.dateDeb|date('d/m/Y') }}</td>
-                                <td class="text-center">{{ payment.dateFin|date('d/m/Y') }}</td>
-                                {% if payment.datePayment %}
-                                    <td class="text-center">{{ payment.datePayment|date('d/m/Y') }}</td>
-                                    <td class="text-center">
-                                        {% if payment.realAmount == 0 %}
-                                            <div class="glyphicon glyphicon-ok text-success"></div>
+                                <tr class="paylist {{ unpayedClass }}">
+                                    {% if first == true or count%10 == 0 %}
+                                        {% set first = false %}
+                                        <td><strong>{{ magazine }}</strong></td>
                                         {% else %}
-                                            <button class="btn btn-warning user-payment-button" data-toggle="modal" data-target="#refundModal" data-amount="{{ payment.amount }}" data-price="{{ payment.realAmount }}" data-id="{{ payment.transaction_id }}">Remboursement</button>
-                                        {% endif %}</td>
-                                {% else %}
-                                    <td class="text-center">Non payé</td>
-                                    <td class="text-center"> <button class="btn btn-info user-payment-mail" data-id="{{ payment.id }}">Relance</button> </td>
-                                {% endif %}
+                                        <td></td>
+                                    {% endif %}
+                                    <td class="text-center">{{ payment.amount }}</td>
+                                    <td class="text-center">{{ payment.dateDeb|date('d/m/Y') }}</td>
+                                    <td class="text-center">{{ payment.dateFin|date('d/m/Y') }}</td>
+                                    {% if payment.datePayment %}
+                                        <td class="text-center">{{ payment.datePayment|date('d/m/Y') }}</td>
+                                        <td class="text-center">
+                                            {% if payment.realAmount == 0 %}
+                                                <div class="glyphicon glyphicon-ok text-success"></div>
+                                            {% else %}
+                                                <button class="btn btn-warning user-payment-button btn-xs" data-toggle="modal" data-target="#refundModal" data-amount="{{ payment.amount }}" data-price="{{ payment.realAmount }}" data-id="{{ payment.transaction_id }}">Remboursement</button>
+                                            {% endif %}</td>
+                                    {% else %}
+                                        <td class="text-center">Non payé</td>
+                                        <td class="text-center"> <button class="btn btn-info user-payment-mail btn-xs" data-id="{{ payment.id }}" style="min-width: 100px">Relance</button> </td>
+                                    {% endif %}
 
-                            </tr>
-                            {% set count = count+1 %}
-                        {% endfor %}
+                                </tr>
+                                {% set count = count+1 %}
+                            {% endfor %}
                         {% endfor %}
                     </table>
-
-
-
                 </div>
             </div>
         </div>

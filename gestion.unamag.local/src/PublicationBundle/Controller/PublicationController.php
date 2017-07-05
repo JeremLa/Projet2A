@@ -156,6 +156,7 @@ class PublicationController extends Controller
 
     public function deleteAction(Request $request){
         $url = $this->getParameter('api')['publication']['delete'];
+
         $response = APIRequest::delete($url, [], http_build_query(['publicationId' => $request->get('publicationId')]));
         if($response->code != 200){
             $error = $this->get('translator')->trans('publication.error.delete');

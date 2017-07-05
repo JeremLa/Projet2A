@@ -98,3 +98,33 @@ a:focus{
 .user-list-wrapper .user-wrapper .info-wrapper{
     margin-left: 15px;
 }
+
+.margin-top-15{
+    margin-top: 15px;
+}
+
+#onglets{
+    display: block;
+    border-bottom: 1px solid #CBCBCB;
+    height: auto;
+
+
+}
+#onglets li{
+    /*float: left;*/
+    display: inline-block;
+    list-style: none;
+    padding: 5px 8px;
+    margin-right: 2px;
+    border: 1px solid #CBCBCB;
+    cursor: pointer;
+    /*color: #0D5995;*/
+
+    border-radius: 2px 2px 0 0;
+    margin-bottom: -1px;
+}
+#onglets .actif{
+    font-weight: 600;
+    border-bottom: 1px solid #FFF;
+
+}

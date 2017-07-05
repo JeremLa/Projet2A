@@ -136,8 +136,6 @@ class UserController extends Controller
             'response' => ['users' => $response]
         ])->getContent();
 
-//        VarDumper::dump($return);die;
-
         return new JsonResponse($return);
     }
 }

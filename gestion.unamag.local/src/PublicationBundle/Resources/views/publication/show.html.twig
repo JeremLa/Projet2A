@@ -2,38 +2,107 @@
 
 {% block content %}
 
-    <div class="row">
-        <div class="jumbotron">
-            <div class="container">
-                <div class="col-md-12 text-right">
-                    <span><strong>{{ 'publication.annualPrice'|trans }}</strong> : {{ publication.annualCost ~ ' ' ~ 'devise.symbol'|trans }}</span>
-                    |
-                    <span><strong>{{ 'publication.countByYear'|trans }}</strong> : {{ publication.countByYear }}</span>
-                </div>
-            </div>
-            <div class="container">
-                <div class="col-md-4 text-center">
-                    <img src="data:image/jpeg;base64,{{ publication.picture }}">
-                </div>
+<div class="row">
+    <div id="contenu">
+        <div>
+            <div>
+                {% for flashErrors in app.session.flashbag.get('errors') %}
+                    <p class="alert alert-danger">{{ flashErrors }}</p>
+                {% endfor %}
 
-                <div class="col-md-8">
-                    <h1>{{ publication.title|capitalize }}</h1>
-                    <p class="text-justify">{{ publication.description }}</p>
-                </div>
+                {% for flashSuccess in app.session.flashbag.get('success') %}
+                    <p class="alert alert-success">{{ flashSuccess }}</p>
+                {% endfor %}
             </div>
 
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <a href="{{ path('publication_index') }}" class="btn btn-primary">Liste des publications</a>
-                    <a href="{{ path('publication_edit', {'id':publication.id}) }}" class="btn btn-warning">Editer la publication</a>
-                    {% if(publication.subscription|length == 0) %}
-                        <form method="post" action="{{ path('publication_delete') }}">
-                            <input type="hidden" name="publicationId" value="{{ publication.id }}">
-                            <input type="submit" class="btn btn-danger" value="Supprimer la publication">
-                        </form>
-                    {% endif %}
+            <div class="col-md-3" style="padding: 5px;">
+                <div class="image-wrapper text-center">
+                    <img src="data:image/jpeg;base64,{{ publication.picture }}" style="max-height: 250px">
+                </div>
+
+                <h3><strong>{{ publication.title|capitalize }}</strong></h3>
+                <p><strong>{{ 'publication.countByYear'|trans }}</strong> : {{ publication.countByYear }}</p>
+                <span><strong>{{ 'publication.annualPrice'|trans }}</strong> : {{ publication.annualCost ~ ' ' ~ 'devise.symbol'|trans }}</span>
+                <br>
+                <a href="{{ path('publication_edit', {'id':publication.id}) }}" class="btn btn-warning margin-top-15 col-md-11">Editer</a>
+                <a href="" class="btn btn-success margin-top-15 col-md-11" title="créer un abonnement" data-toggle="modal" data-target="#new-abo">Nouvel abonnement</a>
+                <a href="" class="btn btn-danger margin-top-15 col-md-11" title="supprimer" data-toggle="modal" data-target="#confirm-delete">Supprimer</a>
+                <a href="{{ path('publication_index') }}" class="btn btn-primary margin-top-15 col-md-11">Liste des publications</a>
+            </div>
+
+            <div class="col-md-9" style="border-left: 1px solid #CBCBCB; min-height: 600px;">
+                <div>
+                    <ul id="onglets">
+                        <li class="actif">Description</li>
+                        <li>Statistiques</li>
+                    </ul>
+                </div>
+
+                <div class="item">
+                    <p class="">{{ publication.description }}
+                </div>
+                <div class="item">
+
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+<div class="modal fade" id="new-abo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form action="{{ path('subscription_new') }}" method="post">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Nouvel abonnement</h4>
+                </div>
+                <div class="modal-body">
+
+                    <p>Choisissez un utilisateur pour pouvoir créer un abonnement à la publication <strong class="publication-title"></strong></p>
+
+                    <input type="hidden" name="from" value="publication">
+                    <input type="hidden" id="publication" name="publication" value="{{ publication.id }}">
+                    <input type="hidden" name="from" value="show">
+                    <div>
+                        <label class="required" for="new-abo-search">Recherche d'utilisateur</label>
+                        <input class="form-control only-one" type="text" id="new-abo-search" autocomplete="off"/>
+                        <p id="modal-error"></p>
+                    </div>
+                    <input type="hidden" class="send-user-list" name="send-user-list" value="">
+                    <div class="row user-list-wrapper">
+                        <div class="col-md-6 user-list-modal"></div>
+                        <div class="col-md-6 user-list-final"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <input type="submit" class="btn btn-primary modal-send">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="confirm-delete">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Supprimer {{ publication.title|capitalize }}</h4>
+            </div>
+            <div class="modal-body">
+                <p>Cette publication n'as aucun abonné et peut être supprimé en toute sécuritée.</p>
+            </div>
+            <div class="modal-footer">
+                <form method="post" action="{{ path('publication_delete') }}">
+                    <input type="hidden" name="publicationId" value="{{ publication.id }}">
+                    <input type="submit" class="btn btn-danger" value="Supprimer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

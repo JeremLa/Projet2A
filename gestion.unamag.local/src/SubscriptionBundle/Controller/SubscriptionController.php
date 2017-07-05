@@ -27,8 +27,14 @@ class SubscriptionController extends Controller
         $data['user'] = $request->get('send-user-list');
         $data['publication'] = $request->get('publication');
 
+        $from = $request->get('from');
+
         $url = $this->getParameter('api')['subscription']['create'];
         APIRequest::post($url, [], http_build_query($data));
+
+        if($from == 'show'){
+            return $this->redirectToRoute('publication_show', ['id' => $data['publication']]);
+        }
 
         return $this->redirectToRoute('publication_index');
     }

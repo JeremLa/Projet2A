@@ -167,6 +167,21 @@ a.margin-top-30{
     margin-left: 15px;
 }
 
-tr.disabled{
+tr.expired{
+    color: #f8f8f8;
+    background-color: #cbcbcb;
+}
 
+tr.expired-soon{
+    color: #9F6000;
+    background-color: #FEEFB3;
+}
+
+tr.unpayed{
+    background-color: #d9534f !important;
+    color: white;
+}
+
+button{
+    min-width: 76px;
 }
