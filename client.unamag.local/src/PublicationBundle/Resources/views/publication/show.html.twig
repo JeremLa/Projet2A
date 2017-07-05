@@ -14,7 +14,7 @@
                 <div class="w3-container">
                     <div class="w3-row show-info">
                         <div class="w3-col s4">
-                            <button class="w3-green w3-btn w3-margin w3-round modal-opener" title="S'abonner"  data-modal-id="confirm-subscription"><i class="fa fa-shopping-cart w3-text-white"></i> {{ publication.annualCost }}€</button>
+                            <button class="w3-green w3-btn w3-margin w3-round modal-opener" title="S'abonner"  data-modal-open-id="confirm-subscription"><i class="fa fa-shopping-cart w3-text-white"></i> {{ publication.annualCost }}€</button>
                         </div>
                         <div class="w3-col s4">
                             <button type="button" class="w3-pink w3-btn w3-margin w3-round disabled" title="Nombre de numéro annuel">{{ publication.countByYear }} <i class="fa fa-book w3-text-white"></i></button>
@@ -29,10 +29,10 @@
         </div>
     </div>
 
-    <div id="confirm-subscription" class="w3-modal modal-closer" data-modal-id="confirm-subscription">
+    <div id="confirm-subscription" class="w3-modal modal-closer" data-modal-close-id="confirm-subscription">
         <div class="w3-modal-content">
             <div class="w3-container w3-text-black">
-                <div class="w3-button w3-display-topright modal-closer"  data-modal-id="confirm-subscription">&times;</div>
+                <div class="w3-button w3-display-topright modal-closer"  data-modal-close-id="confirm-subscription">&times;</div>
 
                 <br>
 
@@ -42,7 +42,7 @@
 
                 <div class="w3-padding w3-center response">
                     <a href="{{ path('subscription_new', { 'id' : publication.id }) }}" class="w3-button w3-green">Confirmer</a>
-                    <button class="w3-button w3-red modal-closer"  data-modal-id="confirm-subscription">Annuler</button>
+                    <button class="w3-button w3-red modal-closer"  data-modal-close-id="confirm-subscription">Annuler</button>
                 </div>
             </div>
         </div>

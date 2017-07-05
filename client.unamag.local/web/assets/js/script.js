@@ -46,6 +46,7 @@ $(document).ready(function(){
   });
 
   $(".modal-opener").each(function(){
+    console.log('test');
     $(this).on('click', function(){
       var modalId = $(this).attr('data-modal-open-id');
 

@@ -35,6 +35,9 @@ class PaymentController extends Controller
             $uuid = '48aeef1a-11b9-8262-be97-2cfb5a7f9b25';
             $url = 'http://10.0.0.6:6543/cardpay/'.$uuid.'/'.$request->get('pay_id').'/'.$cardNumber.'/'.$request->get('card')['expMonth'].'/'.$request->get('card')['expYear'].'/'.$request->get('amount');
             $response = APIRequest::get($url, [], []);
+
+            VarDumper::dump($response->body);die;
+
             if($response->code != 200){
                   $this->get('session')->getFlashBag()->add('errors', 'Une erreur est survenue lors du réglement de votre abonnement, réessayez plus tard ou contactez le service client.');
             }
