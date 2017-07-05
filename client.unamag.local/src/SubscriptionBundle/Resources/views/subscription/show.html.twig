@@ -43,7 +43,7 @@
                                 <button class="w3-btn  w3-block  modal-opener"  data-modal-open-id="payment-extend-{{ payment.id }}">Du {{ payment.dateDeb|date('d/m/Y') }}  Au {{ payment.dateFin|date('d/m/Y') }} <i class="{{ class }} w3-large"></i></button>
                             {% else %}
                                 {% set class = 'fa fa-check-circle w3-text-green' %}
-                                <button class="w3-btn  w3-block  " title="TOTO a la plage">Du {{ payment.dateDeb|date('d/m/Y') }}  Au {{ payment.dateFin|date('d/m/Y') }}   <i class="{{ class }} w3-large"></i>  Réglé</button>
+                                <button class="w3-btn  w3-block  ">Du {{ payment.dateDeb|date('d/m/Y') }}  Au {{ payment.dateFin|date('d/m/Y') }}   <i class="{{ class }} w3-large"></i>  Réglé</button>
 
                             {% endif %}
                         </div>
@@ -85,8 +85,8 @@
                                 <input id="amount" name="amount" type="hidden">
                                 <input type="submit"  class="w3-button w3-green modal-closer modal-opener" value="Confirmer">
 
+                                {{ form_end(form) }}
                                 <button class="w3-button w3-red modal-closer" data-modal-close-id="pay-extend">Annuler</button>
-                                <p class="text-justify">{{ form_end(form) }}</p>
                             </div>
                         </div>
                     </div>
