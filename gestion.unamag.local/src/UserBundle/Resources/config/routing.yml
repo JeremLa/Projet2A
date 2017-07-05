@@ -6,6 +6,10 @@ user_search:
     path:     /search
     defaults: { _controller: UserBundle:User:search }
 
+user_search_for_subscribe:
+    path:     /search/for-publication
+    defaults: { _controller: UserBundle:User:getUsersForPublication }
+
 user_activation:
     path:     /changeActif
     defaults: { _controller: UserBundle:User:changeActif }

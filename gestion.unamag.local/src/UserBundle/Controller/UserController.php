@@ -30,8 +30,6 @@ class UserController extends Controller
         $url = $this->getParameter('api')['user']['get_all'];
         $response = APIRequest::get($url, [], ['page' => $page, 'limit' => 10]);
 
-//        VarDumper::dump($response->body);die;
-
         $historical = new Historical();
         $form = $this->createForm(HistoricalType::class, $historical);
 
@@ -53,7 +51,6 @@ class UserController extends Controller
         $urlHisto = $this->getParameter('api')['historical']['getAll'].$id;
         $responseHisto = APIRequest::get($urlHisto);
 
-//VarDumper::dump($response->body);die;
         return $this->render('UserBundle:User:show.html.twig', array('client'=> $response->body, 'historical' => $responseHisto->body,'form' => $form->createView()));
     }
 
@@ -116,13 +113,30 @@ class UserController extends Controller
             'search' => $search
         ])->body;
 
-//        return new JsonResponse($response['users']);
-
         $return = [];
 
         $return['users']['view'] = $this->renderView('@User/User/historical-partial/search-user-list.html.twig', [
             'response' => ['users' => $response['users']]
         ]);
+
+        return new JsonResponse($return);
+    }
+
+
+    public function getUsersForPublicationAction(Request $request){
+        $data['search'] = $request->get('search');
+        $data['publication'] = $request->get('publication');
+
+        $url = $this->getParameter('api')['user']['searchForSub'];
+
+        APIRequest::jsonOpts(true);
+        $response = APIRequest::get($url, [], $data)->body;
+
+        $return['users']['view'] = $this->render('@User/User/historical-partial/search-user-list.html.twig', [
+            'response' => ['users' => $response]
+        ])->getContent();
+
+//        VarDumper::dump($return);die;
 
         return new JsonResponse($return);
     }

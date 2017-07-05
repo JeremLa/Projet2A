@@ -4,6 +4,7 @@ namespace AuthenticationBundle\Services;
 
 use AuthenticationBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
+use SubscriptionBundle\Entity\Subscription;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -85,5 +86,30 @@ class UserService
         $normalizers = array(new ObjectNormalizer());
 
         return new Serializer($normalizers, $encoders);
+    }
+
+    public function getUserForSuscribe($publicationId, $search = ''){
+        $users = $this->em->getRepository('AuthenticationBundle:User')->findAll();
+
+        $return = [];
+
+        foreach ($users as $user){
+            if (strpos($user->getCanonicalFullname(), $search) !== false){
+                $add = true;
+                /** @var  $subscription Subscription*/
+                foreach ($user->getSubscription() as $subscription){
+                    if($subscription->getPublication()->getId() == $publicationId){
+                        $add = false;
+                        break;
+                    }
+                }
+
+                if($add){
+                    $return[] = $user;
+                }
+            }
+        }
+
+        return $return;
     }
 }

@@ -24,10 +24,9 @@ class PublicationController extends Controller
     public function indexAction(Request $request)
     {
         $page = $request->get('page') ? $request->get('page') : 1;
-
         $url = $this->getParameter('api')[PubliConst::KEYPUBLICATION]['get_all'];
-
         $response = APIRequest::get($url, [], ['page' => $page, 'limit', 'limit' => 8]);
+
 
         return $this->render('PublicationBundle:publication:index.html.twig', array(
             'response' => $response->body,

@@ -219,4 +219,17 @@ class UserController extends Controller
             'pagination' => $pagination
         );
     }
+
+    /**
+     * @Rest\View(serializerGroups={"user"})
+     * @Rest\Get("/users/search/for-subscribe")
+     */
+    public function getUsersForSubscribeAction(Request $request){
+        $publicationId = $request->get('publication');
+        $search = $request->get('search');
+
+        $users = $this->get('unamag.service.user')->getUserForSuscribe($publicationId, $this->get('unamag.tools.service.string')->canonicolize($search));
+
+        return $users;
+    }
 }

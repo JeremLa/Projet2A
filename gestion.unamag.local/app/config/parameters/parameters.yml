@@ -10,6 +10,7 @@ parameters:
             update: "%api.url%/user/edit"
             activation: "%api.url%/users/actif"
             search: "%api.url%/users/search"
+            searchForSub: "%api.url%/users/search/for-subscribe"
         publication:
             get: "%api.url%/publication/show"
             get_all: "%api.url%/publication"
@@ -22,5 +23,6 @@ parameters:
             getAll: "%api.url%/historical/all?userId="
         subscription:
             activation: "%api.url%/subscription/edit/status"
+            create: "%api.url%/subscription/new"
         search: "%api.url%/search"
 

@@ -95,7 +95,11 @@ $(document).ready(function () {
     $elem.keyup(function () {
         clearTimeout(typingTimer);
 
-        // if ($elem.val()) {
+        if(!$elem.val()){
+          $('.user-list-modal').empty();
+          return;
+        }
+
         typingTimer = setTimeout(doneTyping, doneTypingInterval);
     });
 

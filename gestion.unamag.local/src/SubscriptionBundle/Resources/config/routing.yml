@@ -6,3 +6,7 @@ subscription_homepage:
 subscription_show:
     path:   /changeActif
     defaults: { _controller: SubscriptionBundle:Subscription:changeActif }
+
+subscription_new:
+    path:   /new
+    defaults: { _controller: SubscriptionBundle:Subscription:new }

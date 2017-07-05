@@ -21,4 +21,15 @@ class SubscriptionController extends Controller
 
         return new JsonResponse("",$response->code);
     }
+
+    public function newAction(Request $request){
+        $data = [];
+        $data['user'] = $request->get('send-user-list');
+        $data['publication'] = $request->get('publication');
+
+        $url = $this->getParameter('api')['subscription']['create'];
+        APIRequest::post($url, [], http_build_query($data));
+
+        return $this->redirectToRoute('publication_index');
+    }
 }

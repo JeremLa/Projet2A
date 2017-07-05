@@ -1,13 +1,11 @@
 <?php
 namespace PublicationBundle\Services;
 
-
 use AuthenticationBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
 use PublicationBundle\Entity\Publication;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\VarDumper\VarDumper;
-
 class PublicationService
 {
     private $em;

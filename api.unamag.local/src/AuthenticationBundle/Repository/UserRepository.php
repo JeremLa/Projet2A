@@ -16,7 +16,6 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
 
     public function search($page, $nbMaxParPage, $search = null)
     {
-
         if (!is_numeric($page)) {
             throw new BadCredentialsException(
                 'La valeur de l\'argument $page est incorrecte (valeur : ' . $page . ').'
@@ -40,9 +39,7 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
         }
 
         $qb->orderBy('u.id', 'ASC');
-
         $query = $qb->getQuery();
-
         $premierResultat = ($page - 1) * $nbMaxParPage;
         $query->setFirstResult($premierResultat)->setMaxResults($nbMaxParPage);
         $paginator = new Paginator($query);

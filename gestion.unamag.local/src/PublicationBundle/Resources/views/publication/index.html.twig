@@ -19,16 +19,16 @@
     </div>
 
     <div class="col-md-12" style="margin:15px 0;">
-        <div class="left col-md-6">
-            <div class="col-md-6">
+        <div class="left col-md-9">
+            <div class="col-md-4">
                 <input type="text" class="form-control search-input" placeholder="Rechercher..." data-class-search="publication">
             </div>
-            <div class="col-md-6">
-                <a href="{{ path('publication_new') }}" class="btn btn-success">Créer une nouvelle publication</a>
+            <div class="col-md-8">
+                <a href="{{ path('publication_new') }}" class="btn btn-success">Nouvelle publication</a>
             </div>
         </div>
 
-        <div class="right col-md-6">
+        <div class="right col-md-3">
             <div class="pagination-wrapper pull-right">
                 {% include '@Tools/pagination.html.twig' %}
             </div>
@@ -43,4 +43,37 @@
         </div>
     </div>
 
+    <div class="modal fade" id="new-abo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="{{ path('subscription_new') }}" method="post">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Nouvel abonnement</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <p>Choisissez un utilisateur pour pouvoir créer un abonnement à la publication <strong class="publication-title"></strong></p>
+
+                        <input type="hidden" name="from" value="publication">
+                        <input type="hidden" id="publication" name="publication" value="">
+                        <div>
+                            <label class="required" for="new-abo-search">Recherche d'utilisateur</label>
+                            <input class="form-control only-one" type="text" id="new-abo-search" autocomplete="off"/>
+                            <p id="modal-error"></p>
+                        </div>
+                        <input type="hidden" class="send-user-list" name="send-user-list" value="">
+                        <div class="row user-list-wrapper">
+                            <div class="col-md-6 user-list-modal"></div>
+                            <div class="col-md-6 user-list-final"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <input type="submit" class="btn btn-primary modal-send">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}
