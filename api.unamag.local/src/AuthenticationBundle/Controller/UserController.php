@@ -113,8 +113,9 @@ class UserController extends Controller
 
          $reponse = $this->get('unamag.service.user')->findByMailOrNull($user->getMail());
 
-         if(get_class($reponse) === User::class){
-             return new JsonResponse("",400);
+
+        if($reponse != null){
+             return new JsonResponse('toto',400);
          }
         $user->setPassword($this->get('unamag.service.user')->encodePassword($user->getPassword()));
 
@@ -143,7 +144,7 @@ class UserController extends Controller
 
 
         $message = new \Swift_Message('Confirmation d\'inscription');
-        $message->setFrom(['projet@simed.fr'])
+        $message->setFrom(['contact@esimed.fr' => 'Unamag'])
             ->setTo($user->getMail())
 //                ->setTo(['hermesalexis@gmail.com'])
         ->setBody(
