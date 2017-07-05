@@ -10,6 +10,9 @@
     <div class="errors alert alert-danger hidden"></div>
     <div class="success alert alert-success hidden"></div>
     <div class="subpaginator"></div>
+    {% if subscriptions|length < 1 %}
+        <p>Aucun résultat.</p>
+    {% endif %}
     {% for sub in subscriptions %}
 
         <table class="table table-striped sublist row">

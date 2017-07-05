@@ -27,7 +27,6 @@ class PublicationController extends Controller
 
         $em = $this->getDoctrine()->getManager();
         $publications = $em->getRepository('PublicationBundle:Publication')->search($page, $limit);
-
         $pagination = array(
             'page' => $page,
             'nbPages' => ceil(count($publications) / $limit),

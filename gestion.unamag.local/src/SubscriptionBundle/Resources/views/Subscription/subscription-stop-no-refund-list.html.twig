@@ -8,6 +8,9 @@
 {% block content %}
     <h1>Liste des abonnements arreté et non remboursé</h1>
     <div class="subpaginator"></div>
+    {% if subscriptions|length < 1 %}
+        <p>Aucun résultat.</p>
+    {% endif %}
     {% for sub in subscriptions %}
 
         <table class="table table-striped sublist row">
