@@ -1,0 +1,10 @@
+payment_refund:
+    path:     /
+    defaults: { _controller: PaymentBundle:Payment:index }
+
+
+payment_mail:
+    path:     /mail
+    defaults: { _controller: PaymentBundle:Payment:mail }
+
+

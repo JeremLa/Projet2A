@@ -24,5 +24,13 @@ parameters:
         subscription:
             activation: "%api.url%/subscription/edit/status"
             create: "%api.url%/subscription/new"
+            extend: "%api.url%/subscription/edit/extend"
+            stopped:
+                noRefund: "%api.url%/subscription/stopped/noRefund"
+            notPaid: "%api.url%/subscription/notPaid"
         search: "%api.url%/search"
+        payment:
+            refund: "%api.url%/payment/refund"
+            mail: "%api.url%/payment/mail"
+
 

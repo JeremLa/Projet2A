@@ -31,7 +31,9 @@ class PublicationController extends Controller
         $url = $this->getParameter('api')[PubliConst::KEYPUBLICATION]['get_for_user'];
 
         APIRequest::jsonOpts(true);
+
         $response = APIRequest::get($url, [], ['id' => $this->getUser()->getId(), 'limit' => $limit, 'offset' => $offset, 'search' => $search])->body;
+
 
         $args = [
             'publications' => $response['publications'],

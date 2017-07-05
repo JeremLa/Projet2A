@@ -15,7 +15,7 @@ HistoricalBundle\Entity\Historical:
 SubscriptionBundle\Entity\Subscription:
     attributes:
         id:
-            groups: ['subscription', 'user', 'publication', 'search']
+            groups: ['subscription', 'user', 'publication', 'payment', 'search']
         user:
             groups: ['subscription', 'publication']
         publication:
@@ -26,6 +26,9 @@ SubscriptionBundle\Entity\Subscription:
             groups: ['subscription', 'user', 'publication']
         dateEnd:
             groups: ['subscription', 'user', 'publication', 'search']
+        payment:
+            groups: ['subscription', 'user', 'publication']
+
 
 
 AuthenticationBundle\Entity\User:
@@ -83,3 +86,25 @@ PublicationBundle\Entity\Publication:
         subscription:
             groups: ['publication', 'search']
 
+PaymentBundle\Entity\Payment:
+    attributes:
+        id:
+            groups: ['payment', 'subscription', 'user']
+        type:
+            groups: ['payment', 'subscription', 'user']
+        amount:
+            groups: ['payment', 'subscription', 'user']
+        transaction_id:
+            groups: ['payment', 'user', 'subscription']
+        abonnement:
+            groups: ['payment']
+        dateDeb:
+            groups: ['payment', 'subscription', 'user']
+        dateFin:
+            groups: ['payment', 'subscription', 'user']
+        datePayment:
+            groups: ['payment', 'subscription', 'user']
+        refund:
+            groups: ['payment', 'subscription', 'user']
+        realAmount:
+            groups: ['payment', 'subscription', 'user']

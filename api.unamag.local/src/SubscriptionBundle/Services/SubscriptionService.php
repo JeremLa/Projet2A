@@ -2,6 +2,7 @@
 namespace SubscriptionBundle\Services;
 
 use Doctrine\ORM\EntityManager;
+use PaymentBundle\Entity\Payment;
 use SubscriptionBundle\Entity\Subscription;
 use SubscriptionBundle\SubscriptionBundle;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -45,5 +46,47 @@ class SubscriptionService
 
     public function extendOneYear(Subscription $subscription){
         $subscription->setDateEnd(clone $subscription->getDateEnd()->modify('+1year'));
+    }
+
+    public function findStoppedWithoutRefund(){
+        $subscriptions = $this->em->getRepository('SubscriptionBundle:Subscription')->findBy(['status' => false]);
+        $arr = [];
+        $found = false;
+        /** @var  $sub Subscription */
+        foreach ($subscriptions as $sub){
+            /** @var  $pay Payment */
+            foreach ($sub->getPayment() as $pay){
+                if($pay->getAmount() != $pay->getRealAmount()){
+                    $found = true;
+                    break;
+                }
+            }
+            if(!$found){
+                $arr[] = $sub;
+            }
+            $found = false;
+        }
+        return $arr;
+    }
+
+    public function findNotPaid(){
+        $subscriptions = $this->em->getRepository('SubscriptionBundle:Subscription')->findAll();
+        $arr = [];
+        $found = false;
+        /** @var  $sub Subscription */
+        foreach ($subscriptions as $sub){
+            /** @var  $pay Payment */
+            foreach ($sub->getPayment() as $pay){
+                if($pay->getTransactionId() == null){
+                    $found = true;
+                    break;
+                }
+            }
+            if($found){
+                $arr[] = $sub;
+            }
+            $found = false;
+        }
+        return $arr;
     }
 }

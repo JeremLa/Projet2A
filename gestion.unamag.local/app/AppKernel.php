@@ -21,6 +21,7 @@ class AppKernel extends Kernel
             new HistoricalBundle\HistoricalBundle(),
             new SubscriptionBundle\SubscriptionBundle(),
             new ToolsBundle\ToolsBundle(),
+            new PaymentBundle\PaymentBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

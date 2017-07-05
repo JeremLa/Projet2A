@@ -3,7 +3,9 @@
 namespace SubscriptionBundle\Entity;
 
 use AuthenticationBundle\Entity\User;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use PaymentBundle\Entity\Payment;
 use PublicationBundle\Entity\Publication;
 
 /**
@@ -40,6 +42,13 @@ class Subscription
     private $publication;
 
     /**
+     * @var $payment Payment
+     *
+     * @ORM\OneToMany(targetEntity="PaymentBundle\Entity\Payment", mappedBy="abonnement")
+     */
+    private $payment;
+
+    /**
      * @var $status boolean
      *
      * @ORM\Column(name="status", type="boolean")
@@ -66,6 +75,7 @@ class Subscription
         $this->dateEnd = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
         date_modify($this->dateEnd, '+1 year');
         $this->status = true;
+        $this->payment = new ArrayCollection();
     }
 
     /**
@@ -157,5 +167,23 @@ class Subscription
     {
         $this->dateEnd = $dateEnd;
     }
+
+    /**
+     * @return Payment
+     */
+    public function getPayment()
+    {
+        return $this->payment;
+    }
+
+    /**
+     * @param Payment $payment
+     */
+    public function setPayment($payment)
+    {
+        $this->payment = $payment;
+    }
+
+
 }
 

@@ -1,0 +1,3 @@
+payment_pay:
+    path:     /pay
+    defaults: { _controller: PaymentBundle:Payment:pay }
