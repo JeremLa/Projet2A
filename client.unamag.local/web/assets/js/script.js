@@ -9,6 +9,9 @@ function toggleFunction() {
 }
 
 $(document).ready(function(){
+  // var prefix = 'http://client.unamag.local';
+  var prefix = 'http://10.0.10.115/projet2a/client.unamag.local/web';
+
   // Change style of navbar on scroll
   window.onscroll = function() {navChange()};
 
@@ -76,7 +79,7 @@ $(document).ready(function(){
     elem.find('i').attr('class', 'fa fa-spinner fa-pulse')
 
     $.ajax({
-      url: 'http://client.unamag.local/publication',
+      url: prefix + '/publication',
       data: {
         offset: $('.publication-elem').length,
         full: false
@@ -130,7 +133,7 @@ $(document).ready(function(){
   function doneTyping () {
     data.search = $elem.val();
 
-    var url = 'http://client.unamag.local/publication';
+    var url = prefix+'/publication';
 
     getSearchAjax(url)
 
