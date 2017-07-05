@@ -121,6 +121,7 @@ class SubscriptionController extends Controller
         $subscriptionService->extendOneYear($subscription);
         $dateEnd =  clone $subscription->getDateEnd();
         $this->get('unamag.service.payment')->createPayment($dateStart,$dateEnd, $subscription);
+        $subscription->setMailAlert(false);
         $this->get('unamag.service.subscription')->persist($subscription, true);
 
 
@@ -162,4 +163,7 @@ class SubscriptionController extends Controller
         $subscriptions = $this->get('unamag.service.subscription')->findNotPaid();
         return $subscriptions;
     }
+
+
+
 }

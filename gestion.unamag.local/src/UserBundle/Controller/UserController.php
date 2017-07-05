@@ -43,7 +43,7 @@ class UserController extends Controller
     {
         /** ici on recupere un utilisateur */
         $url = $this->getParameter('api')['user']['get'].$id;
-        $response = APIRequest::get($url);
+        $response = APIRequest::get($url, [], []);
 
         $historical = new Historical();
         $form = $this->createForm(HistoricalType::class, $historical);
@@ -59,8 +59,8 @@ class UserController extends Controller
         /** ici on edit le user */
         $userMod = clone $user;
 
-        $form = $this->createForm(UserType::class, $userMod);
-        $formPassword = $this->createForm(UserType::class, $userMod);
+        $form = $this->createForm(UserType::class, $userMod, array('required' => true));
+        $formPassword = $this->createForm(UserType::class, $userMod, array('required' => false));
 
         if (!empty($request->request->all())) {
             $formName = $request->request->all()['user']['formName'];
@@ -72,18 +72,23 @@ class UserController extends Controller
                     $serializer = $this->get('unamag.service.user')->getSerializer();
 
                     $response = APIRequest::post($url, [], ['serializeObject' => $serializer->serialize($userMod, 'json')]);
+                    $this->get('session')->getFlashBag()->add('success', 'L\'utilisateur '. ucfirst($userMod->getFirstname()). ' '. ucfirst($userMod->getLastname()) .' a bien été modifié');
                     return $this->redirectToRoute('user_show', ['id'=> $user->getId()]);
                 }
             } else if ($formName == 'password') {
                 $formPassword->handleRequest($request);
-                if ($formPassword->isValid() && $formPassword->isSubmitted()) {
+                $arr = $formPassword->get('password')->getViewData();
+                if ($arr['first'] == $arr['second']) {
 
                     $user->setPassword($this->get('unamag.service.user')->encodePassword($userMod->getPassword()));
                     $url = $this->getParameter('api')['user']['update'];
                     $serializer = $this->get('unamag.service.user')->getSerializer();
 
                     $response = APIRequest::post($url, [], ['serializeObject' => $serializer->serialize($user, 'json')]);
+                    $this->get('session')->getFlashBag()->add('success', 'Le mot de passe a bien été modifié');
                     return $this->redirectToRoute('user_show', ['id'=> $user->getId()]);
+                }else{
+                    return $this->render('UserBundle:User:edit.html.twig', array('form' => $form->createView(), 'formPassword' => $formPassword->createView()));
                 }
             }
         }

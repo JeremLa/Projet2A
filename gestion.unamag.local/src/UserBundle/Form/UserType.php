@@ -21,7 +21,7 @@ class UserType extends AbstractType
     {
         $builder
             ->add('firstName', TextType::class, [
-                'required' => true,
+                'required' => $args['required'],
                 'trim' => true,
                 'label' => 'user.firstName.label',
                 'translation_domain' => 'messages',
@@ -30,7 +30,7 @@ class UserType extends AbstractType
                 ]
             ])
             ->add('lastName', TextType::class, [
-                'required' => true,
+                'required' => $args['required'],
                 'trim' => true,
                 'label' => 'user.lastName.label',
                 'translation_domain' => 'messages',
@@ -39,7 +39,7 @@ class UserType extends AbstractType
                 ]
             ])
             ->add('adress', TextareaType::class, [
-                'required' => true,
+                'required' => $args['required'],
                 'trim' => true,
                 'label' => 'user.adress.label',
                 'translation_domain' => 'messages',
@@ -49,7 +49,7 @@ class UserType extends AbstractType
                 ]
             ])
             ->add('city', TextType::class, [
-                'required' => true,
+                'required' => $args['required'],
                 'trim' => true,
                 'label' => 'user.city.label',
                 'translation_domain' => 'messages',
@@ -58,7 +58,7 @@ class UserType extends AbstractType
                 ]
             ])
             ->add('zipCode', TextType::class, [
-                'required' => true,
+                'required' => $args['required'],
                 'trim' => true,
                 'label' => 'user.zipcode.label',
                 'translation_domain' => 'messages',
@@ -68,7 +68,7 @@ class UserType extends AbstractType
                 ]
             ])
             ->add('tel', TextType::class, [
-                'required' => true,
+                'required' => $args['required'],
                 'trim' => true,
                 'label' => 'user.tel.label',
                 'translation_domain' => 'messages',
@@ -77,7 +77,7 @@ class UserType extends AbstractType
                 ]
             ])
             ->add('mail', EmailType::class, [
-                'required' => true,
+                'required' => $args['required'],
                 'trim' => true,
                 'label' => 'user.mail.label',
                 'translation_domain' => 'messages',
@@ -96,7 +96,7 @@ class UserType extends AbstractType
 
             ])
             ->add('birthDate', TextType::class, [
-                'required' => true,
+                'required' => $args['required'],
                 'label' => 'user.birthDate.label',
                 'translation_domain' => 'messages',
                 'attr' => [
@@ -104,7 +104,7 @@ class UserType extends AbstractType
                 ]
             ])
             ->add('birthCity', TextType::class, [
-                'required' => true,
+                'required' => $args['required'],
                 'trim' => true,
                 'label' => 'user.birthCity.label',
                 'translation_domain' => 'messages',
