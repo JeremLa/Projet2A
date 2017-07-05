@@ -148,16 +148,6 @@ $(document).ready(function(){
         $('.next-wrapper').remove();
         $('.publication-wrapper').empty().append(datas);
 
-        // $('.search-link').each(function(){
-        //   $(this).off().on('click', function(e){
-        //     e.preventDefault();
-        //
-        //     var url = 'http://gestion.unamag.local' + $(this).attr('href');
-        //     data.page = $(this).attr('data-page');
-        //
-        //     getSearchAjax(url);
-        //   })
-        // })
       }
     });
   }

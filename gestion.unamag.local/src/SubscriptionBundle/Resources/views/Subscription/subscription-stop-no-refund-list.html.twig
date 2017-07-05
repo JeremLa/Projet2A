@@ -35,6 +35,7 @@
                 <button class="btn {{ class }} abo-activation-button" data-id="{{ sub.id }}">{{ txt }}</button>
             </th>
             {% for pay in sub.payment|reverse %}
+                {% if pay.transaction_id != null and pay.realAmount == pay.amount %}
             <tr>
                 <td class="text-center">
                     {{ pay.dateDeb|date('d/m/Y') }}
@@ -55,6 +56,7 @@
 
                 {% endif %}
             </tr>
+            {% endif %}
             {% endfor %}
         </table>
         {% endfor %}

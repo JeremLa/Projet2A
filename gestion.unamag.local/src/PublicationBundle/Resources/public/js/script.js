@@ -12,11 +12,10 @@ $(document).ready(function(){
 
   var $elem = $('#new-abo-search');
 
-  //setup before functions
   var typingTimer;                //timer identifier
   var doneTypingInterval = 1000;  //time in ms (5 seconds)
 
-  //on keyup, start the countdown
+
   $elem.keyup(function () {
     clearTimeout(typingTimer);
 
@@ -28,7 +27,6 @@ $(document).ready(function(){
     typingTimer = setTimeout(doneTyping, doneTypingInterval);
   });
 
-  //user is "finished typing," do something
   function doneTyping () {
     $.ajax({
       url: 'http://gestion.unamag.local/users/search/for-publication',
@@ -43,9 +41,6 @@ $(document).ready(function(){
         $('.user-list-modal').empty().append(data.users.view);
 
         $('.add-historical').each(function () {
-          // if($('.remove-'+$(this).attr('data-user-id')).length){
-          //     $(this).addClass("hidden");
-          // }
 
           $(this).on('click', function () {
 
@@ -60,7 +55,6 @@ $(document).ready(function(){
                 return;
               }
             }
-            // $('.user-list-final').append('<div class="btn glyphicon glyphicon-minus remove-historical remove-'+ $(this).attr('data-user-id') +'" data-user-id="'+$(this).attr('data-user-id')+'">'+$(this).attr('data-user-name')+'</div>');
 
             if($(this).parent().hasClass('user-list-modal')){
               $(this).prependTo('.user-list-final');

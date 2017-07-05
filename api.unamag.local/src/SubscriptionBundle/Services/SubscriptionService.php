@@ -51,20 +51,20 @@ class SubscriptionService
     public function findStoppedWithoutRefund(){
         $subscriptions = $this->em->getRepository('SubscriptionBundle:Subscription')->findBy(['status' => false]);
         $arr = [];
-        $found = false;
+
+        $countNoRefund = 0;
         /** @var  $sub Subscription */
         foreach ($subscriptions as $sub){
             /** @var  $pay Payment */
             foreach ($sub->getPayment() as $pay){
-                if($pay->getAmount() != $pay->getRealAmount()){
-                    $found = true;
-                    break;
+                if($pay->getTransactionId() != null and $pay->getRealAmount() == $pay->getAmount()){
+                    $countNoRefund ++;
                 }
             }
-            if(!$found){
+            if($countNoRefund > 0){
                 $arr[] = $sub;
             }
-            $found = false;
+            $countNoRefund = 0;
         }
         return $arr;
     }

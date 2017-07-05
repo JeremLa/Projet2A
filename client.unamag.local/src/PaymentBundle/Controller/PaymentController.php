@@ -19,6 +19,7 @@ class PaymentController extends Controller
 
         if($form->isSubmitted()  && $form->isValid())
         {
+
             $cardNumber = $request->get('card')['cardNumber'];
             if(strlen($cardNumber) != 10){
                 $this->get('session')->getFlashBag()->add('errors', 'Les données de votre carte ne sont pas correcte, merci d\'essayer avec une autre carte');
@@ -28,7 +29,6 @@ class PaymentController extends Controller
                 $this->get('session')->getFlashBag()->add('errors', 'Les données de votre carte ne sont pas correcte, merci d\'essayer avec une autre carte');
                 return $this->redirectToRoute('subscription_show', ['id' => $request->get('abo_id')]);
             }
-
             $url = $this->getParameter('api')['payment']['pay'];
             $response = APIRequest::post($url, [], http_build_query($request->request->all()));
 
