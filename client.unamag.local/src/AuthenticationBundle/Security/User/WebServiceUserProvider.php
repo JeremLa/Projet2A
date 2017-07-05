@@ -16,7 +16,8 @@ class WebServiceUserProvider implements UserProviderInterface
         // make a call to your webservice here
 
         APIRequest::jsonOpts(true);
-        $userData = APIRequest::get('http://api.unamag.local/user/bymail', [], ['mail' => $username])->body;
+//        $userData = APIRequest::get('http://api.unamag.local/user/bymail', [], ['mail' => $username])->body;
+        $userData = APIRequest::get('http://10.0.10.116/projet2a/api.unamag.local/web/user/bymail', [], ['mail' => $username])->body;
         // pretend it returns an array on success, false if there is no user
 
         if ($userData) {

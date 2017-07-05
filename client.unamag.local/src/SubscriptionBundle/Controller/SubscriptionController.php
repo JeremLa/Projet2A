@@ -15,6 +15,9 @@ class SubscriptionController extends Controller
     {
 
         $subscriptions = APIRequest::get($this->getParameter('api')['subscription']['get_all'], [], ['id' => $this->getUser()->getId() ])->body;
+
+//        VarDumper::dump($subscriptions);die;
+
         return $this->render('SubscriptionBundle:subscription:index.html.twig', [
             'subscriptions' => $subscriptions
         ]);

@@ -1,6 +1,6 @@
 parameters:
-    api.url: "http://api.unamag.local"
-#    api.url: "http://10.0.10.115/projet2a/api.unamag.local/web"
+#    api.url: "http://api.unamag.local"
+    api.url: "http://10.0.10.116/projet2a/api.unamag.local/web"
     api:
         user:
             get: "%api.url%/user/"

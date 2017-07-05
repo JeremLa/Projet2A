@@ -42,7 +42,6 @@ class AuthenticationController extends Controller
         return $this->render('AuthenticationBundle:user:index.html.twig');
     }
 
-
     public function loginAction(Request $request){
         if($request->get('key')){
             $url = $this->getParameter('api')['activation'];
@@ -101,6 +100,11 @@ class AuthenticationController extends Controller
     }
 
     public function createAccountAction(Request $request){
+
+//        $url = $this->getParameter('api')['user']['create'];
+//
+//        VarDumper::dump($url);die;
+
         $user = new User();
 
         $form = $this->createForm(UserType::class, $user);
@@ -108,6 +112,7 @@ class AuthenticationController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $url = $this->getParameter('api')['user']['create'];
             $response = APIRequest::post($url, [], http_build_query($request->get('user')));
+
             if($response->code == 400){
                 $this->get('session')->getFlashBag()->add('errors', 'Impossible de créer le compte, l\'adresse mail est déjà utilisé');
                 return $this->render('AuthenticationBundle:user:create.html.twig', array(

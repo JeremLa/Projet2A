@@ -1,5 +1,5 @@
 {% if(response.users|length == 0) %}
-    <p>Aucun résultat.</p>
+    <td colspan="8" class="text-center"><p>Aucun résultat</p></td>
 {% else %}
     {% for user in response.users %}
         <tr>
