@@ -68,7 +68,8 @@ class UserType extends AbstractType
                 'label' => 'form.tel.label',
                 'translation_domain' => 'messages',
                 'label_attr' => ['class' => 'w3-text-teal'],
-                'attr' => ['class' => 'w3-input w3-border w3-light-grey']
+                'attr' => ['class' => 'w3-input w3-border w3-light-grey',
+                    'maxlength' => 10]
             ])
             ->add('mail', EmailType::class, [
                 'required' => true,
