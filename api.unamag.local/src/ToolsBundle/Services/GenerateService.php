@@ -1327,7 +1327,10 @@ class GenerateService
 
         $mails = $this->em->getRepository('AuthenticationBundle:User')->getAllMail();
 
+        $return = [];
+
         for($i = 0; $i < $number; $i++){
+            srand();
             $user = new User();
 
             $firstname = $this::ARRAYFIRSTNAME[array_rand($this::ARRAYFIRSTNAME, 1)];
@@ -1350,27 +1353,18 @@ class GenerateService
             $prefix = $split[0].$split[1];
             $sufix = '@mail.fr';
 
-            $check = false;
-
-            while(!$check){
-                $break = false;
 
                 foreach($mails as $mail){
-                    if($prefix.$sufix === array_values($mail)){
-                        $break = true;
-                        break;
+
+                    if($prefix.$sufix == ($mail['mail'])){
+                        $prefix = $prefix.'x';
+
                     }
                 }
 
-                if($break){
-                    $prefix = $prefix.'x';
-                }else{
-                    $check = true;
-                }
-
-            }
 
             $user->setMail($prefix.$sufix);
+            $mails[] = ['mail' => $prefix.$sufix];
 
             $user->setPassword(hash("sha512", '123'));
             $user->setBirthCity('N/C');
@@ -1423,7 +1417,7 @@ class GenerateService
 
                 $subscriptions[] = $subscription;
 
-                $this->paymentService->createPayment($subscription->getDateStart(), $subscription->getDateEnd(), $subscription);
+                $this->paymentService->createPayment($subscription->getDateStart(), $subscription->getDateEnd(), $subscription, true);
 
                 $this->em->persist($subscription);
             }

@@ -14,7 +14,7 @@ class PaymentService
         $this->em = $em;
     }
 
-    public function createPayment($dateStart, $dateEnd, Subscription $subscription)
+    public function createPayment($dateStart, $dateEnd, Subscription $subscription, $payed = false)
     {
         $payment = new Payment();
         $payment->setDateDeb($dateStart);
@@ -22,6 +22,11 @@ class PaymentService
         $payment->setAbonnement($subscription);
         $payment->setAmount($subscription->getPublication()->getAnnualCost());
         $payment->setRealAmount($subscription->getPublication()->getAnnualCost());
+
+        if($payed){
+            $payment->setTransactionId('string');
+            $payment->setDatePayment(new \DateTime('now'));
+        }
 
         $this->em->persist($payment);
         $this->em->flush();

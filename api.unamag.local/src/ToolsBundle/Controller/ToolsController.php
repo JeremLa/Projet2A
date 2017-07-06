@@ -32,7 +32,7 @@ class ToolsController extends Controller
      */
     public function randomUsersAction() {
 
-//        return $this->get('unamag.tools.service.generate')->seedBase(50, true);
-        return $this->get('unamag.tools.service.generate')->createRandomUsers();
+        return $this->get('unamag.tools.service.generate')->seedBase(25, false);
+//        return $this->get('unamag.tools.service.generate')->createRandomUsers(5000);
     }
 }
