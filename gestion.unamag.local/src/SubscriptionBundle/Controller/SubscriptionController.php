@@ -30,8 +30,12 @@ class SubscriptionController extends Controller
         $from = $request->get('from');
 
         $url = $this->getParameter('api')['subscription']['create'];
-        APIRequest::post($url, [], http_build_query($data));
-
+        $response = APIRequest::post($url, [], http_build_query($data));
+        if($response->code != 200){
+            $this->get('session')->getFlashBag()->add('errors', 'Une erreur est survenu, réessayez ou contactez le service technique d\'Unamag');
+        }else{
+            $this->get('session')->getFlashBag()->add('success', 'Publication créée');
+        }
         if($from == 'show'){
             return $this->redirectToRoute('publication_show', ['id' => $data['publication']]);
         }
@@ -43,7 +47,11 @@ class SubscriptionController extends Controller
     {
         $url = $this->getParameter('api')['subscription']['extend'];
         $response = APIRequest::post($url, [], ['id' => $request->get('sub_id')]);
-
+        if($response->code != 200){
+            $this->get('session')->getFlashBag()->add('errors', 'Une erreur est survenu, réessayez ou contactez le service technique d\'Unamag');
+        }else{
+            $this->get('session')->getFlashBag()->add('success', 'La prolongation de l\'abonnement a bien été pris en compte');
+        }
         return $this->redirectToRoute('user_show', ['id' => $request->get('user_id')]);
     }
 
