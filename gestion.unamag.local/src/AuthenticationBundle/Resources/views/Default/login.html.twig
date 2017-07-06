@@ -27,6 +27,15 @@
                     <div class="panel-heading">
                         <h2> UNAMAG <small>gestion</small></h2>
                     </div>
+
+                    <div>
+                        {% if errors is defined %}
+                            {% for error in errors %}
+                                <p class="alert alert-danger">{{ error|trans }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
                     <div class="panel-body">
                         {{ form_start(form) }}
                         {#<form role="form" action="#" method="POST">#}
