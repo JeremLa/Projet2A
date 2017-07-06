@@ -23,8 +23,16 @@ class ToolsController extends Controller
         $searchClass = $request->get('searchClass');
         $limit       = $request->get('limit');
 
-//        return [$search, $page, $searchClass, $limit];
-
         return $this->get('unamag.tools.service.search')->search($searchClass, $search, $page, $limit);
+    }
+
+    /**
+     * @Rest\View(serializerGroups={"user"})
+     * @Rest\Get("/random")
+     */
+    public function randomUsersAction() {
+
+//        return $this->get('unamag.tools.service.generate')->seedBase(50, true);
+        return $this->get('unamag.tools.service.generate')->createRandomUsers();
     }
 }

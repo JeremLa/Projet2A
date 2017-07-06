@@ -18,6 +18,13 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
         return $this->findBy(['level'=>2, 'actif' => true],['firstname'=> 'ASC' ]);
     }
 
+    public function getAllMail(){
+        return $this->getEntityManager()->createQueryBuilder()
+                ->select('u.mail')
+                ->from('AuthenticationBundle:User', 'u')
+                ->getQuery()
+                ->getResult();
+    }
 
     public function search($page, $nbMaxParPage, $search = null)
     {

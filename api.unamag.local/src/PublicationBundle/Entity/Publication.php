@@ -2,6 +2,7 @@
 
 namespace PublicationBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -67,6 +68,11 @@ class Publication
      * @ORM\OneToMany(targetEntity="SubscriptionBundle\Entity\Subscription", mappedBy="publication")
      */
     private $subscriptions;
+
+    function __construct()
+    {
+        $this->subscriptions = new ArrayCollection();
+    }
 
     /**
      * Get id

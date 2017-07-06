@@ -5,6 +5,7 @@ namespace AuthenticationBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use HistoricalBundle\Entity\Historical;
+use SubscriptionBundle\Entity\Subscription;
 
 /**
  * User
@@ -119,9 +120,6 @@ class User
      * @ORM\ManyToMany(targetEntity="HistoricalBundle\Entity\Historical", mappedBy="users")
      */
     private $historical;
-
-
-
 
     /**
      * @ORM\OneToMany(targetEntity="SubscriptionBundle\Entity\Subscription", mappedBy="user")
@@ -378,7 +376,7 @@ class User
 
     public function addHistorical(Historical $historical)
     {
-        $this->$historical[] = $historical;
+        $this->historical[] = $historical;
 
         return $this;
     }
@@ -387,8 +385,6 @@ class User
     {
         $this->historical->removeElement($historical);
     }
-
-
 
     public function getSubscription()
     {
@@ -401,6 +397,18 @@ class User
     public function setSubscription($subscription)
     {
         $this->subscription = $subscription;
+    }
+
+    public function addSubscription(Subscription $subscription)
+    {
+        $this->subscription[] = $subscription;
+
+        return $this;
+    }
+
+    public function removeSubscription(Subscription $subscription)
+    {
+        $this->subscription->removeElement($subscription);
     }
 
 }

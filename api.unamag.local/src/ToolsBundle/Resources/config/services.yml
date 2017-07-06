@@ -7,3 +7,10 @@ services:
         arguments:
             - '@doctrine.orm.default_entity_manager'
             - '@unamag.tools.service.string'
+
+    unamag.tools.service.generate:
+        class: ToolsBundle\Services\GenerateService
+        arguments:
+            - '@doctrine.orm.default_entity_manager'
+            - '@unamag.tools.service.string'
+            - '@unamag.service.payment'
