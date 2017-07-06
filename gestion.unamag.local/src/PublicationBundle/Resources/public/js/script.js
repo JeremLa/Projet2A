@@ -102,8 +102,6 @@ $(document).ready(function(){
     }
   })
 
-
-
   $('#onglets').css('display', 'block');
   $('#onglets').click(function(event) {
     var actuel = event.target;
@@ -121,7 +119,6 @@ $(document).ready(function(){
     });
   }
   setDisplay();
-
     var ctx = $("#myChart");
     var myChart = new Chart(ctx, {
         type: 'polarArea',
@@ -154,7 +151,7 @@ $(document).ready(function(){
 
     var depArray = {
         "department-59": {
-            value: $('#chartData').attr('department-59') ? $('#chartData').attr('department-59') : "0",
+            value: "0",
             tooltip: {content: "<span style=\"font-weight:bold;\">Nord (59)</span><br />Nb abonnés : 0 "}
             },
         "department-75": {
@@ -684,12 +681,12 @@ $(document).ready(function(){
         },
         legend: {
             area: {
-                title: "Nb abonnés of France by department",
+                title: "Nb abonnés par département",
                 slices: [
                     {
                         max: 5,
                         attrs: {
-                            fill: "#97e766"
+                            fill: "#CFA0E9"
                         },
                         label: "Moins de 5 abonnés"
                     },
@@ -697,7 +694,7 @@ $(document).ready(function(){
                         min: 5,
                         max: 10,
                         attrs: {
-                            fill: "#7fd34d"
+                            fill: "#B666D2"
                         },
                         label: "Entre 5 et 10 abonnés"
                     },
@@ -705,14 +702,14 @@ $(document).ready(function(){
                         min: 10,
                         max: 20,
                         attrs: {
-                            fill: "#5faa32"
+                            fill: "#884DA7"
                         },
                         label: "Entre 10 et 20 abonnés"
                     },
                     {
                         min: 20,
                         attrs: {
-                            fill: "#3f7d1a"
+                            fill: "#800080"
                         },
                         label: "Plus de 20 abonnés"
                     }

@@ -33,17 +33,18 @@
             <div class="col-md-9" style="border-left: 1px solid #CBCBCB; min-height: 600px;">
                 <div>
                     <ul id="onglets">
-                        <li class="actif">Description</li>
-                        <li>Statistiques</li>
+                        <li class="actif">Statistiques</li>
+                        <li>Description</li>
                     </ul>
                 </div>
 
                 <div class="item">
-                    <p class="">{{ publication.description }}
-                </div>
-                <div class="item">
                     {% include '@Publication/publication/show-partial/statistic.html.twig' %}
                 </div>
+                <div class="item">
+                    <p class="">{{ publication.description }}
+                </div>
+
             </div>
         </div>
     </div>
