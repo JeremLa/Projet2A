@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\VarDumper\VarDumper;
 use Unirest\Request as APIRequest;
@@ -82,7 +83,12 @@ class PublicationController extends Controller
         $url = $this->getParameter('api')[PubliConst::KEYPUBLICATION]['get'];
 
         APIRequest::jsonOpts(true);
-        $publication = APIRequest::get($url, [], ['publicationId' => $id])->body;
+        $publication = APIRequest::get($url, [], ['publicationId' => $id]);
+        if($publication->code != 200){
+                Throw new NotFoundHttpException('Oups !! Cette page n\'a pas pu être trouvé');
+        }
+        $publication = $publication->body;
+
         $now = new \DateTime('now');
         $countAge['-18'] = 0;
         $countAge['18-25'] = 0;
@@ -165,9 +171,9 @@ class PublicationController extends Controller
      */
     public function editAction(Request $request, Publication $publication)
     {
-        $editForm = $this->createForm('PublicationBundle\Form\PublicationType', $publication);
+        $publiMod = clone $publication;
+        $editForm = $this->createForm('PublicationBundle\Form\PublicationType', $publiMod);
         $editForm->handleRequest($request);
-
         if ($editForm->isSubmitted() && $editForm->isValid()) {
 
             /** @var  $file UploadedFile */
@@ -178,19 +184,27 @@ class PublicationController extends Controller
                 $file_binary = fread(fopen($file_real_path, "r"), filesize($file_real_path));
                 $img_str = base64_encode($file_binary);
 
-
-                $publication->setPicture($img_str);
+                $publiMod->setPicture($img_str);
             }
+
+            $send = new Publication();
+            $send->setId($publiMod->getId());
+            $send->setTitle($publiMod->getTitle());
+            $send->setCountByYear($publiMod->getCountByYear());
+            $send->setAnnualCost($publiMod->getAnnualCost());
+            $send->setDescription($publiMod->getDescription());
+            $send->setPicture($publiMod->getPicture());
+
 
             $serializer = $this->get('unamag.service.user')->getSerializer();
             $url = $this->getParameter('api')[PubliConst::KEYPUBLICATION]['update'];
-            APIRequest::post($url, ['Content-Type' => "application/json"], $serializer->serialize($publication, 'json'));
 
+            $response = APIRequest::put($url, ['Content-Type' => "application/json"], $serializer->serialize($send, 'json'));
             return $this->redirectToRoute('publication_index');
         }
 
         return $this->render('PublicationBundle:publication:edit.html.twig', array(
-            'publication' => $publication,
+            'publication' => $publiMod,
             'form' => $editForm->createView(),
         ));
     }
