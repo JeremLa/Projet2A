@@ -1,0 +1,29 @@
+<h3>Bonjour {{ name }} !</h3>
+<br>
+<p>Voici la liste de vos abonnements qui arrivent bientôt à expiration :</p>
+<br>
+<ul>
+{% for abo in subscriptions %}
+    <li>{{ abo.publication.title }}</li>
+
+{% endfor %}
+</ul>
+<br>
+{#<p>Avant de vous connectez, merci de <a href="http://client.unamag.local/auth/login?key={{ hash }}">cliquez ici</a> pour valider votre inscritpion.</p>#}
+<p>Pour les prolonger, connectez vous à notre application en <a href="http://10.0.10.115/projet2a/client.unamag.local/web/auth/login">cliquant ici</a>.</p>
+<br>
+<p>N'hésitez pas à contacter le service client qui est disponible pour vous, via courrier, téléphone et email.</p>
+<br>
+<p>Cordialement,<br>
+    L'équipe d'Unamag<br>
+    <br>
+    Technopôle de Château-Gombert<br>
+    Europarc bâtiment B<br>
+    22 rue John Maynard Keynes<br>
+    13013 MARSEILLE<br>
+    <br>
+    06 51 57 91 73<br>
+    04 91 95 50 00<br>
+    <br>
+    projet@esimed.fr
+</p>

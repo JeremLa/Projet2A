@@ -31,6 +31,10 @@
                                 <button type="button" class="w3-red w3-text-white w3-btn w3-round disabled" title="Titre"><i class="fa fa-lock"></i></button>
                                 Cet abonnement est arrêté
                             </p>
+                            <p>
+                                <button type="button" class="w3-orange w3-text-white w3-animate-opacity w3-btn w3-margin w3-round disabled" title="Titre"><i class="fa fa-exclamation"></i></button>
+                                Cet abonnement à une ou plusieurs année non payé
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -57,11 +61,22 @@
                                 <button type="button" class="w3-white w3-animate-opacity w3-btn w3-margin w3-round disabled" title="Titre">{{ subscription.publication.title }}</button>
                             </div>
 
-                            {% if subscription.status == false %}
-                                <div class="w3-display-topright w3-large">
-                                    <button type="button" class="w3-red w3-text-white w3-animate-opacity w3-btn w3-margin w3-round disabled" title="Titre"><i class="fa fa-lock"></i></button>
-                                </div>
+                            {% set unpayed = false %}
+                            {% for payment in subscription.payment %}
+                                {% if payment.transaction_id %}
+                                    {% set unpayed = true %}
+                                {% endif %}
+                            {% endfor %}
+
+                            <div class="w3-display-topright w3-large">
+                            {% if unpayed %}
+                                    <button type="button" class="w3-orange w3-text-white w3-animate-opacity w3-btn w3-margin w3-round disabled" title="Titre" style="min-width: 43px; margin-right: 2px !important;"><i class="fa fa-exclamation"></i></button>
                             {% endif %}
+
+                            {% if subscription.status == false %}
+                                    <button type="button" class="w3-red w3-text-white w3-animate-opacity w3-btn w3-margin w3-round disabled" title="Titre" style="min-width: 43px; margin-left: 2px !important;"><i class="fa fa-lock"></i></button>
+                            {% endif %}
+                            </div>
 
                             <div class="w3-display-middle w3-large">
                                 <a href="{{ path('subscription_show', { 'id': subscription.id }) }}" class="w3-button w3-round w3-green w3-animate-opacity w3-btn w3-round">En savoir plus</a>
@@ -73,3 +88,4 @@
         </div>
     </div>
 {% endblock %}
+

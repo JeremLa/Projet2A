@@ -28,7 +28,8 @@ SubscriptionBundle\Entity\Subscription:
             groups: ['subscription', 'user', 'publication', 'search']
         payment:
             groups: ['subscription', 'user', 'publication']
-
+        mailAlert:
+            groups: ['subscription', 'user', 'publication']
 
 
 AuthenticationBundle\Entity\User:

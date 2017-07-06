@@ -32,7 +32,6 @@
             <div class="col-md-6 col-sd-12">
                 <div class="text-center"><h2>{{ 'user.editPassword'|trans }}</h2></div>
                 {{ form_start(formPassword, {'method': 'POST'  }) }}
-                {{ form_errors(formPassword) }}
                 {{ form_row(formPassword.password) }}
                 {{ form_row(formPassword.submit) }}
                 {{ form_row(formPassword._token) }}

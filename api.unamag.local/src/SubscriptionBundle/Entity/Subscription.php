@@ -69,6 +69,13 @@ class Subscription
      */
     private $dateEnd;
 
+    /**
+     * @var $mailAlert boolean
+     *
+     * @ORM\Column(name="mail_alert", type="boolean", nullable=true)
+     */
+    private $mailAlert;
+
     function __construct()
     {
         $this->dateStart = new \DateTime('now', new \DateTimeZone('Europe/Paris'));
@@ -76,6 +83,7 @@ class Subscription
         date_modify($this->dateEnd, '+1 year');
         $this->status = true;
         $this->payment = new ArrayCollection();
+        $this->mailAlert = false;
     }
 
     /**
@@ -183,6 +191,23 @@ class Subscription
     {
         $this->payment = $payment;
     }
+
+    /**
+     * @return bool
+     */
+    public function isMailAlert()
+    {
+        return $this->mailAlert;
+    }
+
+    /**
+     * @param bool $mailAlert
+     */
+    public function setMailAlert($mailAlert)
+    {
+        $this->mailAlert = $mailAlert;
+    }
+
 
 
 }

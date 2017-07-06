@@ -137,13 +137,8 @@
                                 </td>
 
                             </tr>
-
-
                         {% endfor %}
                     </table>
-
-
-
                 </div>
 
                 <div class="item">
@@ -176,8 +171,14 @@
                                     {% if first == true or count%10 == 0 %}
                                         {% set first = false %}
                                         <td><strong>{{ magazine }}</strong></td>
+                                    {% else %}
+
+                                        {% if abo.dateEnd|date('d/m/Y') < date()|date('d/m/Y') %}
+                                            <td class="text-center">expiré</td>
                                         {% else %}
-                                        <td></td>
+                                            <td></td>
+                                        {% endif %}
+
                                     {% endif %}
                                     <td class="text-center">{{ payment.amount }}</td>
                                     <td class="text-center">{{ payment.dateDeb|date('d/m/Y') }}</td>

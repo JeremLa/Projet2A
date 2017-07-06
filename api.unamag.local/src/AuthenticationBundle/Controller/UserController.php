@@ -6,6 +6,7 @@ use AuthenticationBundle\Entity\ActivationLink;
 use AuthenticationBundle\Entity\User;
 use AuthenticationBundle\Form\UserType;
 use FOS\RestBundle\View\View;
+use SubscriptionBundle\Entity\Subscription;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -40,6 +41,7 @@ class UserController extends Controller
     public function getUserAction($id)
     {
         $user = $this->get('unamag.service.user')->findOneOr404($id);
+
         return $user;
     }
 
@@ -55,8 +57,6 @@ class UserController extends Controller
          */
         $serializer = $this->get('unamag.service.user')->getSerializer();
         $user = $serializer->deserialize($request->get('serializeObject'),User::class, 'json');
-
-        // @TODO Rzjouter les validateurs !!!
 
         $userDb = $this->get('unamag.service.user')->findOneOr404($user->getId());
         $userDb = $serializer->deserialize($request->get('serializeObject'),User::class, 'json',  array('object_to_populate' => $userDb));
@@ -233,5 +233,56 @@ class UserController extends Controller
         $users = $this->get('unamag.service.user')->getUserForSuscribe($publicationId, $this->get('unamag.tools.service.string')->canonicolize($search));
 
         return $users;
+    }
+
+    /**
+     * @Rest\View(serializerGroups={"user"})
+     * @Rest\Get("/users/alertMail")
+     */
+    public function sendAlertMailAction(){
+
+        $now = new \DateTime('now');
+        $em = $this->getDoctrine()->getManager();
+        $numberMail = 0;
+        $result['number_of_mail'] = $numberMail;
+        $users = $em->getRepository('AuthenticationBundle:User')->findAllActive();
+        if($users == null){
+            return 'Aucun utilisateurs dans la base';
+        }else {
+            /** @var  $user User */
+            foreach ($users as $user) {
+                $arr = [];
+                /** @var  $sub Subscription */
+                foreach ($user->getSubscription() as $sub) {
+                    $dateEnd = clone $sub->getDateEnd();
+                    if (!$sub->isMailAlert()) {
+                        if ($dateEnd > $now) {
+                            if ($dateEnd->modify('-2 month') < $now) {
+                                $arr[] = $sub;
+                                $result[$user->getCanonicalFullname()][] = $sub->getPublication()->getCanonicalTitle();
+                                $sub->setMailAlert(true);
+                            }
+                        }
+                    }
+                }
+                if(count($arr) > 0) {
+                    $message = new \Swift_Message('Vos abonnements expirent !');
+                    $message->setFrom(['contact@esimed.fr' => 'Unamag'])
+                        ->setTo($user->getMail())
+//                ->setTo(['hermesalexis@gmail.com'])
+                        ->setBody(
+                            $this->renderView('@Authentication/Emails/alertMail.html.twig', array('name' => $user->getFirstname() . ' ' . $user->getLastname(),
+                                'subscriptions' => $arr)),
+                            'text/html'
+                        );
+                    $numberMail = $numberMail + ($this->get('mailer')->send($message));
+                }
+
+            }
+            $result['number_of_mail'] = $numberMail;
+            $em->flush();
+            return $result;
+        }
+
     }
 }

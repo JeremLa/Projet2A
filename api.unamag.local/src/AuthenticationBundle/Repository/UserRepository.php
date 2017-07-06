@@ -14,6 +14,11 @@ class UserRepository extends \Doctrine\ORM\EntityRepository
         return $this->findBy(['level'=>2],['firstname'=> 'ASC' ]);
     }
 
+    public function  findAllActive(){
+        return $this->findBy(['level'=>2, 'actif' => true],['firstname'=> 'ASC' ]);
+    }
+
+
     public function search($page, $nbMaxParPage, $search = null)
     {
         if (!is_numeric($page)) {
