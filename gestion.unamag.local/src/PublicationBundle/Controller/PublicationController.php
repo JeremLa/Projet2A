@@ -201,9 +201,9 @@ class PublicationController extends Controller
 
             $response = APIRequest::put($url, ['Content-Type' => "application/json"], $serializer->serialize($send, 'json'));
             if($response->code != 200){
-                $this->get('session')->setFlashBag('errors', 'Un problème est survenu lors de la modification, veuillez reessayer ou contacter le service technique');
+                $this->get('session')->getFlashBag()->add('errors', 'Un problème est survenu lors de la modification, veuillez reessayer ou contacter le service technique');
             }else{
-                $this->get('session')->setFlashBag('success', 'Modification réussi');
+                $this->get('session')->getFlashBag()->add('success', 'Modification réussi');
             }
             return $this->redirectToRoute('publication_show', ['id' => $send->getId()]);
         }
