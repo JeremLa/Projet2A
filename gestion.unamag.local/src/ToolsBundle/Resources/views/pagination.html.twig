@@ -3,7 +3,7 @@
     {% if response.pagination.search is defined and response.pagination.search == true %}
         {% set linkClass = 'search-link' %}
     {% endif %}
-    <ul class="pagination">
+    <ul class="pagination" style="margin: 0;">
         {% if response.pagination.page > 1 %}
             <li>
                 <a href="{{ path(response.pagination.nomRoute, response.pagination.paramsRoute|merge({'page': 1})) }}" data-page="1" class="{{ linkClass }}">
