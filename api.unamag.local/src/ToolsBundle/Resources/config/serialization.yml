@@ -15,21 +15,21 @@ HistoricalBundle\Entity\Historical:
 SubscriptionBundle\Entity\Subscription:
     attributes:
         id:
-            groups: ['subscription', 'user', 'publication', 'payment', 'search']
+            groups: ['subscription', 'user','publication', 'payment', 'search']
         user:
             groups: ['subscription', 'publication']
         publication:
             groups: ['subscription', 'user']
         status:
-            groups: ['subscription', 'user', 'publication']
+            groups: ['subscription', 'user']
         dateStart:
             groups: ['subscription', 'user', 'publication']
         dateEnd:
             groups: ['subscription', 'user', 'publication', 'search']
         payment:
-            groups: ['subscription', 'user', 'publication']
+            groups: ['subscription', 'user']
         mailAlert:
-            groups: ['subscription', 'user', 'publication']
+            groups: ['subscription', 'user']
 
 
 AuthenticationBundle\Entity\User:
@@ -37,9 +37,9 @@ AuthenticationBundle\Entity\User:
         id:
             groups: ['user', 'subscription','histo', 'search', 'publication']
         firstname:
-            groups: ['user', 'subscription','histo', 'search', 'publication']
+            groups: ['user', 'subscription','histo', 'search']
         lastname:
-            groups: ['user', 'subscription','histo', 'search', 'publication']
+            groups: ['user', 'subscription','histo', 'search']
         canonicalFullname:
             groups: ['user']
         adress:

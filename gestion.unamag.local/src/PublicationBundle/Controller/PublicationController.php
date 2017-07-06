@@ -83,6 +83,7 @@ class PublicationController extends Controller
 
         APIRequest::jsonOpts(true);
         $publication = APIRequest::get($url, [], ['publicationId' => $id])->body;
+
         $now = new \DateTime('now');
         $countAge['-18'] = 0;
         $countAge['18-25'] = 0;
@@ -165,9 +166,9 @@ class PublicationController extends Controller
      */
     public function editAction(Request $request, Publication $publication)
     {
-        $editForm = $this->createForm('PublicationBundle\Form\PublicationType', $publication);
+        $publiMod = clone $publication;
+        $editForm = $this->createForm('PublicationBundle\Form\PublicationType', $publiMod);
         $editForm->handleRequest($request);
-
         if ($editForm->isSubmitted() && $editForm->isValid()) {
 
             /** @var  $file UploadedFile */
@@ -178,19 +179,27 @@ class PublicationController extends Controller
                 $file_binary = fread(fopen($file_real_path, "r"), filesize($file_real_path));
                 $img_str = base64_encode($file_binary);
 
-
-                $publication->setPicture($img_str);
+                $publiMod->setPicture($img_str);
             }
+
+            $send = new Publication();
+            $send->setId($publiMod->getId());
+            $send->setTitle($publiMod->getTitle());
+            $send->setCountByYear($publiMod->getCountByYear());
+            $send->setAnnualCost($publiMod->getAnnualCost());
+            $send->setDescription($publiMod->getDescription());
+            $send->setPicture($publiMod->getPicture());
+
 
             $serializer = $this->get('unamag.service.user')->getSerializer();
             $url = $this->getParameter('api')[PubliConst::KEYPUBLICATION]['update'];
-            APIRequest::post($url, ['Content-Type' => "application/json"], $serializer->serialize($publication, 'json'));
 
+            $response = APIRequest::put($url, ['Content-Type' => "application/json"], $serializer->serialize($send, 'json'));
             return $this->redirectToRoute('publication_index');
         }
 
         return $this->render('PublicationBundle:publication:edit.html.twig', array(
-            'publication' => $publication,
+            'publication' => $publiMod,
             'form' => $editForm->createView(),
         ));
     }

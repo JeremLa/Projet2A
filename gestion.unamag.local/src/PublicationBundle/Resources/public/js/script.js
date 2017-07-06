@@ -651,19 +651,24 @@ $(document).ready(function(){
         }
     };
 
-
+var domtom = 0;
     var depData = $("#chartData").attr('data-Hdep-chart');
     var arrDep = depData.split(',');
     console.log(typeof arrDep);
     for(var i=0 ; i< arrDep.length; i++){
         console.log(arrDep[i]);
         var depElem = arrDep[i].split(':');
-        console.log('avant',depArray[depElem[0]]);
-        depArray[depElem[0]]['value'] = depElem[1];
-        depArray[depElem[0]]['tooltip']['content'] = depArray[depElem[0]]['tooltip']['content'].slice(0,-1);
-        depArray[depElem[0]]['tooltip']['content'] += depElem[1];
-        console.log('apres',depArray[depElem[0]]);
-        console.log('apres',depArray[depElem[0]]['tooltip']['content']);
+        if(depElem[0] == 'department-97'){
+            domtom = depElem[1];
+        }else{
+            console.log('avant',depArray[depElem[0]]);
+            depArray[depElem[0]]['value'] = depElem[1];
+            depArray[depElem[0]]['tooltip']['content'] = depArray[depElem[0]]['tooltip']['content'].slice(0,-1);
+            depArray[depElem[0]]['tooltip']['content'] += depElem[1];
+            console.log('apres',depArray[depElem[0]]);
+            console.log('apres',depArray[depElem[0]]['tooltip']['content']);
+        }
+
 
     }
     $(".mapContainer").mapael({
@@ -684,6 +689,11 @@ $(document).ready(function(){
                 title: "Nb abonnés par département",
                 slices: [
                     {
+                        max: 0,
+                        label: "0 abonné",
+                    },
+                    {
+                        min: 1,
                         max: 5,
                         attrs: {
                             fill: "#CFA0E9"
@@ -712,6 +722,9 @@ $(document).ready(function(){
                             fill: "#800080"
                         },
                         label: "Plus de 20 abonnés"
+                    },
+                    {
+                      label: domtom + " Abonnés DOM-TOM"
                     }
                 ]
             }

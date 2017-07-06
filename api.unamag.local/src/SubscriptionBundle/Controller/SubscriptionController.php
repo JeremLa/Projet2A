@@ -124,8 +124,6 @@ class SubscriptionController extends Controller
         $subscription->setMailAlert(false);
         $this->get('unamag.service.subscription')->persist($subscription, true);
 
-
-
         return $subscription;
     }
 
