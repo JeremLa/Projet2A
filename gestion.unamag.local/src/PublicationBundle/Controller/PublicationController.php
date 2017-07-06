@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\VarDumper\VarDumper;
 use Unirest\Request as APIRequest;
@@ -82,7 +83,11 @@ class PublicationController extends Controller
         $url = $this->getParameter('api')[PubliConst::KEYPUBLICATION]['get'];
 
         APIRequest::jsonOpts(true);
-        $publication = APIRequest::get($url, [], ['publicationId' => $id])->body;
+        $publication = APIRequest::get($url, [], ['publicationId' => $id]);
+        if($publication->code != 200){
+                Throw new NotFoundHttpException('Oups !! Cette page n\'a pas pu être trouvé');
+        }
+        $publication = $publication->body;
 
         $now = new \DateTime('now');
         $countAge['-18'] = 0;
