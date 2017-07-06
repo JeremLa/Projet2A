@@ -14,6 +14,7 @@ use Doctrine\DBAL\VersionAwarePlatformDriver;
 use HistoricalBundle\Entity\Historical;
 use HistoricalBundle\Form\HistoricalType;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use UserBundle\Form\UserType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -44,6 +45,10 @@ class UserController extends Controller
         /** ici on recupere un utilisateur */
         $url = $this->getParameter('api')['user']['get'].$id;
         $response = APIRequest::get($url, [], []);
+
+        if($response->code != 200){
+            throw new NotFoundHttpException('Oups !! Cette page n\a pas pu être trouvé');
+        }
 
         $historical = new Historical();
         $form = $this->createForm(HistoricalType::class, $historical);

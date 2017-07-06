@@ -332,7 +332,7 @@ $(document).ready(function () {
     }
     pagination(10,'.histo','.paginator',3);
     pagination(10,'.abolist','.abopaginator',3);
-    pagination(2,'.sublist','.subpaginator',3);
+    pagination(10,'.sublist','.subpaginator',3);
     pagination(10,'.paylist','.paymentpaginator',3);
 
 });
