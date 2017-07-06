@@ -45,7 +45,7 @@ class PublicationRepository extends \Doctrine\ORM\EntityRepository
             $qb->where("p.canonicalTitle LIKE '%" .$search. "%'");
         }
 
-        $qb->orderBy('p.id', 'ASC');
+        $qb->orderBy('p.id', 'DESC');
 
         $query = $qb->getQuery();
 
