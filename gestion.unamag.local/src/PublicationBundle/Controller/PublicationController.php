@@ -200,7 +200,12 @@ class PublicationController extends Controller
             $url = $this->getParameter('api')[PubliConst::KEYPUBLICATION]['update'];
 
             $response = APIRequest::put($url, ['Content-Type' => "application/json"], $serializer->serialize($send, 'json'));
-            return $this->redirectToRoute('publication_index');
+            if($response->code != 200){
+                $this->get('session')->setFlashBag('errors', 'Un problème est survenu lors de la modification, veuillez reessayer ou contacter le service technique');
+            }else{
+                $this->get('session')->setFlashBag('success', 'Modification réussi');
+            }
+            return $this->redirectToRoute('publication_show', ['id' => $send->getId()]);
         }
 
         return $this->render('PublicationBundle:publication:edit.html.twig', array(
