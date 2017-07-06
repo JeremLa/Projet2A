@@ -2,6 +2,7 @@
 
 namespace PublicationBundle\Controller;
 
+use AuthenticationBundle\Entity\User;
 use PublicationBundle\Entity\Publication;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -79,9 +80,82 @@ class PublicationController extends Controller
     public function showAction($id)
     {
         $url = $this->getParameter('api')[PubliConst::KEYPUBLICATION]['get'];
-        $publication = APIRequest::get($url, [], ['publicationId' => $id]);
+
+        APIRequest::jsonOpts(true);
+        $publication = APIRequest::get($url, [], ['publicationId' => $id])->body;
+        $now = new \DateTime('now');
+        $countAge['-18'] = 0;
+        $countAge['18-25'] = 0;
+        $countAge['25-40'] = 0;
+        $countAge['40-60'] = 0;
+        $countAge['60+'] = 0;
+        $dep = [];
+        $depRes = [];
+        foreach ($publication['subscription'] as $sub){
+            // si l'abonnement n'est pas expiré
+            if(new \DateTime($sub['dateEnd']) > $now){
+                /** @var  $user User*/
+                $user = $sub['user'];
+                $age = $this->get('unamag.service.user')->calculAge($user['birthDate']);
+//                VarDumper::dump($age);die;
+                $department = substr($user['zipCode'],0,2);
+                if(array_search($department, $dep) == false){
+                    $dep[] = $department;
+                    $depRes[$department] = 1;
+                }else{
+                    $depRes[$department]++;
+                }
+
+                if($age < 18){
+                    $countAge['-18']++;
+                }elseif ($age < 25){
+                    $countAge['18-25']++;
+                }elseif ($age < 40){
+                    $countAge['25-40']++;
+                }elseif ($age < 60 ){
+                    $countAge['40-60']++;
+                }else{
+                    $countAge['60+']++;
+                }
+
+            }
+        }
+        $strCountAge = "";
+        $comma = 1;
+        foreach ($countAge as $count){
+            if($comma != count($countAge)){
+                $strCountAge = $strCountAge . $count .',';
+            }else{
+                $strCountAge = $strCountAge . $count;
+            }
+            $comma++;
+        }
+
+//        $strDep = "";
+//        $comma = 1;
+//        foreach ($depRes as $count){
+//            if($comma != count($depRes)){
+//                $strDep = $strDep . $count .',';
+//            }else{
+//                $strDep = $strDep . $count;
+//            }
+//            $comma++;
+//        }
+
+        $strDepH = "";
+        $comma = 1;
+        foreach ($dep as $numDep){
+            if($comma != count($dep)){
+                $strDepH = $strDepH . 'department-'.$numDep .':'.$depRes[$numDep].',';
+            }else{
+                $strDepH = $strDepH . 'department-'.$numDep.':'.$depRes[$numDep];
+            }
+            $comma++;
+        }
         return $this->render('PublicationBundle:publication:show.html.twig', array(
-            'publication' => $publication->body,
+            'publication' => $publication,
+            'ageData' => $strCountAge,
+            'depHead' => $strDepH,
         ));
     }
 

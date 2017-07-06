@@ -29,6 +29,13 @@ class Publication
     private $title;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="canonical_title", type="string", nullable=true)
+     */
+    private $canonicalTitle;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="count_by_year", type="integer")
@@ -57,6 +64,11 @@ class Publication
     private $annualCost;
 
     /**
+     * @ORM\OneToMany(targetEntity="SubscriptionBundle\Entity\Subscription", mappedBy="publication")
+     */
+    private $subscriptions;
+
+    /**
      * Get id
      *
      * @return int
@@ -64,14 +76,6 @@ class Publication
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
     }
 
     /**
@@ -88,6 +92,22 @@ class Publication
     public function setTitle($title)
     {
         $this->title = $title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCanonicalTitle()
+    {
+        return $this->canonicalTitle;
+    }
+
+    /**
+     * @param string $canonical_title
+     */
+    public function setCanonicalTitle($canonicalTitle)
+    {
+        $this->canonicalTitle = $canonicalTitle;
     }
 
     /**
@@ -155,19 +175,20 @@ class Publication
         $this->annualCost = $annualCost;
     }
 
-    public function toArray($withId = false){
-        $return = [];
-        if($withId){
-            $return['id'] = $this->id;
-        }
+    /**
+     * @return mixed
+     */
+    public function getSubscription()
+    {
+        return $this->subscriptions;
+    }
 
-        $return['title'] = $this->title;
-        $return['countByYear'] = $this->countByYear;
-        $return['picture'] = $this->picture;
-        $return['description'] = $this->description;
-        $return['annualCost']  = $this->annualCost;
-
-        return $return;
+    /**
+     * @param mixed $subscriptions
+     */
+    public function setSubscription($subscriptions)
+    {
+        $this->subscriptions = $subscriptions;
     }
 }
 
