@@ -99,12 +99,8 @@ class AuthenticationController extends Controller
         ));
     }
 
-    public function createAccountAction(Request $request){
-
-//        $url = $this->getParameter('api')['user']['create'];
-//
-//        VarDumper::dump($url);die;
-
+    public function createAccountAction(Request $request)
+    {
         $user = new User();
 
         $form = $this->createForm(UserType::class, $user);
@@ -119,9 +115,8 @@ class AuthenticationController extends Controller
                     'form' => $form->createView(),
                 ));
             }else{
-                $this->get('session')->getFlashBag()->add('success', 'Un mail viens de vous être envoyé, merci de confirmer votre inscription pour activer votre compte');
+                $this->get('session')->getFlashBag()->add('success', 'Un mail vient de vous être envoyé, merci de confirmer votre inscription pour activer votre compte');
             }
-//            $user =  $this->get('unamag.service.user')->cast($user,$response->body);
 
 
             return $this->redirectToRoute('user_homepage');

@@ -161,7 +161,4 @@ class SubscriptionController extends Controller
         $subscriptions = $this->get('unamag.service.subscription')->findNotPaid();
         return $subscriptions;
     }
-
-
-
 }

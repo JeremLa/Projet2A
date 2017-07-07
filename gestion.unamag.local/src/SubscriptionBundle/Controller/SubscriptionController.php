@@ -34,7 +34,7 @@ class SubscriptionController extends Controller
         if($response->code != 200){
             $this->get('session')->getFlashBag()->add('errors', 'Une erreur est survenu, réessayez ou contactez le service technique d\'Unamag');
         }else{
-            $this->get('session')->getFlashBag()->add('success', 'Publication créée');
+            $this->get('session')->getFlashBag()->add('success', 'Abonnement créé');
         }
         if($from == 'show'){
             return $this->redirectToRoute('publication_show', ['id' => $data['publication']]);

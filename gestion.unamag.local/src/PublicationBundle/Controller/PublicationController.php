@@ -258,6 +258,9 @@ class PublicationController extends Controller
 
             return $this->redirectToRoute('publication_show', ['id' => $request->get('publicationId')]);
         }
+
+        $this->get('session')->getFlashBag()->add('success', 'La publication a bien été supprimé');
+
         return $this->redirectToRoute('publication_list');
     }
 }
