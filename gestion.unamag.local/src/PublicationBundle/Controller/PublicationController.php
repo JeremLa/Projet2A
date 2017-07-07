@@ -158,6 +158,7 @@ class PublicationController extends Controller
             }
             $comma++;
         }
+
         return $this->render('PublicationBundle:publication:show.html.twig', array(
             'publication' => $publication,
             'ageData' => $strCountAge,

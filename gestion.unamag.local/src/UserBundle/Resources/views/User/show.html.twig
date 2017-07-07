@@ -104,7 +104,7 @@
                         <th class="text-center">Date de fin</th>
                         <th class="text-center">Statut</th>
                         <th class="text-center"></th>
-                        {% for abo in client.subscription|reverse %}
+                        {% for abo in client.subscription %}
                             {% set expiredClass = '' %}
                             {% if abo.dateEnd|date('d/m/Y') < date()|date('d/m/Y') %}
                                 {% set expiredClass = 'expired' %}
@@ -154,7 +154,7 @@
                         {% set magazine = null %}
                         {% set first = true %}
                         {% set count = 0 %}
-                        {% for abo in client.subscription|reverse %}
+                        {% for abo in client.subscription %}
                             {% if magazine !=  abo.publication.title %}
                                 {% set magazine = abo.publication.title %}
                                 {% set first = true %}

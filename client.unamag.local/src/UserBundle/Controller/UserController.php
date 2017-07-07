@@ -58,15 +58,18 @@ class UserController extends Controller
         $form = $this->createForm(UserType::class, $newPwd);
         $form->handleRequest($request);
         if($form->isSubmitted()) {
-            $newPwd = $form->getData();
-            $password = $this->get('unamag.service.user')->encodePassword($newPwd->getPassword());
-            $url = $this->getParameter('api')['user']['update'];
-            $serializer = $this->get('unamag.service.user')->getSerializer();
-            $response = APIRequest::post($url, [], ['serializeObject' => $serializer->serialize($user, 'json')]);
-            if($response->code == 200){
-                $user->setPassword($password);
-                $this->get('session')->getFlashBag()->add('success', 'Le nouveau mot de passe a bien été enregistré.');
-                return $this->redirectToRoute('user_profil');
+            $arr = $form->get('password')->getViewData();
+            if ($arr['first'] == $arr['second']) {
+                $newPwd = $form->getData();
+                $password = $this->get('unamag.service.user')->encodePassword($newPwd->getPassword());
+                $url = $this->getParameter('api')['user']['update'];
+                $serializer = $this->get('unamag.service.user')->getSerializer();
+                $response = APIRequest::post($url, [], ['serializeObject' => $serializer->serialize($user, 'json')]);
+                if ($response->code == 200) {
+                    $user->setPassword($password);
+                    $this->get('session')->getFlashBag()->add('success', 'Le nouveau mot de passe a bien été enregistré.');
+                    return $this->redirectToRoute('user_profil');
+                }
             }
         }
         return $this->render('UserBundle::editUserPwd.html.twig',array('form' => $form->createView()));
@@ -82,7 +85,6 @@ class UserController extends Controller
          */
 
         $user = $this->get('session')->get('User');
-        $this->getUser();
 
         if(!$user){
             return $this->redirectToRoute('user_homepage');

@@ -654,24 +654,21 @@ $(document).ready(function(){
 
     var domtom = 0;
     var depData = $("#chartData").attr('data-Hdep-chart');
-    var arrDep = depData.split(',');
-    console.log(typeof arrDep);
-    for(var i=0 ; i< arrDep.length; i++){
-      console.log(arrDep[i]);
-      var depElem = arrDep[i].split(':');
-      if(depElem[0] == 'department-97'){
-        domtom = depElem[1];
-      }else{
-        console.log('avant',depArray[depElem[0]]);
-        depArray[depElem[0]]['value'] = depElem[1];
-        depArray[depElem[0]]['tooltip']['content'] = depArray[depElem[0]]['tooltip']['content'].slice(0,-1);
-        depArray[depElem[0]]['tooltip']['content'] += depElem[1];
-        console.log('apres',depArray[depElem[0]]);
-        console.log('apres',depArray[depElem[0]]['tooltip']['content']);
+
+    if(depData.length > 0){
+      var arrDep = depData.split(',');
+      for(var i=0 ; i< arrDep.length; i++){
+        var depElem = arrDep[i].split(':');
+        if(depElem[0] == 'department-97'){
+          domtom = depElem[1];
+        }else{
+          depArray[depElem[0]]['value'] = depElem[1];
+          depArray[depElem[0]]['tooltip']['content'] = depArray[depElem[0]]['tooltip']['content'].slice(0,-1);
+          depArray[depElem[0]]['tooltip']['content'] += depElem[1];
+        }
       }
-
-
     }
+
     $(".mapContainer").mapael({
       map: {
         name: "france_departments",

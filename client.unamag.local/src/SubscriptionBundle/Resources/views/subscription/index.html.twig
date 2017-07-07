@@ -63,7 +63,7 @@
 
                             {% set unpayed = false %}
                             {% for payment in subscription.payment %}
-                                {% if payment.transaction_id %}
+                                {% if payment.transaction_id == null %}
                                     {% set unpayed = true %}
                                 {% endif %}
                             {% endfor %}
