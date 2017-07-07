@@ -136,7 +136,7 @@ class PaymentController extends Controller
         $abo = $payment->getAbonnement();
         $user = $abo->getUser();
         $message = new \Swift_Message('Rappel d\'impayé');
-        $message->setFrom(['projet@simed.fr'])
+        $message->setFrom(['contact@esimed.fr' => 'Unamag'])
             ->setTo($user->getMail())
 //                ->setTo(['hermesalexis@gmail.com'])
             ->setBody(

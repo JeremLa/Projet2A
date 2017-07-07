@@ -103,7 +103,10 @@ class UserController extends Controller
             $response = APIRequest::post($url, [], ['serializeObject' => $serializer->serialize($userMod,'json')]);
             if($response->code == 200){
                 $this->connectUser($userMod);
+                $this->get('session')->getFlashBag()->add('success', 'Les modifications ont bien été enregistrées.');
                 return $this->redirectToRoute('user_profil');
+            }else{
+                $this->get('session')->getFlashBag()->add('errors', 'Une erreur est survenu, réessayez ou contactez le service client d\'Unamag');
             }
         }
 

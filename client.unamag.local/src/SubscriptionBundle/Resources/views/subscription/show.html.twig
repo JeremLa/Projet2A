@@ -37,13 +37,13 @@
                         <div class="w3-row w3-left ">
                             {% if payment.datePayment == null %}
                                 {% set class = 'fa fa-times-circle fa-3 w3-text-red' %}
-                                <button class="w3-btn  w3-block  modal-opener"  data-modal-open-id="payment-extend-{{ payment.id }}">Du {{ payment.dateDeb|date('d/m/Y') }}  Au {{ payment.dateFin|date('d/m/Y') }}   <i class="{{ class }} w3-large"></i>  A payé</button>
+                                <div class="w3-btn w3-block">Du {{ payment.dateDeb|date('d/m/Y') }}  Au {{ payment.dateFin|date('d/m/Y') }}   <button class="w3-btn w3-small w3-padding-small w3-red modal-opener "  data-modal-open-id="payment-extend-{{ payment.id }}">Payer</button>  </div>
                             {% elseif payment.transaction_id == null %}
                                 {% set class = 'fa fa-exclamation-circle w3-text-orange' %}
-                                <button class="w3-btn  w3-block  modal-opener"  data-modal-open-id="payment-extend-{{ payment.id }}">Du {{ payment.dateDeb|date('d/m/Y') }}  Au {{ payment.dateFin|date('d/m/Y') }} <i class="{{ class }} w3-large"></i></button>
+                                <div class="w3-btn  w3-block ">Du {{ payment.dateDeb|date('d/m/Y') }}  Au {{ payment.dateFin|date('d/m/Y') }} <button class="{{ class }} w3-large  modal-opener"  data-modal-open-id="payment-extend-{{ payment.id }}"></button></div>
                             {% else %}
                                 {% set class = 'fa fa-check-circle w3-text-green' %}
-                                <button class="w3-btn  w3-block  ">Du {{ payment.dateDeb|date('d/m/Y') }}  Au {{ payment.dateFin|date('d/m/Y') }}   <i class="{{ class }} w3-large"></i>  Réglé</button>
+                                <div class="w3-btn  w3-block  ">Du {{ payment.dateDeb|date('d/m/Y') }}  Au {{ payment.dateFin|date('d/m/Y') }}   <i class="{{ class }} w3-large"></i>  Réglé</div>
 
                             {% endif %}
                         </div>
