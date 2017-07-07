@@ -106,7 +106,7 @@
                         <th class="text-center"></th>
                         {% for abo in client.subscription %}
                             {% set expiredClass = '' %}
-                            {% if abo.dateEnd|date('d/m/Y') < date()|date('d/m/Y') %}
+                            {% if abo.dateEnd < date().date %}
                                 {% set expiredClass = 'expired' %}
                             {% elseif abo.dateEnd|date_modify("-2 month") < date() %}
                                 {% set expiredClass = 'expired-soon' %}
@@ -117,7 +117,8 @@
                                 <td>{{ abo.publication.annualCost }}</td>
                                 <td>{{ abo.dateStart|date('d/m/Y') }}</td>
                                 <td>{{ abo.dateEnd|date('d/m/Y') }}</td>
-                                {% if abo.dateEnd|date('d/m/Y') < date()|date('d/m/Y') %}
+
+                                {% if abo.dateEnd < date().date %}
                                     <td class="abo-status-{{ abo.id }}">Expiré</td>
                                 {% elseif(abo.status) %}
                                     {% set class = " btn-danger" %}
@@ -173,7 +174,7 @@
                                         <td><strong>{{ magazine }}</strong></td>
                                     {% else %}
 
-                                        {% if abo.dateEnd|date('d/m/Y') < date()|date('d/m/Y') %}
+                                        {% if abo.dateEnd < date().date %}
                                             <td class="text-center">expiré</td>
                                         {% else %}
                                             <td></td>

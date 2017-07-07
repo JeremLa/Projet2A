@@ -17,7 +17,7 @@
                         <span class="glyphicon glyphicon-plus text-success margin-right-10" title="créer un abonnement"></span>
                     </a>
                     {% if(publication.subscription|length == 0) %}
-                        <a title="supprimer"><span class="glyphicon glyphicon-remove text-danger margin-right-10" data-toggle="modal" data-target="#confirm-delete{{ publication.id }}"></span></a>
+                        <a href="" title="supprimer"><span class="glyphicon glyphicon-remove text-danger margin-right-10" data-toggle="modal" data-target="#confirm-delete{{ publication.id }}"></span></a>
                         {#<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Large modal</button>#}
 
                         <div class="modal fade" tabindex="-1" role="dialog" id="confirm-delete{{ publication.id }}">
@@ -34,7 +34,7 @@
                                         <form method="post" action="{{ path('publication_delete') }}">
                                             <input type="hidden" name="publicationId" value="{{ publication.id }}">
                                             <input type="submit" class="btn btn-danger" value="Supprimer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Annuler</button>
+                                            <a href="" class="btn btn-default" data-dismiss="modal">Annuler</a>
                                         </form>
 
                                     </div>

@@ -1,37 +1,41 @@
-{% for publication in publications %}
-    <div class="w3-card-2 w3-display-container w3-margin-bottom publication-elem" style="transition:0.5s;width:100%">
-        <div class="w3-hover-green w3-hover-opacity">
-            <img src="data:image/jpeg;base64,{{ publication.picture }}" alt="Pants" style="width:100%">
-        </div>
+{% if publications is defined and publications|length > 0 %}
+    {% for publication in publications %}
+        <div class="w3-card-2 w3-display-container w3-margin-bottom publication-elem" style="transition:0.5s;width:100%">
+            <div class="w3-hover-green w3-hover-opacity">
+                <img src="data:image/jpeg;base64,{{ publication.picture }}" alt="Pants" style="width:100%">
+            </div>
 
-        {% set countSubscriber = 0 %}
-        {% for subscription in publication.subscription %}
-            {% if subscription.dateEnd|date() < date() %}
-                {% set countSubscriber = countSubscriber + 1 %}
-            {% endif %}
-        {% endfor %}
+            {% set countSubscriber = 0 %}
+            {% for subscription in publication.subscription %}
+                {% if subscription.dateEnd|date() < date() %}
+                    {% set countSubscriber = countSubscriber + 1 %}
+                {% endif %}
+            {% endfor %}
 
-        <div class="w3-display-topleft w3-display-hover w3-large">
-            <button type="button" class="w3-white w3-animate-opacity w3-btn w3-margin w3-round disabled" title="Nombre d'abonnés"><i class="fa fa-user w3-text-green"></i> {{ countSubscriber }}</button>
+            <div class="w3-display-topleft w3-display-hover w3-large">
+                <button type="button" class="w3-white w3-animate-opacity w3-btn w3-margin w3-round disabled" title="Nombre d'abonnés"><i class="fa fa-user w3-text-green"></i> {{ countSubscriber }}</button>
+            </div>
+            <div class="w3-display-topright w3-display-hover w3-large">
+                <button type="button" class="w3-white w3-animate-opacity w3-btn w3-margin w3-round disabled" title="S'abonner"><i class="fa fa-shopping-cart w3-text-grey"></i> {{ publication.annualCost }}€</button>
+            </div>
+            <div class="w3-display-bottomleft w3-display-hover w3-large w3-text-white">
+                <button type="button" class="w3-white w3-animate-opacity w3-btn w3-margin w3-round disabled" title="Titre">{{ publication.title }}</button>
+            </div>
+            <div class="w3-display-middle w3-display-hover w3-large">
+                <a href="{{ path('publication_show', { 'id': publication.id }) }}" class="w3-button w3-round w3-green w3-animate-opacity w3-btn w3-round">En savoir plus</a>
+            </div>
         </div>
-        <div class="w3-display-topright w3-display-hover w3-large">
-            <button type="button" class="w3-white w3-animate-opacity w3-btn w3-margin w3-round disabled" title="S'abonner"><i class="fa fa-shopping-cart w3-text-grey"></i> {{ publication.annualCost }}€</button>
-        </div>
-        <div class="w3-display-bottomleft w3-display-hover w3-large w3-text-white">
-            <button type="button" class="w3-white w3-animate-opacity w3-btn w3-margin w3-round disabled" title="Titre">{{ publication.title }}</button>
-        </div>
-        <div class="w3-display-middle w3-display-hover w3-large">
-            <a href="{{ path('publication_show', { 'id': publication.id }) }}" class="w3-button w3-round w3-green w3-animate-opacity w3-btn w3-round">En savoir plus</a>
-        </div>
-    </div>
-{% endfor %}
+    {% endfor %}
 
-{% if next == true %}
-    {% set searchClass = '' %}
-    {% if search is defined and search == true %}
-        {% set searchClass = 'search' %}
+    {% if next == true %}
+        {% set searchClass = '' %}
+        {% if search is defined and search == true %}
+            {% set searchClass = 'search' %}
+        {% endif %}
+        <div class="w3-row w3-center next-wrapper" onclick="nextPubli()">
+            <p class="next-button {{ searchClass }}"><i class="fa fa-arrow-down"></i></p>
+        </div>
     {% endif %}
-    <div class="w3-row w3-center next-wrapper">
-        <p class="next-button {{ searchClass }}"><i class="fa fa-arrow-down"></i></p>
-    </div>
+{% else %}
+    <p>Aucun résultat</p>
 {% endif %}

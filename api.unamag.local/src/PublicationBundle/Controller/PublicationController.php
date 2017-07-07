@@ -119,6 +119,8 @@ class PublicationController extends Controller
         $offset = $request->get('offset');
         $search = $request->get('search');
 
+        $search = $this->get('unamag.tools.service.string')->canonicolize($search);
+
         $publications = $this->get('unamag.service.publication')->getPublicationByUser($user, $limit, $offset, $search);
 
         $next = $this->get('unamag.service.publication')->getPublicationByUser($user, 1, $offset+$limit+1, $search);

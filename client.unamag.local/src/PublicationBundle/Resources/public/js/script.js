@@ -13,7 +13,6 @@ var prefix = "http://10.0.10.115/projet2a/client.unamag.local/web";
         publication: $(this).attr('data-publication-id')
       },
       success: function(data){
-        console.log(data);
       }
     })
   });

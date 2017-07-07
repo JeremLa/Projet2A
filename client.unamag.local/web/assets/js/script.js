@@ -27,7 +27,7 @@ $(document).ready(function(){
       }
     }
 
-    if($(window).scrollTop() + $(window).height() === $(document).height()) {
+    if($(window).scrollTop() + $(window).height() >= $(document).height()-15) {
       if(typeof $('.next-button') !== typeof undefined && $('.next-button').length){
         nextPubli();
       }
@@ -66,9 +66,9 @@ $(document).ready(function(){
     });
   });
 
-  $('.next-button').on('click', function(){
-    nextPubli();
-  });
+  // $('.next-button').on('click', function(){
+  //   nextPubli();
+  // });
 
   function nextPubli() {
     var elem = $('.next-button');
@@ -137,7 +137,6 @@ $(document).ready(function(){
     var url = prefix+'/publication';
 
     getSearchAjax(url)
-
   }
 
   function getSearchAjax(url){

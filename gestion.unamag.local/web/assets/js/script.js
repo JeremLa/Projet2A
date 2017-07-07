@@ -9,7 +9,7 @@ $(document).ready(function() {
       search: '',
       page: 1,
       searchClass: '',
-      limit: 15
+      limit: 8
     }
 
     //on keyup, start the countdown
@@ -24,12 +24,12 @@ $(document).ready(function() {
       data.searchClass = $elem.attr('data-class-search');
       data.search = $elem.val();
 
-      if(data.searchClass === 'pagination'){
+      if(data.searchClass === 'publication'){
         data.limit = 8;
       }
 
       if(data.searchClass === 'user'){
-        data.limit = 15;
+        data.limit = 10;
       }
 
       var url = 'http://gestion.unamag.local/tools/search';
